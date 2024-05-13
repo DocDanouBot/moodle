@@ -2741,4 +2741,17 @@ $capabilities = array(
             'manager' => CAP_ALLOW,
         ]
     ],
+
+    // Allows users with more rights to see the API Dokumentation if the capability is assigned to the role.
+    // and the setting is turned on in the site configuration file.
+    // CORE HACK from Mantis MT-4559 lernlink_webservicemanagement.
+    'moodle/site:lernlink_webservicemanagement' => [
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => [
+            'guest' => CAP_PROHIBIT,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW,
+        ],
+    ],
 );

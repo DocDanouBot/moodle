@@ -682,3 +682,44 @@ if ($hassiteconfig) {
     $ADMIN->add('webservicesettings', new admin_externalpage('webservicetokens', new lang_string('managetokens', 'webservice'),
         new moodle_url('/admin/webservice/tokens.php')));
 }
+
+// CORE HACK from MANTIS Ticket MT-4559 to extend the API visibility to special users from the manager group and / or that
+// have the according rights. Additionally we had to add some lang-strings and some more rights in /lib/db/access.php.
+if (!$hassiteconfig
+        && (isset($CFG->lernlink_webservicemanagement) && $CFG->lernlink_webservicemanagement == true )
+        && has_capability('moodle/site:lernlink_webservicemanagement', context_system::instance())
+        && has_capability('moodle/site:configview', context_system::instance())) {
+
+    // Web services.
+    $ADMIN->add('server', new admin_category('webservicesettings', new lang_string('webservices', 'webservice')));
+
+    // Web services > API documentation.
+    $ADMIN->add('webservicesettings', new admin_externalpage('webservicedocumentation', new lang_string('wsdocapi', 'webservice'),
+        "{$CFG->wwwroot}/{$CFG->admin}/webservice/documentation.php", 'moodle/site:configview', false));
+
+    // Web services > External services.
+    $temp = new admin_settingpage('externalservices', new lang_string('externalservices', 'webservice'), 'moodle/site:configview');
+    $temp->add(new admin_setting_heading('manageserviceshelpexplaination', new lang_string('information', 'webservice'),
+        new lang_string('servicehelpexplanation', 'webservice')));
+    $temp->add(new admin_setting_manageexternalservices());
+    $ADMIN->add('webservicesettings', $temp);
+
+    $ADMIN->add('webservicesettings', new admin_externalpage('externalservice', new lang_string('editaservice', 'webservice'),
+        "{$CFG->wwwroot}/{$CFG->admin}/webservice/service.php", 'moodle/site:configview', true));
+
+    $ADMIN->add('webservicesettings', new admin_externalpage('externalservicefunctions',
+        new lang_string('externalservicefunctions', 'webservice'), "{$CFG->wwwroot}/{$CFG->admin}/webservice/service_functions.php",
+        'moodle/site:configview', true));
+
+    $ADMIN->add('webservicesettings', new admin_externalpage('externalserviceusers',
+        new lang_string('externalserviceusers', 'webservice'), "{$CFG->wwwroot}/{$CFG->admin}/webservice/service_users.php",
+        'moodle/site:configview', true));
+
+    $ADMIN->add('webservicesettings', new admin_externalpage('externalserviceusersettings',
+        new lang_string('serviceusersettings', 'webservice'), "{$CFG->wwwroot}/{$CFG->admin}/webservice/service_user_settings.php",
+        'moodle/site:configview', true));
+
+    // Web services > Manage tokens.
+    $ADMIN->add('webservicesettings', new admin_externalpage('webservicetokens', new lang_string('managetokens', 'webservice'),
+        new moodle_url('/admin/webservice/tokens.php'), 'moodle/site:configview'));
+}
