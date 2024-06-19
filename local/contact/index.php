@@ -1,0 +1,184 @@
+<?php
+// This file is part of the Contact Form plugin for Moodle - https://moodle.org/
+//
+// Contact Form is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Contact Form is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Contact Form.  If not, see <https://www.gnu.org/licenses/>.
+
+/**
+ * This plugin for Moodle is used to send emails through a web form.
+ *
+ * @package    local_contact
+ * @copyright  2016-2024 TNG Consulting Inc. - www.tngconsulting.ca
+ * @author     Michael Milette
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+require_once('../../config.php');
+require_once($CFG->dirroot . '/local/contact/classes/local_contact.php');
+
+if (empty(get_local_referer(false))) {
+    $PAGE->set_url('/local/contact/index.php');
+} else {
+    $PAGE->set_url(get_local_referer(false));
+}
+
+// If we require user to be logged in.
+if (!empty(get_config('local_contact', 'loginrequired'))) {
+    // Log them in and then redirect them back to the form.
+    if (!isloggedin() || isguestuser()) {
+        // Set message that session has timed out.
+        $SESSION->has_timed_out = 1;
+        require_login();
+    }
+}
+
+$context = context_system::instance();
+$PAGE->set_context($context);
+$PAGE->set_heading(format_text($SITE->fullname, FORMAT_HTML, ['context' => $context, 'escape' => false]));
+$PAGE->set_pagelayout('standard');
+$PAGE->set_title(get_string('confirmationpage', 'local_contact'));
+$PAGE->navbar->add('');
+
+$contact = new local_contact();
+if ($contact->isspambot) {
+    header('HTTP/1.0 403 Forbidden');
+    if ($CFG->debugdisplay == 1 || is_siteadmin()) {
+        die(get_string('forbidden', 'local_contact') . '. ' . $contact->errmsg);
+    } else {
+        die(get_string('forbidden', 'local_contact')) . '.';
+    }
+}
+
+// Display page header.
+echo $OUTPUT->header();
+
+// Determine the recipient's name and email address.
+
+// The default recipient is the Moodle site's support contact. This will
+// be used if no recipient was specified or if the recipient is unknown.
+$name = trim($CFG->supportname ?? '');
+$email = trim($CFG->supportemail ?? '');
+
+// Handle recipient alias.
+// If the form includes a recipient's alias, search the plugin's recipient list settings for a name and email address.
+$recipient = trim(optional_param('recipient', '', PARAM_TEXT));
+if (!empty($recipient)) {
+    $lines = explode("\n", get_config('local_contact', 'recipient_list'));
+    foreach ($lines as $linenumbe => $line) {
+        $line = trim($line ?? '');
+        if (empty($line)) { // Blank line.
+            continue;
+        }
+        $thisrecipient = explode('|', $line);
+        // 0 = alias, 1 = email address, 2 = name.
+        if (count($thisrecipient) == 3) {
+            // Trim leading and trailing spaces from each of the 3 parameters.
+            $thisrecipient = array_map('trim', $thisrecipient);
+            // See if this alias matches the one we are looking for.
+            if ($thisrecipient[0] == $recipient && !empty($thisrecipient[1]) && !empty($thisrecipient[2])) {
+                $email = $thisrecipient[1];
+                $name = $thisrecipient[2];
+                break;
+            }
+        }
+    }
+}
+
+// Test for ReCAPTCHA.
+
+// ReCAPTCHA is never required for logged-in non-guest users.
+if (!isloggedin() || isguestuser()) {
+    // Is ReCAPTCHA configured in Moodle?
+    if (
+        !empty($CFG->recaptchaprivatekey)
+        && !empty($CFG->recaptchapublickey)
+        && empty(get_config('local_contact', 'norecaptcha'))
+    ) {
+        // If so, ensure that it was filled correctly and submitted with the form.
+        if (file_exists($CFG->libdir . '/recaptchalib_v2.php')) {
+            // For reCAPTCHA 2.0.
+            require_once($CFG->libdir . '/recaptchalib_v2.php');
+            $response = recaptcha_check_response(
+                RECAPTCHA_VERIFY_URL,
+                $CFG->recaptchaprivatekey,
+                getremoteaddr(),
+                optional_param('g-recaptcha-response', '', PARAM_TEXT)
+            );
+            $resp = new stdClass();
+            $resp->is_valid = $response['isvalid'];
+            if (!$resp->is_valid) {
+                $resp->error = $response['error'];
+            }
+        } else {
+            // For reCAPTCHA 1.0.
+            $resp = recaptcha_check_answer(
+                $CFG->recaptchaprivatekey,
+                $_SERVER["REMOTE_ADDR"],
+                optional_param('recaptcha_challenge_field', '', PARAM_TEXT),
+                optional_param('recaptcha_response_field', '', PARAM_TEXT)
+            );
+        }
+
+        if (!$resp->is_valid) {
+            // Display error message if CAPTCHA was entered incorrectly.
+            echo '<h3>' . get_string('missingrecaptchachallengefield') . '</h3>';
+            echo '<p>' . get_string('recaptcha_help', 'auth')
+                . ($CFG->debugdisplay == 1 ? ' (' .  $resp->error . ')' : '') . '</p>';
+            echo '<button type="button" onclick="history.back();">' . get_string('incorrectpleasetryagain', 'auth') . '</a>';
+            // Display page footer.
+            echo $OUTPUT->footer();
+            die;
+        }
+    }
+}
+
+// Send the message.
+
+if ($contact->sendmessage($email, $name)) {
+    // Share a gratitude and Say Thank You! Your user will love to know their message was sent.
+    echo '<h3>' . get_string('eventmessagesent', 'message') . '</h3>';
+    echo '<p>' . get_string('confirmationmessage', 'local_contact') . '</p>';
+} else {
+    // Oh no! What are the chances. Looks like we failed to meet user expectations (message not sent).
+    echo '<h3>' . get_string('errorsendingtitle', 'local_contact') . '</h3>';
+    echo '<p>' . get_string('errorsending', 'local_contact') . '</p>';
+}
+
+// Determine the URL of the Continue button after the form has been submitted.
+// If a 'referrer' parameter is provided and is a valid URL on the same site, use it.
+// If not, if the course ID is the same as the site ID, set the button to the home page.
+// Otherwise, it tries to return to the page where the form was submitted from.
+// If it can't find such a page, it redirects to the course page.
+// Finally, it outputs a continue button with the determined URL.
+$continueurl = optional_param('referrer', '', PARAM_URL);
+// Only allow continue to relative or absolute URLs on this site.
+if (!(stripos($continueurl, $CFG->wwwroot) === 0 || substr($continueurl, 0, 1) != '/' || substr($continueurl, 0, 1) != '.')) {
+    $continueurl = '';
+}
+if (empty($continueurl)) {
+    if ($PAGE->course->id == SITEID) {
+        // If coming from a site page, continue to the home page.
+        $continueurl = $CFG->wwwroot;
+    } else { // If coming from a course page.
+        // See if we can return to the page from where the form was submitted.
+        $continueurl = get_local_referer(false);
+        if (empty($continueurl)) {
+            // If the referrer was not available, go to the course page.
+            $continueurl = new moodle_url('/course/view.php', ['id' => $PAGE->course->id]);
+        }
+    }
+}
+echo $OUTPUT->continue_button($continueurl);
+
+// Display page footer.
+echo $OUTPUT->footer();
