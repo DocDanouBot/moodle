@@ -51,6 +51,8 @@ $PAGE->navbar->add('');
 
 $contact = new local_contact();
 if ($contact->isspambot) {
+    var_dump($contact);
+
     header('HTTP/1.0 403 Forbidden');
     if ($CFG->debugdisplay == 1 || is_siteadmin()) {
         die(get_string('forbidden', 'local_contact') . '. ' . $contact->errmsg);

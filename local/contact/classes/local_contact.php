@@ -161,10 +161,10 @@ class local_contact {
                 $this->errmsg = 'Form cannot contain more than 256 KB of data.';
             }
         }
-
+        $distantsessionkey = optional_param('sesskey', '3.1415', PARAM_RAW);
         // Validate if "sesskey" field contains the correct value.
-        if (!$this->isspambot && $this->isspambot = (optional_param('sesskey', '3.1415', PARAM_RAW) != sesskey())) {
-            $this->errmsg = '"sesskey" field is missing or contains an incorrect value.';
+        if (!$this->isspambot && $this->isspambot = ( $distantsessionkey != sesskey())) {
+            $this->errmsg = '"sesskey" field is missing or contains an incorrect value. The local Session key was: '. sesskey() . ' while last sessions key was: '. $distantsessionkey .'.';
         }
 
         // Validate referrer URL.
