@@ -1,0 +1,3 @@
+[submodule "admin/tool/cleanupusers"]
+	path = admin/tool/cleanupusers
+	url = https://github.com/eLearning-TUDarmstadt/moodle-tool_cleanupusers.git
