@@ -1,0 +1,19 @@
+code, code a {
+    font-size: 87.5%;
+    color: #e83e8c;
+    word-break: break-word;
+}
+
+.form-warning {
+    font-size: 87.5%;
+    color: #cc0000;
+}
+
+/*
+############################################################
+###########    NEW : index.php listing    ##################
+############################################################
+*/
+#page-local-lai_connector-index {
+    background-color: #0a78d1;
+}
