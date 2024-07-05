@@ -1,0 +1,98 @@
+.block_lai_sandbox .card-body  {
+    flex: 1 1 auto;
+}
+.block_lai_sandbox.block  {
+    margin-bottom: 0px;
+    border-radius: 0px;
+    border-color: transparent;
+}
+
+.block_lai_sandbox.card  {
+    background-color: transparent;
+}
+
+.block_lai_sandbox.managerview .card-body {
+    padding: 0px !important;
+}
+
+.block_lai_sandbox.managerview .card-body .mt-3,
+.block_lai_sandbox .card-body .mt-3 {
+    margin-top: 0rem !important;
+}
+
+.block_lai_sandbox.managerview.mb-3 {
+    margin-bottom: 0px!important;
+}
+
+.block_lai_sandbox.managerview #iu_tutor_tasks_content {
+    border-radius: 14px;
+    border: var(--borders);
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.block_lai_sandbox.managerview #iu_tutor_tasks_content .generaltable {
+    margin-bottom: 5px;
+}
+
+.block_lai_sandbox table#open_tutor_tasks {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.block_lai_sandbox table#open_tutor_tasks tr.parent:hover > td{
+    background-color: #b0e4f0;
+    cursor: pointer;
+}
+
+.block_lai_sandbox table#open_tutor_tasks tr.headerrow th {
+    background-color: #f9f9f9;
+}
+
+.block_lai_sandbox table#open_tutor_tasks .tii_container {
+    padding: 0;
+}
+
+.block_lai_sandbox table#open_tutor_tasks table.resultlist_tii_entires{
+    width: 100%;
+    margin: 0;
+}
+
+.block_lai_sandbox table#open_tutor_tasks table.resultlist_tii_entires tr:hover > td {
+    background-color: #eee !important;
+}
+
+.block_lai_sandbox table#open_tutor_tasks .zentriert {
+    text-align: center;
+}
+
+.block_lai_sandbox table#open_tutor_tasks table.resultlist_tii_entires .lightbluebg > td{
+    background-color: #f9faff;
+}
+
+
+/*********** Admin toggle button **********************/
+.block_lai_sandbox #iu_tutor_tasks_admin_toggle,
+.block_lai_sandbox #iu_tutor_tasks_content #iu_tutor_tasks_admin_backend {
+    cursor: pointer;
+    font-size: 9px;
+    text-align: right;
+}
+
+
+.block_lai_sandbox #iu_tutor_tasks_content {
+    display: none;
+}
+
+.block_lai_sandbox #iu_tutor_tasks_content.norightsblock{
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.block_lai_sandbox #iu_tutor_tasks_admin_toggle #iu_tutor_tasks_admin_header:hover,
+.block_lai_sandbox #iu_tutor_tasks_content #iu_tutor_tasks_admin_backend a:hover {
+    color: var(--iu_lightblue);
+}
