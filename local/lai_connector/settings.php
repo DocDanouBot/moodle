@@ -40,7 +40,7 @@ if ($hassiteconfig) {
         get_string('setting_general_title', 'local_lai_connector'),
         get_string('setting_general_title_help', 'local_lai_connector')));
 
-    // Show Button within course to create entries?
+    // Activate component?
     $name = 'local_lai_connector_activate_component';
     $title = get_string('setting_activate_component', 'local_lai_connector');
     $hint = get_string('setting_activate_component_help', 'local_lai_connector');
@@ -90,6 +90,14 @@ if ($hassiteconfig) {
     $setting->add(new admin_setting_heading('headerconnectortasks',
         get_string('setting_tasks_title', 'local_lai_connector'),
         get_string('setting_tasks_title_help', 'local_lai_connector')));
+
+    // Activate Tasks?
+    $name = 'local_lai_connector_activate_tasks';
+    $title = get_string('setting_activate_tasks', 'local_lai_connector');
+    $hint = get_string('setting_activate_tasks_help', 'local_lai_connector');
+    $default = false;
+    $setting->add(new admin_setting_configcheckbox($name, $title, $hint, $default));
+
 
     $settings->add($setting);
 

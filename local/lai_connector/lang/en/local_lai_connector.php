@@ -47,7 +47,8 @@ $string['setting_subbrain_title_help'] = 'Auf dieser Seite werden alle Einstellu
 $string['setting_tasks_tab_title'] = 'Tasks';
 $string['setting_tasks_title'] = 'Tasks und Cronjobs Konfigurationsübersicht';
 $string['setting_tasks_title_help'] = 'Auf dieser Seite konfigurieren Sie die Tasks und Cronjobs, die für das LAI-System benötigt werden';
-
+$string['setting_activate_tasks'] = 'Aktiviere LAI Tasks?';
+$string['setting_activate_tasks_help'] = 'Wollen sie die Tasks der KI Komponente von LernLink aktivieren. Dann wählen Sie die Checkbox.';
 
 
 $string['abc'] = '';
