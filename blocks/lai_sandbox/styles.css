@@ -24,7 +24,7 @@
     margin-bottom: 0px!important;
 }
 
-.block_lai_sandbox.managerview #iu_tutor_tasks_content {
+.block_lai_sandbox.managerview #lai_sandbox_content {
     border-radius: 14px;
     border: var(--borders);
     background-color: white;
@@ -32,67 +32,27 @@
     margin-bottom: 15px;
 }
 
-.block_lai_sandbox.managerview #iu_tutor_tasks_content .generaltable {
-    margin-bottom: 5px;
-}
-
-.block_lai_sandbox table#open_tutor_tasks {
-    width: 100%;
-    margin-bottom: 0;
-}
-
-.block_lai_sandbox table#open_tutor_tasks tr.parent:hover > td{
-    background-color: #b0e4f0;
-    cursor: pointer;
-}
-
-.block_lai_sandbox table#open_tutor_tasks tr.headerrow th {
-    background-color: #f9f9f9;
-}
-
-.block_lai_sandbox table#open_tutor_tasks .tii_container {
-    padding: 0;
-}
-
-.block_lai_sandbox table#open_tutor_tasks table.resultlist_tii_entires{
-    width: 100%;
-    margin: 0;
-}
-
-.block_lai_sandbox table#open_tutor_tasks table.resultlist_tii_entires tr:hover > td {
-    background-color: #eee !important;
-}
-
-.block_lai_sandbox table#open_tutor_tasks .zentriert {
-    text-align: center;
-}
-
-.block_lai_sandbox table#open_tutor_tasks table.resultlist_tii_entires .lightbluebg > td{
-    background-color: #f9faff;
-}
 
 
 /*********** Admin toggle button **********************/
-.block_lai_sandbox #iu_tutor_tasks_admin_toggle,
-.block_lai_sandbox #iu_tutor_tasks_content #iu_tutor_tasks_admin_backend {
+.block_lai_sandbox #lai_sandbox_admin_toggle {
     cursor: pointer;
     font-size: 9px;
     text-align: right;
 }
 
 
-.block_lai_sandbox #iu_tutor_tasks_content {
+.block_lai_sandbox #lai_sandbox_content {
     display: none;
 }
 
-.block_lai_sandbox #iu_tutor_tasks_content.norightsblock{
+.block_lai_sandbox #lai_sandbox_content.norightsblock{
     background-color: white;
     padding: 15px;
     border-radius: 10px;
     overflow: hidden;
 }
 
-.block_lai_sandbox #iu_tutor_tasks_admin_toggle #iu_tutor_tasks_admin_header:hover,
-.block_lai_sandbox #iu_tutor_tasks_content #iu_tutor_tasks_admin_backend a:hover {
+.block_lai_sandbox #lai_sandbox_admin_toggle #lai_sandbox_admin_header:hover {
     color: var(--iu_lightblue);
 }

@@ -29,10 +29,10 @@ $string['plugin_title'] = 'Your free sandbox to experiment';
 
 // info for the main page in frontend.
 $string['admin_not_available'] = 'There are no further information available for admins. You can access the settings <a href="/admin/settings.php?section=blocksettinglai_sandbox">here</a>.';
-$string['admin_title'] = 'Open LAI Sandbox';
-$string['admin_view_open'] = 'Open the admin sandbox';
-$string['admin_view_close'] = 'Close the admin sandbox';
+$string['admin_title'] = 'LAI Sandbox';
+$string['admin_view_open'] = 'Open the LAI sandbox';
+$string['admin_view_close'] = 'Close the LAI sandbox';
 
 // strings for the settings page.
 $string['setting_laisandbox'] = 'Einstellungen für den Sandbox Block von der LAI Komponente ';
-$string['setting_laisandbox_task'] = 'Hier können sie alle Einstellungen für den Block vornehmen';
+$string['setting_laisandbox_help'] = 'Hier können sie alle Einstellungen für den Block vornehmen';

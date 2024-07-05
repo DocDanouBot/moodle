@@ -25,7 +25,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
-    'block/block_lai_sandbox:myaddinstance' => array(
+    'block/lai_sandbox:myaddinstance' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_SYSTEM,
         'archetypes' => array(
@@ -33,7 +33,7 @@ $capabilities = array(
         ),
     ),
 
-    'block/block_lai_sandbox:addinstance' => array(
+    'block/lai_sandbox:addinstance' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_BLOCK,
         'archetypes' => array(
@@ -44,7 +44,7 @@ $capabilities = array(
         'clonepermissionsfrom' => 'moodle/site:manageblocks'
     ),
 
-    'block/block_lai_sandbox:viewsandbox' => array(
+    'block/lai_sandbox:viewsandbox' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_BLOCK,
         'archetypes' => array(

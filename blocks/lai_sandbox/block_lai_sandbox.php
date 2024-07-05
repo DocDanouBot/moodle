@@ -60,7 +60,7 @@ class block_lai_sandbox extends block_base {
         return false;
     }
 
-    /** Here comes the actual work for the Block to build the table for the teacher / tutor
+    /** Here comes the actual work for the Block to build the sandbox
      * @return stdClass|stdObject|null
      * @throws coding_exception
      * @throws dml_exception
@@ -77,6 +77,8 @@ class block_lai_sandbox extends block_base {
         $this->title = get_string('plugin_title', 'block_lai_sandbox');
 
         if ($this->_managerview) {
+            $this->page->requires->js('/blocks/lai_sandbox/lib.js');
+
             # Managers can get their own mask later on
             $this->title = null;
             $this->_showaccordiontoggle = true;
@@ -109,10 +111,10 @@ class block_lai_sandbox extends block_base {
 
         if ($this->_showaccordiontoggle) {
             $returnstring .= '<div class="admincontainer">
-            <div id="block_lai_sandbox_admin_toggle"><span id="block_lai_sandbox_admin_header">' . get_string('admin_view_open', 'block_lai_sandbox') . '</span>
-                <i id="block_lai_sandbox_admin_icon" class="fa fa-angle-down toggler"></i>
+            <div id="lai_sandbox_admin_toggle"><span id="lai_sandbox_admin_header">' . get_string('admin_view_open', 'block_lai_sandbox') . '</span>
+                <i id="lai_sandbox_admin_icon" class="fa fa-angle-down toggler"></i>
             </div>
-            <div id="iu_tutor_tasks_content"';
+            <div id="lai_sandbox_content"';
 
             if($this->_showaccordiontoggle) {
                 $returnstring .= " class='norightsblock'";
@@ -136,8 +138,8 @@ class block_lai_sandbox extends block_base {
     private function build_javascript_strings() {
         global $CFG;
         $someJStexts = '<script type="text/javascript">
-            string_tutor_task_view_open = "'. get_string("admin_view_open", "block_lai_sandbox"). '";
-            string_tutor_task_view_close = "'. get_string("admin_view_close", "block_lai_sandbox"). '";
+            string_lai_sandbox_view_open = "'. get_string("admin_view_open", "block_lai_sandbox"). '";
+            string_lai_sandbox_view_close = "'. get_string("admin_view_close", "block_lai_sandbox"). '";
 </script>';
 
         return $someJStexts;

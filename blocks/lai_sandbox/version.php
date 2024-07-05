@@ -12,7 +12,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'block_lai_sandbox';
-$plugin->version  = 2024060100; // The version of this plugin (@@major@@@@@@@@@@@@@@@@@@@@@minor@@)
+$plugin->version  = 2024060101; // The version of this plugin (@@major@@@@@@@@@@@@@@@@@@@@@minor@@)
 $plugin->requires = 2022041900;
 $plugin->maturity  = MATURITY_ALPHA;
 $plugin->dependencies = array(
