@@ -15,19 +15,19 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package     local_iubh_turnitin
- * @author      Danou Nauck <Danou@Nauck.eu>
- * @copyright   Nauck IT Consulting 2020
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     local_lai_connector
+ * @copyright   lern.link GmbH
+ * @author      Danou Nauck
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace local_iubh_turnitin\forms;
+namespace local_lai_connector\forms;
 
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir.'/formslib.php');
 
-class edit_iubh_turnitin extends \moodleform {
+class edit_lai_connector extends \moodleform {
 
     /**
      * Define the elements in this form.
@@ -42,9 +42,9 @@ class edit_iubh_turnitin extends \moodleform {
         $this->related_training = $this->_customdata['related_training'];
 
         // Prepare some strings.
-        $strrelatedtrainingtitle = get_string('title', 'local_iubh_turnitin');
-        $strrelatedtrainingslistde = get_string('trainingslist_de', 'local_iubh_turnitin');
-        $strrelatedtrainingslisten = get_string('trainingslist_en', 'local_iubh_turnitin');
+        $strrelatedtrainingtitle = get_string('title', 'local_lai_connector');
+        $strrelatedtrainingslistde = get_string('trainingslist_de', 'local_lai_connector');
+        $strrelatedtrainingslisten = get_string('trainingslist_en', 'local_lai_connector');
 
         $mform->addElement('header', 'general', get_string('general'));
 
@@ -61,12 +61,12 @@ class edit_iubh_turnitin extends \moodleform {
         $mform->addElement('text', 'trainingslist_de', $strrelatedtrainingslistde);
         $mform->setType('trainingslist_de', PARAM_TEXT);
         $mform->addRule('trainingslist_de', null, 'required', null, 'client');
-        $mform->addHelpButton('trainingslist_de', 'trainingslist_de', 'local_iubh_turnitin');
+        $mform->addHelpButton('trainingslist_de', 'trainingslist_de', 'local_lai_connector');
 
         // The list of related trainings in EN.
         $mform->addElement('text', 'trainingslist_en', $strrelatedtrainingslisten);
         $mform->setType('trainingslist_en', PARAM_TEXT);
-        $mform->addHelpButton('trainingslist_en', 'trainingslist_en', 'local_iubh_turnitin');
+        $mform->addHelpButton('trainingslist_en', 'trainingslist_en', 'local_lai_connector');
 
 
         # Area to add Tags to Training
@@ -79,8 +79,8 @@ class edit_iubh_turnitin extends \moodleform {
             $tags[] =  $mform->createElement('advcheckbox', 'tags['.$i.']', $tag, null, array('group' => 1), array(null, $index));
             $i++;
         }
-        $mform->addGroup($tags, 'tagcheckboxgroup', get_string('iubh_turnitin_associated_tags', 'local_iubh_turnitin'),array(''), false);
-        $mform->addHelpButton('tagcheckboxgroup', 'iubh_turnitin_associated_tags', 'local_iubh_turnitin');
+        $mform->addGroup($tags, 'tagcheckboxgroup', get_string('iubh_turnitin_associated_tags', 'local_lai_connector'),array(''), false);
+        $mform->addHelpButton('tagcheckboxgroup', 'iubh_turnitin_associated_tags', 'local_lai_connector');
 
         # $mform->setType('tagcheckboxgroup', PARAM_BOOL);
         # $mform->addRule('tagcheckboxgroup', get_string('training_tagcheckboxgroup_validation', 'local_eledia_cp_create_training'), 'required', null, 'client');
@@ -96,11 +96,11 @@ class edit_iubh_turnitin extends \moodleform {
      * @param \stdClass|array $defaultvalues The data we want to set.
      */
     public function set_data($related_training) {
-        if ($related_training instanceof \local_iubh_turnitin\iubh_turnitin) {
+        if ($related_training instanceof \local_lai_connector\iubh_turnitin) {
 
             // Preparing the array $mapped_selected_tags to set checked status of adv-checkboxes
             $existing_tags = \local_eledia_cp_create_training\util::get_all_available_tags(1);
-            $selected_tags = \local_iubh_turnitin\util::get_all_selected_tags_for_related_training($related_training);
+            $selected_tags = \local_lai_connector\util::get_all_selected_tags_for_related_training($related_training);
 
 
             if (isset($selected_tags)) {

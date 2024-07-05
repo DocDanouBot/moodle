@@ -30,39 +30,71 @@ global $CFG, $DB;
 
 if ($hassiteconfig) {
 
-    $settings = new theme_boost_admin_settingspage_tabs('local_iubh_turnitin', get_string('pluginname', 'local_iubh_turnitin'));
+    $settings = new theme_boost_admin_settingspage_tabs('local_lai_connector', get_string('pluginname', 'local_lai_connector'));
 
     /* All general settings */
-    $setting = new admin_settingpage('local_iubh_turnitin_general',
-        get_string('setting_general_title', 'local_iubh_turnitin'));
+    $setting = new admin_settingpage('local_lai_connector_general',
+        get_string('setting_general_tab_title', 'local_lai_connector'));
 
-    $setting->add(new admin_setting_heading('headerturnitingeneral',
-        get_string('setting_general', 'local_iubh_turnitin'),
-        get_string('setting_general_help', 'local_iubh_turnitin')));
+    $setting->add(new admin_setting_heading('headerconnectorgeneral',
+        get_string('setting_general_title', 'local_lai_connector'),
+        get_string('setting_general_title_help', 'local_lai_connector')));
 
     // Show Button within course to create entries?
-    $name = 'local_iubh_turnitin_showcreateentrybutton';
-    $title = get_string('setting_createbutton_show', 'local_iubh_turnitin');
-    $hint = get_string('setting_createbutton_show_help', 'local_iubh_turnitin');
+    $name = 'local_lai_connector_activate_component';
+    $title = get_string('setting_activate_component', 'local_lai_connector');
+    $hint = get_string('setting_activate_component_help', 'local_lai_connector');
     $default = false;
     $setting->add(new admin_setting_configcheckbox($name, $title, $hint, $default));
 
-    // Date of execution of Cron Job / Task
-    $name = 'local_iubh_turnitin_taskpushtoarchive_days';
-    $title = get_string('setting_tasks_pushtoarchive_day', 'local_iubh_turnitin');
-    $hint = get_string('setting_tasks_pushtoarchive_day_help', 'local_iubh_turnitin');
-    $default = 29;
+    // API Key for TARSUS
+    $name = 'local_lai_connector_apikey_tarsus';
+    $title = get_string('setting_apikey_tarsus', 'local_lai_connector');
+    $hint = get_string('setting_apikey_tarsus_help', 'local_lai_connector');
+    $default = '7517fd28-8cb4-4304-b9f0-0312b8c92ef1'; // Default Api Key
     $setting->add(new admin_setting_configtext($name, $title, $hint, $default));
 
+    $settings->add($setting);
 
-    // This Tasks aktivated?
-    $name = 'local_iubh_turnitin_tasks_generatelogs_active';
-    $title = get_string('setting_tasks_generatelogs_active', 'local_iubh_turnitin');
-    $hint = get_string('setting_tasks_generatelogs_active_help', 'local_iubh_turnitin');
-    $default = 1;
-    $setting->add(new admin_setting_configcheckbox($name, $title, $hint, $default));
+    /* -------------------------------------------------------------------- */
+
+    /* Main Brain settings */
+    $setting = new admin_settingpage('local_lai_connector_mainbrain',
+        get_string('setting_mainbrain_tab_title', 'local_lai_connector'));
+
+    $setting->add(new admin_setting_heading('headerconnectormainbrain',
+        get_string('setting_mainbrain_title', 'local_lai_connector'),
+        get_string('setting_mainbrain_title_help', 'local_lai_connector')));
 
     $settings->add($setting);
+
+    /* -------------------------------------------------------------------- */
+
+    /* Sub Brain settings */
+    $setting = new admin_settingpage('local_lai_connector_subbrain',
+        get_string('setting_subbrain_tab_title', 'local_lai_connector'));
+
+    $setting->add(new admin_setting_heading('headerconnectorsubbrain',
+        get_string('setting_subbrain_title', 'local_lai_connector'),
+        get_string('setting_subbrain_title_help', 'local_lai_connector')));
+
+    $settings->add($setting);
+
+
+    /* -------------------------------------------------------------------- */
+
+    /* Tasks settings */
+    $setting = new admin_settingpage('local_lai_connector_tasks',
+        get_string('setting_tasks_tab_title', 'local_lai_connector'));
+
+    $setting->add(new admin_setting_heading('headerconnectortasks',
+        get_string('setting_tasks_title', 'local_lai_connector'),
+        get_string('setting_tasks_title_help', 'local_lai_connector')));
+
+    $settings->add($setting);
+
+
+
 
 
     $ADMIN->add('localplugins', $settings);

@@ -39,7 +39,7 @@ use local_iubh_generic\course_extended;
  * Class to prepare template data
  *
  */
-class page_reports_tii implements templatable {
+class page_reports_ implements templatable {
 
     /** @var \object $content The block content object. */
     protected $content;
@@ -48,7 +48,6 @@ class page_reports_tii implements templatable {
      * Constructor
      */
     public function __construct($data) {
-        $data->legend = \local_iubh_generic\course_extended::generate_tii_legend_data();
         $this->content = $data;
     }
 
@@ -121,8 +120,6 @@ class page_reports_tii implements templatable {
 
             }
         }
-
-
         $content->cleantiicourses = $cleantiicourses;
 
         # echo("cleantiicourses<pre>");

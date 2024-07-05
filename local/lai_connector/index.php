@@ -43,8 +43,8 @@ $PAGE->set_url(new moodle_url('/local/lai_connector/index.php'));
 if (has_capability('local/iubh_turnitin:show_iubh_turnitin_whitelist', $PAGE->context)) {
     $turnitinpages[] = array(
         'turnitinlink' => new moodle_url('/local/iubh_turnitin/show_iubh_turnitin_whitelist.php'),
-        'turnitinname' => get_string('index_show_whitelist_title', 'local_iubh_turnitin'),
-        'turnitininfo' => get_string('index_show_whitelist_info', 'local_iubh_turnitin'));
+        'turnitinname' => get_string('index_show_whitelist_title', 'local_lai_connector'),
+        'turnitininfo' => get_string('index_show_whitelist_info', 'local_lai_connector'));
 }
 
 $templatedata['turnitinpages'] = $turnitinpages;

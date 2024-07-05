@@ -15,7 +15,7 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template local_iubh_turnitin/comp_reports_courses_all
+    @template local_lai_connector/comp_reports_courses_all
 
     ...
 
@@ -37,12 +37,12 @@
 <table id="turnitin_reports" class="resultlist">
     <thead>
         <tr class="headerrow grey_bg">
-        <th>{{#str}}report_header_courseid, local_iubh_turnitin{{/str}}</th>
-        <th>{{#str}}report_header_coursename, local_iubh_turnitin{{/str}}</th>
-        <th>{{#str}}report_header_startdate, local_iubh_turnitin{{/str}}</th>
-        <th>{{#str}}report_header_turnitin_elements, local_iubh_turnitin{{/str}}</th>
-        <th>{{#str}}report_header_participants, local_iubh_turnitin{{/str}}</th>
-        <th>{{#str}}report_header_participants_handed_in, local_iubh_turnitin{{/str}}</th>
+        <th>{{#str}}report_header_courseid, local_lai_connector{{/str}}</th>
+        <th>{{#str}}report_header_coursename, local_lai_connector{{/str}}</th>
+        <th>{{#str}}report_header_startdate, local_lai_connector{{/str}}</th>
+        <th>{{#str}}report_header_turnitin_elements, local_lai_connector{{/str}}</th>
+        <th>{{#str}}report_header_participants, local_lai_connector{{/str}}</th>
+        <th>{{#str}}report_header_participants_handed_in, local_lai_connector{{/str}}</th>
         </tr>
     </thead>
     <tbody>
@@ -50,31 +50,31 @@
         <tr class="{{{parentclass}}} courserow" id="row{{{courseid}}}">
             <td class="vlr">
                 {{#shownolinks}}{{{courseid}}}{{/shownolinks}}
-                {{^shownolinks}}<a href="{{{coursedetailurl}}}" class="courseidlink" title="{{#str}}report_header_expand_collapse, local_iubh_turnitin{{/str}}">{{{courseid}}}</a>{{/shownolinks}}</td>
+                {{^shownolinks}}<a href="{{{coursedetailurl}}}" class="courseidlink" title="{{#str}}report_header_expand_collapse, local_lai_connector{{/str}}">{{{courseid}}}</a>{{/shownolinks}}</td>
             <td class="vlr">
                 {{#shownolinks}}{{{coursename}}}<br>({{{courseshortname}}}){{/shownolinks}}
-                {{^shownolinks}}<a href="{{{coursedetailurl}}}" class="courselink" title="{{#str}}report_header_expand_collapse, local_iubh_turnitin{{/str}}">{{{coursename}}}<br>({{{courseshortname}}})</a>{{/shownolinks}}</td>
+                {{^shownolinks}}<a href="{{{coursedetailurl}}}" class="courselink" title="{{#str}}report_header_expand_collapse, local_lai_connector{{/str}}">{{{coursename}}}<br>({{{courseshortname}}})</a>{{/shownolinks}}</td>
             <td class="vlr">
                 {{#shownolinks}}{{{startdate}}}{{/shownolinks}}
-                {{^shownolinks}}<a href="{{{coursedetailurl}}}" class="courselink" title="{{#str}}report_header_expand_collapse, local_iubh_turnitin{{/str}}">{{{startdate}}}</a>{{/shownolinks}}</td>
+                {{^shownolinks}}<a href="{{{coursedetailurl}}}" class="courselink" title="{{#str}}report_header_expand_collapse, local_lai_connector{{/str}}">{{{startdate}}}</a>{{/shownolinks}}</td>
             <td class="vlr">
                 {{#shownolinks}}{{{turnitinelements}}}{{/shownolinks}}
-                {{^shownolinks}}<a href="{{{coursedetailurl}}}" class="courselink" title="{{#str}}report_header_expand_collapse, local_iubh_turnitin{{/str}}">{{{turnitinelements}}}</a>{{/shownolinks}}</td>
+                {{^shownolinks}}<a href="{{{coursedetailurl}}}" class="courselink" title="{{#str}}report_header_expand_collapse, local_lai_connector{{/str}}">{{{turnitinelements}}}</a>{{/shownolinks}}</td>
             <td class="vlr">
                 {{#shownolinks}}{{{participants}}}{{/shownolinks}}
-                {{^shownolinks}}<a href="{{{coursedetailurl}}}" class="courselink" title="{{#str}}report_header_expand_collapse, local_iubh_turnitin{{/str}}">{{{participants}}}</a>{{/shownolinks}}</td>
+                {{^shownolinks}}<a href="{{{coursedetailurl}}}" class="courselink" title="{{#str}}report_header_expand_collapse, local_lai_connector{{/str}}">{{{participants}}}</a>{{/shownolinks}}</td>
             <td class="vlr">
                 {{#shownolinks}}{{{participants_handed_in}}}{{/shownolinks}}
-                {{^shownolinks}}<a href="{{{coursedetailurl}}}" class="courselink" title="{{#str}}report_header_expand_collapse, local_iubh_turnitin{{/str}}">{{{participants_handed_in}}}</a>{{/shownolinks}}</td>
+                {{^shownolinks}}<a href="{{{coursedetailurl}}}" class="courselink" title="{{#str}}report_header_expand_collapse, local_lai_connector{{/str}}">{{{participants_handed_in}}}</a>{{/shownolinks}}</td>
         </tr>
 
-        {{>local_iubh_turnitin/comp_activities}}
+        {{>local_lai_connector/comp_activities}}
 
     {{/cleantiicourses}}
 
     {{^cleantiicourses}}
         <tr>
-            <td colspan="6">{{#str}}report_no_results, local_iubh_turnitin{{/str}}</td>
+            <td colspan="6">{{#str}}report_no_results, local_lai_connector{{/str}}</td>
         </tr>
     {{/cleantiicourses}}
     </tbody>

@@ -19,13 +19,13 @@
  *
  * Indicates that a new TurnItIn entry was created
  *
- * @package     local_iubh_turnitin
+ * @package     local_lai_connector
  * @author      Danou Nauck <Danou@Nauck.eu>
  * @copyright   Nauck IT Consulting 2020
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace local_iubh_turnitin\event;
+namespace local_lai_connector\event;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -42,6 +42,6 @@ class nugged_entry_created extends \core\event\base {
     }
 
     public static function get_name() {
-        return get_string('event_nugged_entry_created', 'local_iubh_turnitin');
+        return get_string('event_nugged_entry_created', 'local_lai_connector');
     }
 }

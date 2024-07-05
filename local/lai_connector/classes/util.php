@@ -15,9 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package   local_iubh_turnitin
- * @copyright 2020 Danou Nauck <Danou@Nauck.eu>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     local_lai_connector
+ * @copyright   lern.link GmbH
+ * @author      Danou Nauck
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 namespace local_lai_connector;
@@ -32,6 +33,20 @@ use moodle_url;
 class util
 {
 
+    /** Check if the menu should be displayed at all
+     * @param
+     * @return mixed
+     * @throws \dml_exception
+     */
+    public static function show_lai_menu() {
+        global $CFG;
+
+        $returnboolean = ((has_capability('local/lai_connector:viewindexpage', \context_system::instance())
+                && (isset($CFG->local_lai_connector_activate_component) &&
+                    $CFG->local_lai_connector_activate_component == 1)) ||
+            false);
+        return $returnboolean;
+    }
 
     /** Getting all the courses that have TII elements
      * and limit them by min ./. max values
@@ -42,7 +57,7 @@ class util
     public static function get_cached_tii_course_ids()
     {
         global $DB;
-        $cache = \cache::make('local_iubh_turnitin', 'tiicourses');
+        $cache = \cache::make('local_lai_connector', 'tiicourses');
         $cache_key = "tiicourse-ids";
         $cache_data = $cache->get($cache_key);
         if ($cache_data !== false) {

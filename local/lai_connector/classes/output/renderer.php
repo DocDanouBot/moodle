@@ -23,18 +23,18 @@
 
 namespace local_lai_connector\output;
 
-use local_lai_connector\output\templatedata\page_reports_tii;
+use local_lai_connector\output\templatedata\page_reports;
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Renderer for the local plugin local_iubh_turnitin
+ * Renderer for the local plugin local_lai_connector
  */
 class renderer extends \plugin_renderer_base {
 
-    public function render_turnitin_reports_tii($data) {
-        $templatedata = new page_reports_tii($data);
-        $output = $this->render_from_template('local_iubh_turnitin/page_reports_tii',
+    public function render_lai_connector_reports($data) {
+        $templatedata = new page_reports($data);
+        $output = $this->render_from_template('local_lai_connector/page_reports',
             $templatedata->export_for_template($this));
         return $output;
     }

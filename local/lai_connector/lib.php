@@ -23,22 +23,21 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-function local_lai_connector_extend_navigation(\global_navigation $navigation) {//REFACTORED//
+function local_lai_connector_extend_navigation(\global_navigation $navigation) {  //REFACTORED//
     global $CFG;
     $showlainodes = \local_lai_connector\util::show_lai_menu();
     if (is_siteadmin() || $showlainodes) {
 
         $context = \context_system::instance();
 
-        if (has_capability('local/iubh_turnitin:show_iubh_turnitin_reports', $context)
-            && ($CFG->local_iubh_turnitin_show_menuitem_reports == 1)) {
+        if (has_capability('local/lai_connector:viewindexpage', $context)
+            && ($CFG->local_lai_connector_activate_component == 1)) {
             $node = $navigation->add(
-                get_string('link_mainmenu_reports_tii', 'local_iubh_turnitin'),
-                new \moodle_url('/local/iubh_turnitin/show_iubh_turnitin_reports.php'),
+                get_string('link_mainmenu_index', 'local_lai_connector'),
+                new \moodle_url('/local/lai_connector/index.php'),
                 \navigation_node::NODETYPE_LEAF,
-                get_string('link_mainmenu_reports_tii', 'local_iubh_turnitin'),
-                'local_iubh_turnitin_report');
-            $node->showinflatnavigation = true;
+                get_string('link_mainmenu_index', 'local_lai_connector'),
+                'local_lai_connector_index');
         }
 
     }

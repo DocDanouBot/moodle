@@ -46,7 +46,7 @@ $PAGE->set_context(context_system::instance());
 # echo("</pre>");
 
 # Get all rooms from all facilities
-$cleanrecords = \local_iubh_turnitin\util::get_lazy_student_data($lastmonths);
+$cleanrecords = \local_lai_connector\util::get_lazy_student_data($lastmonths);
 
 # echo json_encode($cleanrecords);
 
@@ -54,21 +54,21 @@ $cleanrecords = \local_iubh_turnitin\util::get_lazy_student_data($lastmonths);
 $returnhtml = "";
 # Build the header
 $returnhtml .= "<div class='lazystudentheader'>";
-$returnhtml .= "<div class='studentname'>" .get_string('report_lazystudent_studentname', 'local_iubh_turnitin'). "</div>";
-$returnhtml .= "<div class='studentwork'>" .get_string('report_lazystudent_studentwork', 'local_iubh_turnitin'). "</div>";
-$returnhtml .= "<div class='studentgrade'>" .get_string('report_lazystudent_studentgrade', 'local_iubh_turnitin'). "</div>";
-$returnhtml .= "<div class='studentplagiat'>" .get_string('report_lazystudent_studentplagiat', 'local_iubh_turnitin'). "</div>";
+$returnhtml .= "<div class='studentname'>" .get_string('report_lazystudent_studentname', 'local_lai_connector'). "</div>";
+$returnhtml .= "<div class='studentwork'>" .get_string('report_lazystudent_studentwork', 'local_lai_connector'). "</div>";
+$returnhtml .= "<div class='studentgrade'>" .get_string('report_lazystudent_studentgrade', 'local_lai_connector'). "</div>";
+$returnhtml .= "<div class='studentplagiat'>" .get_string('report_lazystudent_studentplagiat', 'local_lai_connector'). "</div>";
 $returnhtml .= "</div>";
 
 if (sizeof($cleanrecords) < 1) {
     $returnhtml .= "<div class='notfound'>";
-    $returnhtml .= "<strong>".get_string('report_lazystudent_not_found', 'local_iubh_turnitin')."</strong>";
+    $returnhtml .= "<strong>".get_string('report_lazystudent_not_found', 'local_lai_connector')."</strong>";
     $returnhtml .= "</div>";
 } else {
     foreach ($cleanrecords as $index => $cleanrecord) {
         if ($index == 'fromtimestamp') {
-            $temphtml = "<div id='infoblock'><div class='dateblock'>".get_string('report_lazystudent_starttime', 'local_iubh_turnitin').": ".date('d.m.Y',$cleanrecord) . "</div><div class='spacer'></div>";
-            $temphtml .= "<div class='studentblock'>".get_string('report_lazystudent_studentamount', 'local_iubh_turnitin').": &nbsp; <div id='numberofstudents'></div></div></div>";
+            $temphtml = "<div id='infoblock'><div class='dateblock'>".get_string('report_lazystudent_starttime', 'local_lai_connector').": ".date('d.m.Y',$cleanrecord) . "</div><div class='spacer'></div>";
+            $temphtml .= "<div class='studentblock'>".get_string('report_lazystudent_studentamount', 'local_lai_connector').": &nbsp; <div id='numberofstudents'></div></div></div>";
             $returnhtml = $temphtml . $returnhtml;
         } else {
             $benotungsentwurfCSS = null;
@@ -126,7 +126,7 @@ if (sizeof($cleanrecords) < 1) {
 
             # Note des Studenten
             $returnhtml .= "<div class='studentgrade'>";
-            $returnhtml .= "Note " . \local_iubh_turnitin\util::calculate_grade_from_score($cleanrecord->tiis_grade) . " (" . $cleanrecord->tiis_grade . " Punkte)";
+            $returnhtml .= "Note " . \local_lai_connector\util::calculate_grade_from_score($cleanrecord->tiis_grade) . " (" . $cleanrecord->tiis_grade . " Punkte)";
             $returnhtml .= "</div>";
 
             # Plagiat des Studenten
