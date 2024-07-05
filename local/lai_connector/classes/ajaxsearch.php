@@ -15,9 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package   local_iubh_facility
- * @copyright 2021 Danou Nauck <Danou@Nauck.eu>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     local_lai_connector
+ * @copyright   lern.link GmbH
+ * @author      Danou Nauck
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 global $OUTPUT, $CFG, $PAGE, $SESSION, $DB, $USER, $FULLME;

@@ -15,26 +15,27 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * version information
+ * upgrade definitions
  *
- * @package    local_iubh_turnitin
- * @copyright  2022 Danou Nauck <Danou@Nauck.eu>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     local_lai_connector
+ * @copyright   lern.link GmbH
+ * @author      Danou Nauck
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') or die;
 
-function xmldb_local_iubh_turnitin_upgrade($oldversion) {
+function xmldb_local_lai_connector_upgrade($oldversion) {
     global $DB;
 
     $dbman = $DB->get_manager();
 
-    if ($oldversion < 2023012001) {
-        $sql = "select * from {modules} WHERE name = 'turnitintooltwo'";
-        $moduleInfo = $DB->get_record_sql($sql);  # $moduleInfo->id ==  27
+    if ($oldversion < 2024060600) {
+        // Just a dummy entry to have the structure ready
+        // $sql = "select * from {modules} WHERE name = 'turnitintooltwo'";
+        // $moduleInfo = $DB->get_record_sql($sql);  # $moduleInfo->id ==  27
 
-        $DB->execute("UPDATE {course_modules} set completion=0 where module=?", array($moduleInfo->id));
-        upgrade_plugin_savepoint(true, 2023012001, 'local', 'iubh_turnitin');
+        upgrade_plugin_savepoint(true, 2024060600, 'local', 'lai_connector');
     }
 
     return true;

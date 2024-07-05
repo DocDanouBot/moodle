@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="local/iubh_turnitin/db" VERSION="20190114" COMMENT="XMLDB file for Moodle local/iubh_turnitin"
+<XMLDB PATH="local/lai_connector/db" VERSION="20190114" COMMENT="XMLDB file for Moodle local/lai_connector"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
-    <TABLE NAME="local_iubh_turnitin_whitelst" COMMENT="The whitelist of Courses">
+    <TABLE NAME="local_lai_connector" COMMENT="The general DB from this Localplugin">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Reference to the course ID"/>
@@ -14,26 +14,6 @@
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-      </KEYS>
-    </TABLE>
-    <TABLE NAME="local_iubh_turnitin_vlrtutor" COMMENT="The Tutors connected to the VLRs of each TII Activity">
-      <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Reference to the course ID"/>
-        <FIELD NAME="cmid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Reference to the course module ID which references to TII"/>
-        <FIELD NAME="tiiid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Reference to the TurnItIn ID"/>
-        <FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Reference to the VLR Group ID"/>
-        <FIELD NAME="groupidnumber" TYPE="char" LENGTH="50" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="Reference to the VLR Group ID Number from frontend"/>
-        <FIELD NAME="tutorids" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Reference to the TutorIDs created this Entry as comma separated string"/>
-        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
-      </FIELDS>
-      <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
-        <KEY NAME="fk_courseid" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
-        <KEY NAME="fk_tiiid" TYPE="foreign" FIELDS="tiiid" REFTABLE="mod_turnitintooltwo" REFFIELDS="id"/>
-        <KEY NAME="fk_groupid" TYPE="foreign" FIELDS="groupid" REFTABLE="group" REFFIELDS="id"/>
-        <KEY NAME="uq_cmvlr" TYPE="unique" FIELDS="cmid, groupid" COMMENT="There cannot exist more records for given CM and groupID."/>
       </KEYS>
     </TABLE>
   </TABLES>

@@ -36,42 +36,11 @@
 
 
 <div>
-    <h3>{{#str}}index_availablereports, local_iubh_turnitin{{/str}}</h3>
+    <h3>{{#str}}pluginname, local_lai_connector{{/str}}</h3>
     <br />
     <div class="filtercontainer">
         {{{formhtml}}}
     </div>
-
-    <div class="exportarea mform">
-        <div class="form-group row fitem">
-            <div class="col-md-3">{{#str}}searchhint, local_iubh_turnitin{{/str}}</div>
-
-            <div class="col-md-9 form-inline felement" data-fieldtype="group">
-                {{#show_jquery_search}}
-                <div class="form-group fitem">
-                    <label class="col-form-label sr-only" for="id_tiireport_query">{{#str}}query, block_iubh_course_overview{{/str}}</label>
-                    <span data-fieldtype="text">
-                        <input type="text" class="form-control " name="query" id="id_tiireport_query" value="{{filterstring}}" size="" onkeyup="refresh_tiireport_courselist()">
-                        <div id="courses-amount">
-                           {{#str}}number_displayed_trainings, block_iubh_course_overview{{/str}}
-                            <span id="numberoftrainings">{{#str}}number_displayed_trainings_all, block_iubh_course_overview{{/str}}</span>
-                        </div>
-                    </span>
-                    <div class="form-control-feedback" id="id_error_query"></div>
-                </div>
-                <div class="col-md-1 form-inline float-left" id="form_resetbutton" title="{{#str}}resetbutton_hint, block_iubh_course_overview{{/str}}">
-                    <i class="fa fa-trash " aria-hidden="true" title="{{#str}}resetbutton, block_iubh_course_overview{{/str}}"></i>
-                </div>
-                {{/show_jquery_search}}
-                {{^show_jquery_search}}
-                    <a href="/local/iubh_turnitin/show_iubh_turnitin_reports.php">Zurück zur Übersicht</a>
-                {{/show_jquery_search}}
-            </div>
-        </div>
-
-    </div>
-    <br>
-
 
     {{#pagingbar}}
         {{{.}}}

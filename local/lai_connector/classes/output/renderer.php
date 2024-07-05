@@ -15,18 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package     local_iubh_turnitin
- * @author      Danou Nauck <Danou@Nauck.eu>
- * @copyright   Nauck IT Consulting 2020
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     local_lai_connector
+ * @copyright   lern.link GmbH
+ * @author      Danou Nauck
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace local_iubh_turnitin\output;
+namespace local_lai_connector\output;
 
-use local_iubh_turnitin\output\templatedata\page_reports_earlysubmissions;
-use local_iubh_turnitin\output\templatedata\page_reports_tii;
-use local_iubh_turnitin\output\templatedata\page_reports_vlr;
-use local_iubh_turnitin\output\templatedata\page_tutor_open_tasks;
+use local_lai_connector\output\templatedata\page_reports_tii;
 
 defined('MOODLE_INTERNAL') || die();
 

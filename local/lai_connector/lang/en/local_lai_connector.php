@@ -15,17 +15,17 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Capability definition.
  * @package     local_lai_connector
  * @copyright   lern.link GmbH
  * @author      Danou Nauck
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-#    const SECONDS_IN_DAY = 86400;
-$definitions = array(
-    'apiconnector' => array(
-        'mode' => cache_store::MODE_APPLICATION,
-        'ttl' => 3600,
-    ),
-);
+defined('MOODLE_INTERNAL') || die;
+
+$string['pluginname'] = 'Learnlink AI Connector Management';
+
+$string['abc'] = '';
+$string['abc'] = '';
+$string['abc'] = '';
+
