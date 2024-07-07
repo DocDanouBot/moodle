@@ -25,29 +25,31 @@
 require_once('../../config.php');
 $context = context_system::instance();
 
-
 global $PAGE, $OUTPUT;
 
 // Check access.
 require_login(null, false);
 require_capability('local/lai_connector:viewindexpage', $context);
 
-
 // Set up $PAGE.
 $PAGE->set_context($context);
-$PAGE->set_pagelayout('admin');
-$PAGE->set_title(get_string('index_title', 'local_lai_connector'));
+$PAGE->set_pagelayout('standard');
+$PAGE->set_title(get_string('indexpage_title', 'local_lai_connector'));
 $PAGE->set_heading($PAGE->title);
 $PAGE->set_url(new moodle_url('/local/lai_connector/index.php'));
 
-if (has_capability('local/iubh_turnitin:show_iubh_turnitin_whitelist', $PAGE->context)) {
-    $turnitinpages[] = array(
-        'turnitinlink' => new moodle_url('/local/iubh_turnitin/show_iubh_turnitin_whitelist.php'),
-        'turnitinname' => get_string('index_show_whitelist_title', 'local_lai_connector'),
-        'turnitininfo' => get_string('index_show_whitelist_info', 'local_lai_connector'));
+// Define empty Array
+$subpages = array();
+
+// What kind of subpages or additional pages do we display according to the rights of the user.
+if (has_capability('local/lai_connector:settingsview', $PAGE->context)) {
+    $subpages[] = array(
+        'subpagelink' => new moodle_url('/local/lai_component/show_subpage.php'),
+        'subpagename' => get_string('indexpage_subbrains_title', 'local_lai_connector'),
+        'subpageinfo' => get_string('indexpage_subbrains_info', 'local_lai_connector'));
 }
 
-$templatedata['turnitinpages'] = $turnitinpages;
+$templatedata['indexpages'] = $subpages;
 
 // Output content.
 echo $OUTPUT->header();

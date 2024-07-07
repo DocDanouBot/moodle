@@ -15,22 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Versionfile
- *
  * @package     local_lai_connector
  * @copyright   lern.link GmbH
  * @author      Danou Nauck
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
+namespace local_lai_connector\exceptions;
 
-$plugin = new stdClass();
-$plugin->version      = 2024060602;
-$plugin->requires     = 2022041900; // Moodle 4.0 release and upwards.
-$plugin->name         = 'LernLink AI Connector';
-$plugin->component    = 'local_lai_connector';
-$plugin->release      = '4.0.1 (build 2022090102)';
-$plugin->maturity     = MATURITY_ALPHA;
-$plugin->dependencies = array();
-$plugin->cron         = 0;
+defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.'); // It must be included from a Moodle page.
+
+/**
+ * This class empty. We only use it to differentiate this exception from a core exception.
+ */
+class lai_exception extends \moodle_exception {
+}

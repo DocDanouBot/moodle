@@ -32,6 +32,60 @@ $capabilities = array(
         'riskbitmask' => RISK_SPAM,
         'contextlevel' => CONTEXT_SYSTEM,
         'archetypes' => array(
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW,
+        ),
+    ),
+    // The User can view the settings
+    'local/lai_connector:settingsview' => array(
+        'captype' => 'read',
+        'riskbitmask' => RISK_SPAM,
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'teacher' => CAP_PREVENT,
+            'editingteacher' => CAP_PREVENT,
+            'manager' => CAP_ALLOW,
+        ),
+    ),
+    // The User can view and edit the settings.
+    'local/lai_connector:settingsmanage' => array(
+        'captype' => 'write',
+        'riskbitmask' => RISK_SPAM,
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'teacher' => CAP_PREVENT,
+            'editingteacher' => CAP_PREVENT,
+            'manager' => CAP_PREVENT,
+        ),
+    ),
+    // The User can add another brain or can clone an existing brain.
+    'local/lai_connector:brainadd' => array(
+        'captype' => 'write',
+        'riskbitmask' => RISK_SPAM,
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'teacher' => CAP_PREVENT,
+            'editingteacher' => CAP_PREVENT,
+            'manager' => CAP_ALLOW,
+        ),
+    ),
+    // The User can delete the subbrain that branches of the main brain.
+    'local/lai_connector:braindelete' => array(
+        'captype' => 'write',
+        'riskbitmask' => RISK_SPAM,
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'teacher' => CAP_PREVENT,
+            'editingteacher' => CAP_PREVENT,
+            'manager' => CAP_ALLOW,
+        ),
+    ),
+    // The User can see a list of all different brains that exist in the system.
+    'local/lai_connector:brainview' => array(
+        'captype' => 'read',
+        'riskbitmask' => RISK_SPAM,
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
             'manager' => CAP_ALLOW,
         ),
     ),

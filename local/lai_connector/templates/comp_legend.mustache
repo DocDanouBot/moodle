@@ -16,17 +16,17 @@
 }}
 {{!
     @template local_lai_connector/comp_legend_infoclass
-    I display some more additional information on the status of the Submissions
+    I display some more additional information on the status of the LAI connector.
 }}
 
-<table id="turnitin_reports_legend" class="resultlist">
+<table id="lai_comp_legend" class="resultlist">
     <thead>
         <tr>
-            <th colspan="2" style="border:0;"><h3>{{#str}}legend_infoclass_title, local_iubh_generic{{/str}}</h3></th>
+            <th colspan="2" style="border:0;"><h3>{{#str}}legend_comp_title, local_lai_connector{{/str}}</h3></th>
         </tr>
         <tr>
-            <th>{{#str}}legend_infoclass_color, local_iubh_generic{{/str}}</th>
-            <th>{{#str}}legend_infoclass_description, local_iubh_generic{{/str}}</th>
+            <th>{{#str}}legend_comp_main, local_lai_connector{{/str}}</th>
+            <th>{{#str}}legend_comp_description, local_lai_connector{{/str}}</th>
         </tr>
     </thead>
     <tbody>
@@ -34,6 +34,11 @@
         <tr class="{{{cssclass}}}">
             <td>{{{identifier}}}</td>
             <td>{{{description}}}</td>
+        </tr>
+    {{/legend}}
+    {{^legend}}
+        <tr>
+            <td colspan="2">{{#str}}legend_comp_noneavailable, local_lai_connector{{/str}}</td>
         </tr>
     {{/legend}}
     </tbody>

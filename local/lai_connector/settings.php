@@ -38,7 +38,7 @@ if ($hassiteconfig) {
 
     $setting->add(new admin_setting_heading('headerconnectorgeneral',
         get_string('setting_general_title', 'local_lai_connector'),
-        get_string('setting_general_title_help', 'local_lai_connector')));
+        get_string('setting_general_title_help', 'local_lai_connector') . get_string('setting_general_title_url', 'local_lai_connector')));
 
     // Activate component?
     $name = 'local_lai_connector_activate_component';

@@ -36,7 +36,7 @@ class util
     /** Check if the menu should be displayed at all
      * @param
      * @return mixed
-     * @throws \dml_exception
+     * @throws \lai_exception
      */
     public static function show_lai_menu() {
         global $CFG;
@@ -52,7 +52,7 @@ class util
      * and limit them by min ./. max values
      * @param
      * @return mixed
-     * @throws \dml_exception
+     * @throws \lai_exception
      */
     public static function get_cached_tii_course_ids()
     {

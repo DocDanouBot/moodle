@@ -106,21 +106,17 @@ class block_lai_sandbox extends block_base {
      * @throws coding_exception
      */
     private function build_admin_box ($innerContent) {
-        global $CFG;
+
+        // Set up the var to later return.
         $returnstring = '<!-- block_lai_sandbox -->';
 
         if ($this->_showaccordiontoggle) {
+            // So we add the brackets for the slider effect only to admins.
             $returnstring .= '<div class="admincontainer">
             <div id="lai_sandbox_admin_toggle"><span id="lai_sandbox_admin_header">' . get_string('admin_view_open', 'block_lai_sandbox') . '</span>
                 <i id="lai_sandbox_admin_icon" class="fa fa-angle-down toggler"></i>
             </div>
-            <div id="lai_sandbox_content"';
-
-            if($this->_showaccordiontoggle) {
-                $returnstring .= " class='norightsblock'";
-            }
-
-            $returnstring .= '>';
+            <div id="lai_sandbox_content">';
         }
 
         $returnstring .= $innerContent;

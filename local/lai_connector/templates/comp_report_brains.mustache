@@ -1,0 +1,62 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_lai_connector/comp_reports_allbrains.html
+    ...
+
+    Classes required for JS:
+    * none
+
+    Data attributes required for JS:
+    * none
+
+    Context variables required for this template:
+    ...
+
+    Example context (json):
+
+        ...
+    }
+}}
+
+<table id="reports_allbrains" class="resultlist">
+    <thead>
+        <tr class="headerrow grey_bg">
+            <th>{{#str}}report_allbrains_brainname, local_lai_connector{{/str}}</th>
+            <th>{{#str}}report_allbrains_brainid, local_lai_connector{{/str}}</th>
+            <th>{{#str}}report_allbrains_braincreationdate, local_lai_connector{{/str}}</th>
+            <th>{{#str}}report_allbrains_brainsize, local_lai_connector{{/str}}</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{#allbrains}}
+        <tr class="{{{parentclass}}} brainrow" id="row{{{brainid}}}">
+            <td class="vlr" colspan="4">
+                {{#shownolinks}}{{{participants_handed_in}}}{{/shownolinks}}
+            </td>
+        </tr>
+
+        {{>local_lai_connector/comp_report_subbrains}}
+    {{/allbrains}}
+
+    {{^allbrains}}
+        <tr>
+            <td colspan="4">{{#str}}report_allbrains_no_results, local_lai_connector{{/str}}</td>
+        </tr>
+    {{/allbrains}}
+    </tbody>
+</table>

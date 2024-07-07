@@ -46,11 +46,13 @@
         {{{.}}}
     {{/pagingbar}}
 
-    {{> local_lai_connector/comp_reports_courses_tii}}
+    {{> local_lai_connector/comp_report_brains}}
 
     {{#pagingbar}}
         {{{.}}}
     {{/pagingbar}}
 
-    {{> local_lai_connector/comp_legend_infoclass}}
+    {{#legend}}
+        {{> local_lai_connector/comp_legend}}
+    {{/legend}}
 </div>
