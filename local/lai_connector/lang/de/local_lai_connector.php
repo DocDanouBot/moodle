@@ -30,6 +30,18 @@ $string['pluginname_admin'] = 'LernLink AI Connector Verwaltung';
 // info for the main menu navigation.
 $string['link_mainmenu_index'] = 'LAI Hauptseite';
 
+// Texts for the general AI Connector interface.
+$string['aic_mainpage'] = 'AI Connector Modular interface';
+
+// Texts for the API connecting to chatGPT.
+$string['api_chatgpt_mainname'] = 'chatGPT';
+
+// Texts for the API connecting to CLAUDE.
+$string['api_claude_mainname'] = 'CLAUDE3';
+
+// Texts for the API connecting to TARSUS.
+$string['api_tarsus_mainname'] = 'TARSUS';
+
 // info for the main page.
 $string['indexpage_title'] = 'LAI Hauptseite';
 $string['indexpage_subbrains_title'] = 'Hauptseite für Subbrains';
@@ -49,14 +61,31 @@ $string['legend_comp_description'] = 'Beschreibung';
 $string['legend_comp_noneavailable'] = 'Tschuldigung, eine Legende ist nicht verfügbar.';
 
 // strings for the settings page.
-$string['setting_general_tab_title'] = 'Allgemeine Konfigurationsübersicht';
-$string['setting_general_title'] = 'LAI Konfigurationsübersicht';
-$string['setting_general_title_help'] = 'Auf dieser Seite können Sie alle notwendigen grundlegenden Parameter des Plugins ändern. Für weitere Einstellungen wechseln Sie bitte die TABs';
-$string['setting_general_title_url'] = 'Sie können auch die Startseite des Plugins <a href="/local/lai_connector/index.php">hier</a> sehen: <a href="/local/lai_connector/index.php">/local/lai_connector/index.php</a>';
 $string['setting_activate_component'] = 'Aktiviere LAI Komponente?';
 $string['setting_activate_component_help'] = 'Wollen sie die KI Komponente von LernLink aktivieren. Dann wählen Sie die Checkbox.';
-$string['setting_apikey_tarsus'] = 'API Key für die TARSUS Schnittstelle';
-$string['setting_apikey_tarsus_help'] = 'Tragen Sie hier Ihren persönlichen API Key für die TARSUS Schnittstelle ein, damit das System von TARSUS Daten empfangen kann.';
+$string['setting_activate_tasks'] = 'Aktiviere LAI Tasks?';
+$string['setting_activate_tasks_help'] = 'Wollen sie die Tasks der KI Komponente von LernLink aktivieren. Dann wählen Sie die Checkbox.';
+$string['setting_current_api'] = 'Welche API wollen Sie derzeit nutzen';
+$string['setting_current_api_help'] = 'Wählen Sie die API aus, die sie akutell benutzen wollen.';
+$string['setting_chatgpt_apikey'] = 'API Key für die chatGPT Schnittstelle';
+$string['setting_chatgpt_apikey_help'] = 'Tragen Sie hier Ihren persönlichen API Key für die chatGPT Schnittstelle ein, damit das System von chatGPT Daten empfangen kann.';
+$string['setting_chatgpt_apiurl'] = 'URL zu der chatGPT API';
+$string['setting_chatgpt_apiurl_help'] = 'Tragen Sie hier die allgemeine URL zur chatGPT API ein, damit das System von chatGPT Daten empfangen kann.';
+$string['setting_chatgpt_tab_title'] = 'chatGPT Settings';
+$string['setting_chatgpt_title'] = 'Konfiguration für das chatGPT-Interface';
+$string['setting_chatgpt_title_help'] = 'Auf dieser Seite werden alle Einstellungen zu dem chatGPT Interface vorgenommen';
+$string['setting_claude_apikey'] = 'API Key für die CLAUDE Schnittstelle';
+$string['setting_claude_apikey_help'] = 'Tragen Sie hier Ihren persönlichen API Key für die CLAUDE Schnittstelle ein, damit das System von CLAUDE Daten empfangen kann.';
+$string['setting_claude_apiurl'] = 'URL zu der CLAUDE API';
+$string['setting_claude_apiurl_help'] = 'Tragen Sie hier die allgemeine URL zur CLAUDE API ein, damit das System von CLAUDE Daten empfangen kann.';
+$string['setting_tarsus_apikey'] = 'API Key für die TARSUS Schnittstelle';
+$string['setting_tarsus_apikey_help'] = 'Tragen Sie hier Ihren persönlichen API Key für die TARSUS Schnittstelle ein, damit das System von TARSUS Daten empfangen kann.';
+$string['setting_tarsus_apiurl'] = 'URL zu der TARSUS API';
+$string['setting_tarsus_apiurl_help'] = 'Tragen Sie hier die allgemeine URL zur TARSUS API ein, damit das System von TARSUS Daten empfangen kann.';
+$string['setting_general_tab_title'] = 'Allgemeine Konfigurationsübersicht';
+$string['setting_general_title'] = 'LAI Konfigurationsübersicht';
+$string['setting_general_title_help'] = 'Auf dieser Seite können Sie alle notwendigen grundlegenden Parameter des Plugins ändern. Für weitere Einstellungen wechseln Sie bitte die TABs. ';
+$string['setting_general_title_url'] = 'Sie können auch die Startseite des Plugins <a href="/local/lai_connector/index.php">hier</a> sehen: <a href="/local/lai_connector/index.php">/local/lai_connector/index.php</a>';
 $string['setting_mainbrain_tab_title'] = 'Main Brain';
 $string['setting_mainbrain_title'] = 'Main Brain Konfigurationsübersicht';
 $string['setting_mainbrain_title_help'] = 'Auf dieser Seite werden alle Einstellungen zu dem Hauptbrain vorgenommen';
@@ -66,8 +95,6 @@ $string['setting_subbrain_title_help'] = 'Auf dieser Seite werden alle Einstellu
 $string['setting_tasks_tab_title'] = 'Tasks';
 $string['setting_tasks_title'] = 'Tasks und Cronjobs Konfigurationsübersicht';
 $string['setting_tasks_title_help'] = 'Auf dieser Seite konfigurieren Sie die Tasks und Cronjobs, die für das LAI-System benötigt werden';
-$string['setting_activate_tasks'] = 'Aktiviere LAI Tasks?';
-$string['setting_activate_tasks_help'] = 'Wollen sie die Tasks der KI Komponente von LernLink aktivieren. Dann wählen Sie die Checkbox.';
 
 $string['abc'] = '';
 $string['abc'] = '';

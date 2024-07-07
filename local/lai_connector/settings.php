@@ -26,8 +26,6 @@
 defined('MOODLE_INTERNAL') || die;
 global $CFG, $DB;
 
-
-
 if ($hassiteconfig) {
 
     $settings = new theme_boost_admin_settingspage_tabs('local_lai_connector', get_string('pluginname', 'local_lai_connector'));
@@ -47,12 +45,66 @@ if ($hassiteconfig) {
     $default = false;
     $setting->add(new admin_setting_configcheckbox($name, $title, $hint, $default));
 
-    // API Key for TARSUS
-    $name = 'local_lai_connector_apikey_tarsus';
-    $title = get_string('setting_apikey_tarsus', 'local_lai_connector');
-    $hint = get_string('setting_apikey_tarsus_help', 'local_lai_connector');
-    $default = '7517fd28-8cb4-4304-b9f0-0312b8c92ef1'; // Default Api Key
+    // Options for the API interface to different providers
+    $availableapioptions = array(
+        1 => get_string('api_tarsus_mainname', 'local_lai_connector'),
+        2 => get_string('api_chatgpt_mainname', 'local_lai_connector'),
+        3 => get_string('api_claude_mainname', 'local_lai_connector'),
+    );
+    // We want a select-box where the user can select the currently used API component.
+    $name    = 'local_lai_connector_current_api';
+    $title   = get_string('setting_current_api', 'local_lai_connector');
+    $hint    = get_string('setting_current_api_help', 'local_lai_connector');
+    $default = 1;
+    $setting->add(new \admin_setting_configselect($name, $title, $hint, $default, $availableapioptions));
+
+    // API Key for chatGPT
+    $name = 'local_lai_connector_chatgpt_api_key';
+    $title = get_string('setting_chatgpt_apikey', 'local_lai_connector');
+    $hint = get_string('setting_chatgpt_apikey_help', 'local_lai_connector');
+    $default = ''; // Default chatgpt Api Key
     $setting->add(new admin_setting_configtext($name, $title, $hint, $default));
+    $setting->hide_if('local_lai_connector_chatgpt_api_key', 'local_lai_connector_current_api', 'neq', '2');
+
+    // API URL for chatGPT
+    $name = 'local_lai_connector_chatgpt_api_url';
+    $title = get_string('setting_chatgpt_apiurl', 'local_lai_connector');
+    $hint = get_string('setting_chatgpt_apiurl_help', 'local_lai_connector');
+    $default = ''; // Default chatgpt Api URL
+    $setting->add(new admin_setting_configtext($name, $title, $hint, $default));
+    $setting->hide_if('local_lai_connector_chatgpt_api_url', 'local_lai_connector_current_api', 'neq', '2');
+
+    // API Key for CLAUDE
+    $name = 'local_lai_connector_claude_api_key';
+    $title = get_string('setting_claude_apikey', 'local_lai_connector');
+    $hint = get_string('setting_claude_apikey_help', 'local_lai_connector');
+    $default = ''; // Default CLAUDE Api Key
+    $setting->add(new admin_setting_configtext($name, $title, $hint, $default));
+    $setting->hide_if('local_lai_connector_claude_api_key', 'local_lai_connector_current_api', 'neq', '3');
+
+    // API URL for CLAUDE
+    $name = 'local_lai_connector_claude_api_url';
+    $title = get_string('setting_claude_apiurl', 'local_lai_connector');
+    $hint = get_string('setting_claude_apiurl_help', 'local_lai_connector');
+    $default = ''; // Default CLAUDE Api URL
+    $setting->add(new admin_setting_configtext($name, $title, $hint, $default));
+    $setting->hide_if('local_lai_connector_claude_api_url', 'local_lai_connector_current_api', 'neq', '3');
+
+    // API Key for TARSUS
+    $name = 'local_lai_connector_tarsus_api_key';
+    $title = get_string('setting_tarsus_apikey', 'local_lai_connector');
+    $hint = get_string('setting_tarsus_apikey_help', 'local_lai_connector');
+    $default = '7517fd28-8cb4-4304-b9f0-0312b8c92ef1'; // Default TARSUS Api Key
+    $setting->add(new admin_setting_configtext($name, $title, $hint, $default));
+    $setting->hide_if('local_lai_connector_tarsus_api_key', 'local_lai_connector_current_api', 'neq', '1');
+
+    // API URI for TARSUS
+    $name = 'local_lai_connector_tarsus_api_url';
+    $title = get_string('setting_tarsus_apiurl', 'local_lai_connector');
+    $hint = get_string('setting_tarsus_apiurl_help', 'local_lai_connector');
+    $default = 'http://tarsus.de'; // Default TARSUS Api URL
+    $setting->add(new admin_setting_configtext($name, $title, $hint, $default));
+    $setting->hide_if('local_lai_connector_tarsus_api_url', 'local_lai_connector_current_api', 'neq', '1');
 
     $settings->add($setting);
 
@@ -61,6 +113,9 @@ if ($hassiteconfig) {
     /* Main Brain settings */
     $setting = new admin_settingpage('local_lai_connector_mainbrain',
         get_string('setting_mainbrain_tab_title', 'local_lai_connector'));
+
+    // Hide this element. Only show, if TARSUS is selected and in use
+    $setting->hide_if('local_lai_connector_mainbrain', 'local_lai_connector_current_api', 'neq', '1');
 
     $setting->add(new admin_setting_heading('headerconnectormainbrain',
         get_string('setting_mainbrain_title', 'local_lai_connector'),
@@ -74,9 +129,27 @@ if ($hassiteconfig) {
     $setting = new admin_settingpage('local_lai_connector_subbrain',
         get_string('setting_subbrain_tab_title', 'local_lai_connector'));
 
+    // Hide this element. Only show, if TARSUS is selected and in use
+    $setting->hide_if('local_lai_connector_subbrain', 'local_lai_connector_current_api', 'neq', '1');
+
     $setting->add(new admin_setting_heading('headerconnectorsubbrain',
         get_string('setting_subbrain_title', 'local_lai_connector'),
         get_string('setting_subbrain_title_help', 'local_lai_connector')));
+
+    $settings->add($setting);
+
+    /* -------------------------------------------------------------------- */
+
+    /* chatGPT settings */
+    $setting = new admin_settingpage('local_lai_connector_chatgpt',
+        get_string('setting_chatgpt_tab_title', 'local_lai_connector'));
+
+    // Hide this element. Only show, if chatgpt is selected and in use
+    $setting->hide_if('local_lai_connector_chatgpt', 'local_lai_connector_current_api', 'neq', '2');
+
+    $setting->add(new admin_setting_heading('headerconnectorsubbrain',
+        get_string('setting_chatgpt_title', 'local_lai_connector'),
+        get_string('setting_chatgpt_title_help', 'local_lai_connector')));
 
     $settings->add($setting);
 
