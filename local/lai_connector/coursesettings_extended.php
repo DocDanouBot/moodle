@@ -64,7 +64,7 @@ if ($tarsusenabledform->is_cancelled())   {
         $fromform->enabled = 0;
     }
 
-    $fieldsToUpdate = array('userid' => $USER->id);
+    $fieldsToUpdate = array('userid' => $USER->id, 'enabled' => $fromform->enabled);
     $result = \local_lai_connector\coursesettings_extended::updateSettings($course->id, $fieldsToUpdate, $context);
     if ($result) {
         $statusmsg = get_string("setting_courseext_saved", "local_lai_connector");
@@ -73,6 +73,7 @@ if ($tarsusenabledform->is_cancelled())   {
     $tarsusenabledform->display();
 
 } else {
+    // Nothing has happend yet, so we display the regular prefilled form, as it exists.
     $tarsusenabledform->display();
 }
 echo $OUTPUT->footer();

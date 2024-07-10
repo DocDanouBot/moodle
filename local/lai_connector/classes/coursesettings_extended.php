@@ -36,15 +36,17 @@ class coursesettings_extended {
     {
         global $DB;
         $fieldsToUpdate['courseid'] = $courseId;
-        $fieldsToUpdate['timemodified'] = time();
         $table = 'local_lai_connector_courses';
         $r = self::getSettings($courseId);
         if ($r === false) {
+            $fieldsToUpdate['timecreated'] = time();
+            $fieldsToUpdate['timemodified'] = 0;
             $insertId = $DB->insert_record($table, $fieldsToUpdate);
             $event = \local_lai_connector\event\coursesettings_extended_created::create(
                 array('context' => $context, 'objectid' => $insertId, 'other' => $fieldsToUpdate)
             );
         } else {
+            $fieldsToUpdate['timemodified'] = time();
             $fieldsToUpdate['id'] = $r->id;
             $event = \local_lai_connector\event\coursesettings_extended_updated::create(
                 array('context' => $context, 'objectid' => $r->id, 'other' => $fieldsToUpdate)
