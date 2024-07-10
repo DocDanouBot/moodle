@@ -25,13 +25,13 @@ namespace local_lai_connector\event;
 
 defined('MOODLE_INTERNAL') || die();
 
-class coursesettings_extended_updated extends \core\event\base {
+class coursesettings_extended_created extends \core\event\base {
 
     /**
      * Set basic properties for the event.
      */
     protected function init() {
-        $this->data['crud'] = 'u';
+        $this->data['crud'] = 'c';
         $this->data['edulevel'] = self::LEVEL_TEACHING;
         $this->data['objecttable'] = 'local_lai_connector_courses';
     }
@@ -42,7 +42,7 @@ class coursesettings_extended_updated extends \core\event\base {
      * @return string
      */
     public static function get_name() {
-        return get_string('event_coursesettings_extended_updated', 'local_lai_connector');
+        return get_string('event_coursesettings_extended_created', 'local_lai_connector');
     }
 
     /**
@@ -51,7 +51,7 @@ class coursesettings_extended_updated extends \core\event\base {
      * @return string
      */
     public function get_description() {
-        return "The user with id '$this->userid' has updated an extended course settings TARSUS index for CourseID '{$this->data['courseid']}' in context with id '{$this->data['contextid']}'";
+        return "The user with id '$this->userid' has created an extended course settings TARSUS index for CourseID '{$this->data['courseid']}' in context with id '{$this->data['contextid']}'";
     }
 
 }

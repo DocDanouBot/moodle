@@ -86,8 +86,9 @@ $string['legend_comp_noneavailable'] = 'Sorry, a legend is not available.';
 $string['setting_courseext_pagetitle'] = 'Kursinhalte ins TARSUS Brain';
 $string['setting_courseext_header'] = 'Inhalte dieses Kurses zu TARSUS hinzufügen?';
 $string['setting_courseext_description'] = 'In diesem Bereich können sie konfigurieren, ob sie dem TARSUS Brain einige oder alle Aktivitäten und Inhalte des Kurses hinzufügen wollen. Wenn sie diese Funktion nur aktivieren, aber noch nicht ausführen, können sie auf der Haupt Kursseite im Bearbeitungsmodus jede einzelne Aktivität individuell dem Brain hinzufügen oder aus dem Brain später wieder entfernen.';
+$string['setting_courseext_enable'] = 'Checkbox aktivieren, um die TARSUS indizierung für diesen Kurs zu aktivieren.';
 $string['setting_courseext_saved'] = 'Die TARSUS-Einstellungen dieses Kurses wurden gespeichert.';
-$string['setting_courseext_addnow_title'] = 'Wollen Sie jetzt ALLE Kursinhaltes dieses Kurses zu TARSUS hinzufügen?';
+$string['setting_courseext_addnow_title'] = 'Jetzt ALLE Kursinhaltes zu TARSUS hinzufügen?';
 $string['setting_courseext_addnow_description'] = 'Sie können entweder jetzt alle verfügbaren Aktivitäten, Dokumente und Elemente ins TARSUS Brain hinzufügen. Dann drücken sie untenstehnden Knopf. Oder Sie gehen zurück zur Kursseite und können dort individuell einige spezielle Inhalte hinzufügen oder auch wieder von TARSUS entfernen.';
 $string['setting_courseext_addnow_action'] = 'Jetzt hinzufügen!';
 

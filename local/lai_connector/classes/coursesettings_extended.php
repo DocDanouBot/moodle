@@ -24,6 +24,7 @@
 namespace local_lai_connector;
 
 global $CFG;
+require_once($CFG->dirroot . '/local/lai_connector/classes/event/coursesettings_extended_created.php');
 require_once($CFG->dirroot . '/local/lai_connector/classes/event/coursesettings_extended_updated.php');
 
 class coursesettings_extended {
@@ -35,12 +36,12 @@ class coursesettings_extended {
     {
         global $DB;
         $fieldsToUpdate['courseid'] = $courseId;
-        $fieldsToUpdate['timeupdated'] = time();
+        $fieldsToUpdate['timemodified'] = time();
         $table = 'local_lai_connector_courses';
         $r = self::getSettings($courseId);
         if ($r === false) {
             $insertId = $DB->insert_record($table, $fieldsToUpdate);
-            $event = \local_lai_connector\event\coursesettings_extended_updated::create(
+            $event = \local_lai_connector\event\coursesettings_extended_created::create(
                 array('context' => $context, 'objectid' => $insertId, 'other' => $fieldsToUpdate)
             );
         } else {
@@ -61,9 +62,7 @@ class coursesettings_extended {
     {
         global $DB;
         $table = 'local_lai_connector_courses';
-        return $DB->get_record($table, ['course' => $courseId], $fields = '*', $strictness = IGNORE_MISSING);
+        return $DB->get_record($table, ['courseid' => $courseId], $fields = '*', $strictness = IGNORE_MISSING);
     }
-
-
 
 }

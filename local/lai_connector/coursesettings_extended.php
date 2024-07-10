@@ -22,6 +22,8 @@ use local_lai_connector\exceptions\lai_exception;
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . '../../config.php';
 require_once($CFG->dirroot . '/local/lai_connector/classes/coursesettings_extended.php');
+require_once($CFG->dirroot . '/local/lai_connector/classes/forms/coursesettings_extended_form.php');
+
 
 $courseid = required_param('course', PARAM_INT);
 // Does the course really exist after all?
@@ -42,13 +44,35 @@ $PAGE->set_heading(get_string("setting_courseext_header",  "local_lai_connector"
 
 $baseurl = $CFG->wwwroot."/local/lai_connector/coursesettings_extended.php";
 
+// All permissions required for specific course settings
+$permissions = array();
+$permissions['coursesettings_tarsus_enable'] = has_capability('local/lai_connector:settingsmanage', $context);
+$permissions['coursesettings_tarsus_addnow'] = has_capability('local/lai_connector:assetadd', $context);
+
+// Get the form element to toggle the status
+$tarsusenabledform   = new \local_lai_connector\forms\CourseSettingsExtendedTarsusForm($baseurl.'?course=' . $courseid, $permissions);
 
 // Now comes all the output.
 echo $OUTPUT->header();
-$fieldsToUpdate = array('userID' => $USER->id);
-$result = \local_lai_connector\coursesettings_extended::updateSettings($course->id, $fieldsToUpdate, $context);
-if ($result) {
-    $statusmsg = get_string("settings_course_saved", "local_lai_connector");
-    echo $OUTPUT->notification($statusmsg, 'notifysuccess');
+
+if ($tarsusenabledform->is_cancelled())   {
+    // Go back to the course overview page.
+    redirect(new moodle_url('/course/view.php', array('id' => $course->id)));
+} else if ($fromform = $tarsusenabledform->get_data()) {
+    if (!isset($fromform->enabled) || (!$fromform->enabled)) {
+        // Set the value to anything if nothing was set before
+        $fromform->enabled = 0;
+    }
+
+    $fieldsToUpdate = array('userid' => $USER->id);
+    $result = \local_lai_connector\coursesettings_extended::updateSettings($course->id, $fieldsToUpdate, $context);
+    if ($result) {
+        $statusmsg = get_string("setting_courseext_saved", "local_lai_connector");
+        echo $OUTPUT->notification($statusmsg, 'notifysuccess');
+    }
+    $tarsusenabledform->display();
+
+} else {
+    $tarsusenabledform->display();
 }
 echo $OUTPUT->footer();

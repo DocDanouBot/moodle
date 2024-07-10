@@ -25,6 +25,8 @@ namespace local_lai_connector\forms;
 
 defined('MOODLE_INTERNAL') || die();
 
+global $CFG;
+
 require_once($CFG->libdir.'/formslib.php');
 
 class edit_lai_connector extends \moodleform {
