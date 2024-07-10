@@ -89,4 +89,37 @@ $capabilities = array(
             'manager' => CAP_ALLOW,
         ),
     ),
+    // The User can add resources and assets into the brain.
+    'local/lai_connector:assetadd' => array(
+        'captype' => 'write',
+        'riskbitmask' => RISK_SPAM,
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW,
+        ),
+    ),
+    // The User can delete his own added resources and assets from the brain.
+    'local/lai_connector:assetmydelete' => array(
+        'captype' => 'write',
+        'riskbitmask' => RISK_SPAM,
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW,
+        ),
+    ),
+    // The User can delete resources and assets from all differend users from the brain.
+    'local/lai_connector:assetdelete' => array(
+        'captype' => 'write',
+        'riskbitmask' => RISK_SPAM,
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'teacher' => CAP_PREVENT,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW,
+        ),
+    ),
 );

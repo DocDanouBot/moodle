@@ -30,6 +30,7 @@ $string['privacy:metadata'] = 'The LernLink AI Connector component does not stor
 
 // info for the main menu navigation.
 $string['link_mainmenu_index'] = 'LAI main page';
+$string['link_mainmenu_coursesettings'] = 'Add course to TARSUS';
 
 // Texts for the general AI Connector interface.
 $string['aic_mainpage'] = 'AI Connector Modular interface';
@@ -53,10 +54,15 @@ $string['lai_connector:settingsmanage'] = 'Can change the settings of the compon
 $string['lai_connector:brainadd'] = 'Can add a new brain ';
 $string['lai_connector:braindelete'] = 'Can delete a specific brain';
 $string['lai_connector:brainview'] = 'Can see the overview of all brains';
+$string['lai_connector:brainview'] = 'Darf die Übersicht über alle Brains sehen';
+$string['lai_connector:assetadd'] = 'Darf weitere Assets und Ressource dem Brain hinzufügen';
+$string['lai_connector:assetmydelete'] = 'Darf seine eigenen Assets und Ressource aus dem Brain löschen';
+$string['lai_connector:assetdelete'] = 'Darf alle verfügbaren Assets und Ressource aus dem Brain löschen';
 
 // Events and related texts:
 $string['event_nugged_entry_created'] = 'Event: A single nugget was created.';
 $string['event_nugged_entry_deleted'] = 'Event: A single nugget was deleted.';
+$string['event_coursesettings_extended_updated'] = 'Event: Die erweiterten Kurseinstellungen zum TARSUS import wurden aktualisiert.';
 
 // info for the main page.
 $string['indexpage_title'] = 'LAI main page';
@@ -75,6 +81,11 @@ $string['legend_comp_title'] = 'Legend for explanation';
 $string['legend_comp_main'] = 'Main element';
 $string['legend_comp_description'] = 'Description';
 $string['legend_comp_noneavailable'] = 'Sorry, a legend is not available.';
+
+// strings for the extended frontend settings page.
+$string['setting_courseext_pagetitle'] = 'Kursinhalteins TARSUS Brain';
+$string['setting_courseext_header'] = 'Die Inhalte dieses Kurses dem TARSUS Brain hinzufügen?';
+$string['setting_courseext_description'] = 'In diesem Bereich können sie konfigurieren, ob sie dem TARSUS Brain einige oder alle Aktivitäten und Inhalte des Kurses hinzufügen wollen. Wenn sie diese Funktion nur aktivieren, aber noch nicht ausführen, können sie auf der Haupt Kursseite im Bearbeitungsmodus jede einzelne Aktivität individuell dem Brain hinzufügen oder aus dem Brain später wieder entfernen.';
 
 // strings for the settings page.
 $string['setting_activate_component'] = 'Activate LAI component?';

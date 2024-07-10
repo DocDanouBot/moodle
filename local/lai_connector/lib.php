@@ -23,6 +23,19 @@
 
 defined('MOODLE_INTERNAL') || die;
 
+function local_lai_connector_extend_navigation_course(\navigation_node $navigation, $course, $context) {
+    if (has_capability('local/lai_connector:assetadd', $context)) {
+        $navigation->add(
+            get_string("link_mainmenu_coursesettings", "local_lai_connector"),
+            new \moodle_url('/local/lai_connector/coursesettings_extended.php', array('course' => $course->id)),
+            \navigation_node::TYPE_SETTING,
+            null,
+            null,
+            new \pix_icon('i/settings', '')
+        );
+    }
+}
+
 function local_lai_connector_extend_navigation(\global_navigation $navigation) {  //REFACTORED//
     global $CFG;
     $showlainodes = \local_lai_connector\util::show_lai_menu();

@@ -30,6 +30,7 @@ $string['privacy:metadata'] = 'Die Komponente LernLink AI Connector speichert ke
 
 // info for the main menu navigation.
 $string['link_mainmenu_index'] = 'LAI Hauptseite';
+$string['link_mainmenu_coursesettings'] = 'Kurs zu TARSUS hinzufügen';
 
 // Texts for the general AI Connector interface.
 $string['aic_mainpage'] = 'AI Connector Modular interface';
@@ -53,10 +54,14 @@ $string['lai_connector:settingsmanage'] = 'Darf die Einstellungen der Komponente
 $string['lai_connector:brainadd'] = 'Darf ein neues Brain hinzufügen ';
 $string['lai_connector:braindelete'] = 'Darf ein bestimmtes Brain löschen ';
 $string['lai_connector:brainview'] = 'Darf die Übersicht über alle Brains sehen';
+$string['lai_connector:assetadd'] = 'Darf weitere Assets und Ressource dem Brain hinzufügen';
+$string['lai_connector:assetmydelete'] = 'Darf seine eigenen Assets und Ressource aus dem Brain löschen';
+$string['lai_connector:assetdelete'] = 'Darf alle verfügbaren Assets und Ressource aus dem Brain löschen';
 
 // Events and related texts:
 $string['event_nugged_entry_created'] = 'Event: Ein einzelner Nugget wurde erstellt.';
 $string['event_nugged_entry_deleted'] = 'Event: Ein einzelner Nugget wurde gelöscht.';
+$string['event_coursesettings_extended_updated'] = 'Event: Die erweiterten Kurseinstellungen zum TARSUS import wurden aktualisiert.';
 
 // info for the main page.
 $string['indexpage_title'] = 'LAI Hauptseite';
@@ -76,7 +81,12 @@ $string['legend_comp_main'] = 'Hauptelement';
 $string['legend_comp_description'] = 'Beschreibung';
 $string['legend_comp_noneavailable'] = 'Tschuldigung, eine Legende ist nicht verfügbar.';
 
-// strings for the settings page.
+// strings for the extended frontend settings page.
+$string['setting_courseext_pagetitle'] = 'Kursinhalteins TARSUS Brain';
+$string['setting_courseext_header'] = 'Inhalte dieses Kurses zu TARSUS hinzufügen?';
+$string['setting_courseext_description'] = 'In diesem Bereich können sie konfigurieren, ob sie dem TARSUS Brain einige oder alle Aktivitäten und Inhalte des Kurses hinzufügen wollen. Wenn sie diese Funktion nur aktivieren, aber noch nicht ausführen, können sie auf der Haupt Kursseite im Bearbeitungsmodus jede einzelne Aktivität individuell dem Brain hinzufügen oder aus dem Brain später wieder entfernen.';
+
+// strings for the Backend settings page.
 $string['setting_activate_component'] = 'Aktiviere LAI Komponente?';
 $string['setting_activate_component_help'] = 'Wollen sie die KI Komponente von LernLink aktivieren. Dann wählen Sie die Checkbox.';
 $string['setting_activate_tasks'] = 'Aktiviere LAI Tasks?';
