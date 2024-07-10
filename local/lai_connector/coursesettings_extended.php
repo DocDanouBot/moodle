@@ -45,5 +45,10 @@ $baseurl = $CFG->wwwroot."/local/lai_connector/coursesettings_extended.php";
 
 // Now comes all the output.
 echo $OUTPUT->header();
-
+$fieldsToUpdate = array('userID' => $USER->id);
+$result = \local_lai_connector\coursesettings_extended::updateSettings($course->id, $fieldsToUpdate, $context);
+if ($result) {
+    $statusmsg = get_string("settings_course_saved", "local_lai_connector");
+    echo $OUTPUT->notification($statusmsg, 'notifysuccess');
+}
 echo $OUTPUT->footer();

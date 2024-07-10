@@ -31,28 +31,26 @@ class coursesettings_extended {
     /*
      *  DB functions for saving specific course settings
      */
-    public static function upsertSettings($courseId, $fieldsToUpdate, $context)
+    public static function updateSettings($courseId, $fieldsToUpdate, $context)
     {
         global $DB;
-        $fieldsToUpdate['course'] = $courseId;
+        $fieldsToUpdate['courseid'] = $courseId;
         $fieldsToUpdate['timeupdated'] = time();
-        $table = 'local_iubh_generic_csettings';
+        $table = 'local_lai_connector_courses';
         $r = self::getSettings($courseId);
-        if (false === $r) {
+        if ($r === false) {
             $insertId = $DB->insert_record($table, $fieldsToUpdate);
-            $event = \local_iubh_generic\event\coursesettings_extended_updated::create(
+            $event = \local_lai_connector\event\coursesettings_extended_updated::create(
                 array('context' => $context, 'objectid' => $insertId, 'other' => $fieldsToUpdate)
             );
         } else {
             $fieldsToUpdate['id'] = $r->id;
-            $event = \local_iubh_generic\event\coursesettings_extended_updated::create(
+            $event = \local_lai_connector\event\coursesettings_extended_updated::create(
                 array('context' => $context, 'objectid' => $r->id, 'other' => $fieldsToUpdate)
             );
             $DB->update_record($table, $fieldsToUpdate);
         }
         $event->trigger();
-
-
         return true;
     }
 

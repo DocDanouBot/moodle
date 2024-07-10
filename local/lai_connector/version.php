@@ -26,11 +26,11 @@
 defined('MOODLE_INTERNAL') || die;
 
 $plugin = new stdClass();
-$plugin->version      = 2024060605;
-$plugin->requires     = 2022041900; // Moodle 4.0 release and upwards.
+$plugin->version      = 2024070000;
+$plugin->requires     = 2024042200; // Moodle 4.4 release and upwards.
 $plugin->name         = 'LernLink AI Connector';
 $plugin->component    = 'local_lai_connector';
-$plugin->release      = '4.0.1 (build 2022090102)';
+$plugin->release      = '4.4.0 (build 2024042200)';
 $plugin->maturity     = MATURITY_ALPHA;
 $plugin->dependencies = array();
 $plugin->cron         = 0;

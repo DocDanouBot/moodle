@@ -4,16 +4,50 @@
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
-    <TABLE NAME="local_lai_connector" COMMENT="The general DB from this Localplugin">
+    <TABLE NAME="local_lai_connector_brains" COMMENT="The general DB from this Localplugin that saves all the brains">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="brainname" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="TARSUS Brain name"/>
+        <FIELD NAME="braindescription" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="Our local desciption of the Brain"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="local_lai_connector_courses" COMMENT="The DB that will note which courses are already activated for TARSUS">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Reference to the course ID"/>
         <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Reference to the UserID created this Entry"/>
+        <FIELD NAME="enabled" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="Boolean, weather the setting is active for this course or not"/>
         <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="courseid_key" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
+        <KEY NAME="userid_key" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="unique_key" TYPE="unique" FIELDS="userid, issuer256, sub256"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="local_lai_connector_assets" COMMENT="The DB that will remember which elements were added to TARSUS by whom and will save its return hash to find it in the brain">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="brainid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Reference to the name of the Brain where it was added"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Reference to the course ID"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Reference to the UserID created this Entry"/>
+        <FIELD NAME="resourceid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Reference to the ResourceID from the Raw Element"/>
+        <FIELD NAME="assertid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="Reference something like a nugget or group or type"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="brainid_key" TYPE="foreign" FIELDS="brainid" REFTABLE="local_lai_connector_brains" REFFIELDS="id"/>
+        <KEY NAME="courseid_key" TYPE="foreign" FIELDS="courseid" REFTABLE="course" REFFIELDS="id"/>
+        <KEY NAME="userid_key" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
+        <KEY NAME="unique_key" TYPE="unique" FIELDS="resourceid"/>
       </KEYS>
     </TABLE>
   </TABLES>
