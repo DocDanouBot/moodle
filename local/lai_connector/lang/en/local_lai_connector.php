@@ -1,0 +1,123 @@
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/** English language file
+ *
+ * @package     local_lai_connector
+ * @copyright   lern.link GmbH
+ * @author      Danou Nauck
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+defined('MOODLE_INTERNAL') || the;
+
+$string['pluginname'] = 'LernLink AI Connector';
+$string['pluginname_admin'] = 'LernLink AI Connector Administration';
+$string['privacy:metadata'] = 'The LernLink AI Connector component does not store any personal data';
+
+// info for the main menu navigation.
+$string['link_mainmenu_index'] = 'LAI main page';
+
+// Texts for the general AI Connector interface.
+$string['aic_mainpage'] = 'AI Connector Modular interface';
+$string['aic_current_api'] = 'Currently activated AI: ';
+$string['aic_current_url'] = 'Current URL: ';
+$string['aic_current_key'] = 'Current key: ';
+
+// Texts for the API connecting to chatGPT.
+$string['api_chatgpt_mainname'] = 'chatGPT';
+
+// Texts for the API connecting to CLAUDE.
+$string['api_claude_mainname'] = 'CLAUDE3';
+
+// Texts for the API connecting to TARSUS.
+$string['api_tarsus_mainname'] = 'TARSUS';
+
+// Rights and Roles
+$string['lai_connector:viewindexpage'] = 'Can visit the main page of the component ';
+$string['lai_connector:settingsview'] = 'Can see the settings of the component ';
+$string['lai_connector:settingsmanage'] = 'Can change the settings of the component';
+$string['lai_connector:brainadd'] = 'Can add a new brain ';
+$string['lai_connector:braindelete'] = 'Can delete a specific brain';
+$string['lai_connector:brainview'] = 'Can see the overview of all brains';
+
+// Events and related texts:
+$string['event_nugged_entry_created'] = 'Event: A single nugget was created.';
+$string['event_nugged_entry_deleted'] = 'Event: A single nugget was deleted.';
+
+// info for the main page.
+$string['indexpage_title'] = 'LAI main page';
+$string['indexpage_subbrains_title'] = 'Main page for subbrains';
+$string['indexpage_subbrains_info'] = 'Here you can find all subbrains';
+
+// strings for the report comp_brain page.
+$string['report_allbrains_brainname'] = 'Name of the brain';
+$string['report_allbrains_brainid'] = 'BrainID';
+$string['report_allbrains_braincreationdate'] = 'Created on';
+$string['report_allbrains_brainsize'] = 'Size of the brain';
+$string['report_allbrains_no_results'] = 'Sorry, no brains were found, or you do not have the necessary rights to see them.';
+
+// strings for the explain comp_legend page.
+$string['legend_comp_title'] = 'Legend for explanation';
+$string['legend_comp_main'] = 'Main element';
+$string['legend_comp_description'] = 'Description';
+$string['legend_comp_noneavailable'] = 'Sorry, a legend is not available.';
+
+// strings for the settings page.
+$string['setting_activate_component'] = 'Activate LAI component?';
+$string['setting_activate_component_help'] = 'Do you want to activate the AI ​​component of LernLink? Then select the checkbox.';
+$string['setting_activate_tasks'] = 'Activate LAI tasks?';
+$string['setting_activate_tasks_help'] = 'Do you want to activate the tasks of the AI ​​component of LernLink? Then select the checkbox.';
+$string['setting_current_api'] = 'Which API do you currently want to use?';
+$string['setting_current_api_help'] = 'Select the API you currently want to use.';
+$string['setting_chatgpt_apikey'] = 'API key for the chatGPT interface';
+$string['setting_chatgpt_apikey_help'] = 'Enter your personal API key for the chatGPT interface here so that the system can receive data from chatGPT.';
+$string['setting_chatgpt_apiurl'] = 'URL to the chatGPT API';
+$string['setting_chatgpt_apiurl_help'] = 'Enter the general URL to the chatGPT API here so that the system can receive data from chatGPT.';
+$string['setting_chatgpt_tab_title'] = 'chatGPT Settings';
+$string['setting_chatgpt_title'] = 'Configuration for the chatGPT interface';
+$string['setting_chatgpt_title_help'] = 'All settings for the chatGPT interface are made on this page';
+$string['setting_claude_apikey'] = 'API key for the CLAUDE interface';
+$string['setting_claude_apikey_help'] = 'Enter your personal API key for the CLAUDE interface here so that the system can receive data from CLAUDE.';
+$string['setting_claude_apiurl'] = 'URL to the CLAUDE API';
+$string['setting_claude_apiurl_help'] = 'Enter the general URL to the CLAUDE API here so that the system can receive data from CLAUDE.';
+$string['setting_tarsus_apikey'] = 'API key for the TARSUS interface';
+$string['setting_tarsus_apikey_help'] = 'Enter your personal API key for the TARSUS interface here so that the system can receive data from TARSUS.';
+$string['setting_tarsus_apiurl'] = 'URL to the TARSUS API';
+$string['setting_tarsus_apiurl_help'] = 'Enter the general URL to the TARSUS API here so that the system can receive data from TARSUS. The complete API description can be found at <a href="https://documenter.getpostman.com/view/23991933/2s9YJXYQT2" target="_blank">https://documenter.getpostman.com/view/23991933/2s9YJXYQT2</a>.';
+$string['setting_general_tab_title'] = 'General configuration overviewht';
+$string['setting_general_title'] = 'LAI Configuration Overview';
+$string['setting_general_title_help'] = 'On this page you can change all necessary basic parameters of the plugin. For further settings please switch TABs. ';
+$string['setting_general_title_url'] = 'You can also see the plugin homepage <a href="/local/lai_connector/index.php" target="_blank">here</a>: <a href="/local/lai_connector/index.php" target="_blank">/local/lai_connector/index.php</a>';
+$string['setting_tarsus_tab_title'] = 'TARSUS Config';
+$string['setting_tarsus_title'] = 'General TARSUS Configuration Overview';
+$string['setting_tarsus_title_help'] = 'On this page, all settings for the main brain are made';
+$string['setting_tarsus_customer_name'] = 'The company name of the customer / user';
+$string['setting_tarsus_customer_name_help'] = 'Enter the name of the customer / user used for the LAI system';
+$string['setting_tarsus_customer_address'] = 'The company address of the customer / user';
+$string['setting_tarsus_customer_address_help'] = 'Enter the company address of the customer / user used for the LAI system';
+$string['setting_tarsus_customer_email'] = 'The email address of the customer / user';
+$string['setting_tarsus_customer_email_help'] = 'Enter the email address of the customer / user used for the LAI system';
+$string['setting_tarsus_brain_tab_title'] = 'TARSUS Brains';
+$string['setting_tarsus_brain_title'] = 'Main and additional brains configuration overview';
+$string['setting_tarsus_brain_title_help'] = 'On this page, all settings for the main brain and the subordinate brains are made';
+$string['setting_tasks_tab_title'] = 'Tasks';
+$string['setting_tasks_title'] = 'Tasks and cronjobs configuration overview';
+$string['setting_tasks_title_help'] = 'On this page, you configure the tasks and cronjobs required for the LAI system';
+
+$string['abc'] = '';
+$string['abc'] = '';
+$string['abc'] = '';
