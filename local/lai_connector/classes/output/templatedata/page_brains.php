@@ -38,7 +38,7 @@ class page_brains implements templatable {
     /** @var \object $content The content object. */
     public $content;
 
-    /** @var brains elements. */
+    /** @var array of multiple brains elements. Added up with additional data from other sources */
     public $brains;
 
     /**
@@ -58,18 +58,20 @@ class page_brains implements templatable {
         $brainsawareness = json_decode($content['brains']);
         $brainsobject = $brainsawareness->awareness;
 
-        echo("<br>brainsobject<br>");
-        var_dump($brainsobject);
+        // Look into what we got during dev times
+        // echo("<br>brainsobject<br>");
+        // var_dump($brainsobject);
 
         foreach ($brainsobject->brain_ids as $brain) {
-            echo("<hr>");
+            // For each element build a new object node and add additional data from another query to it.
             $newbrainobjekt = new \stdClass();
             $newbrainobjekt->brainname = "First Name ";
             $newbrainobjekt->brainquota = "First Quota ";
             $newbrainobjekt->brainid = $brain->id;
             # $newbrainobjekt->braindeleteurl = "First Quota ";
             $allbrains[] = $newbrainobjekt;
-            var_dump($brain->id);
+            var_dump($newbrainobjekt);
+            echo("<hr>");
         }
         $this->brains = $allbrains;
     }

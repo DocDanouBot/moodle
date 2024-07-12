@@ -302,7 +302,10 @@ class api_connector_tarsus
 }
 
 
-
+/**
+ * This is a subclass to generate DB entries into the own table called "local_lai_connector_brains".
+ * Also we trigger events and can later save additional data to the same table.
+ */
 class tarsus_brain
 {
     /**
@@ -313,12 +316,12 @@ class tarsus_brain
      */
     private static $_self;
 
-    //* Component constructor.
-    public function __construct() {
+    //* Component constructor. Still empty at the time.
+    public function __construct()
+    {
         global $CFG;
 
     }
-
 
     /**
      * Factory method to get an instance of the AI connector. We use this method to get the instance.
@@ -328,7 +331,8 @@ class tarsus_brain
      * @return the TARSUS Connector
      * @throws \lai_exception
      */
-    public static function get_instance() {
+    public static function get_instance()
+    {
         global $CFG;
 
         # We also need to check, that the self->id is NOT the same as before,
@@ -340,4 +344,97 @@ class tarsus_brain
         return self::$_self;
     }
 
+    /** General function to insert an AI brain into the database if none exists by the same unique name.
+     * Otherwise we find the same entry and add new data to it, like the new userid that triggered the update.
+     * as well as the timestamp of the update and maybe more additional information in the future.
+     * @param $brain_id
+     * @param $userid
+     * @return mixed|stdClass
+     * @throws \coding_exception
+     * @throws \dml_exception
+     */
+    public static function create_new_brain($brain_id, $userid)
+    {
+        global $DB;
+        // we always need a context for events and anything.
+        $context = context_system::instance();
+        $table = 'local_lai_connector_brains';
+
+        // Is there already a record with this brainid identifier? Than update it, otherwise create it.
+        if ($existingrecord = $DB->get_record($table, array('brainid' => $brain_id), '*', IGNORE_MULTIPLE)) {
+            $existingrecord->userid = $userid;
+            $existingrecord->timemodified = time();
+            $successfullyupdated = $DB->update_record($table, $existingrecord);
+
+            // Did the update run smoothly?
+            if ($successfullyupdated) {
+                // What should we memorize and track in the event?
+                $fieldsToEvent['userid'] = $userid;
+                $fieldsToEvent['timemodified'] = $existingrecord->timemodified;
+                $event = \local_lai_connector\event\brain_updated::create(
+                    array('context' => $context, 'objectid' => $existingrecord->id, 'other' => $fieldsToEvent)
+                );
+                $event->trigger();
+            }
+            // Now just return the given record
+            return $existingrecord;
+        } else {
+            // we have not yet found a record with this brainid, so we create it.
+            $newrecord = new stdClass();
+            $newrecord->brainid = $brain_id;
+            $newrecord->userid = $userid;
+            $newrecord->timecreated = time();
+            $newrecord->timemodified = 0;  // This entry is brand new, it has never been modified.
+
+            // We recycle this id in the event later.
+            $newrecord->id = $DB->insert_record($table, $newrecord);
+
+            // What should we memorize and track in the event?
+            $fieldsToEvent['userid'] = $newrecord->userid;
+            $fieldsToEvent['timecreated'] = $newrecord->timecreated;
+            $event = \local_lai_connector\event\brain_created::create(
+                array('context' => $context, 'objectid' => $newrecord->id, 'other' => $fieldsToEvent)
+            );
+            $event->trigger();
+            return $newrecord;
+        }
+    }
+
+    /** one of these basic functions to clean our database from old unused entries.
+     * On successful delete, we add also an event to it.
+     * @param $brain_id
+     * @param $userid
+     * @return void
+     * @throws \coding_exception
+     * @throws \dml_exception
+     */
+    public static function delete_brain($brain_id, $userid)
+    {
+        global $DB;
+
+        $table = 'local_lai_connector_brains';
+        $params = array('brainid' => $brain_id);
+
+        // Is there already a record with this brainid identifier? Than update it, otherwise create it.
+        if ($existingrecord = $DB->get_record($table, $params, '*', IGNORE_MULTIPLE)) {
+            // Maybe we dont really need the line above, the line below should be sufficiant.
+
+            if ($DB->delete_records($table, $params)) {
+                // Successfully deleted, so we save everything in an event.
+
+                // we always need a context for events and anything.
+                $context = context_system::instance();
+                // What should we memorize and track in the event?
+                $fieldsToEvent['userid'] = $userid;
+                $fieldsToEvent['timedeleted'] = time();
+
+                $event = \local_lai_connector\event\brain_deleted::create(
+                    array('context' => $context, 'objectid' => $existingrecord->id, 'other' => $fieldsToEvent)
+                );
+
+                // Send the event to the DB
+                $event->trigger();
+            }
+        }
+    }
 }

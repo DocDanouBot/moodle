@@ -98,5 +98,28 @@ function xmldb_local_lai_connector_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2024070000, 'local', 'lai_connector');
     }
 
+    if ($oldversion < 2024070002) {
+
+        // Add an extra field to save the TARSUS ID from the brain
+        $table = new xmldb_table('local_lai_connector_brains');
+        $field = new xmldb_field('brainid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'id');
+        // Conditionally launch add field pdfexportfont.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+            // Define key brainid to be added as a unique key to local_lai_connector_courses.
+            $table->add_key('brainid', XMLDB_KEY_UNIQUE, array('brainid'));
+        }
+
+        $field = new xmldb_field('userid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'braindescription');
+        // Conditionally launch add field pdfexportfont.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+            // Define key userid (foreign) to be added to local_lai_connector_courses.
+            $table->add_key('userid', XMLDB_KEY_FOREIGN, ['userid'], 'user', ['id']);
+        }
+
+        upgrade_plugin_savepoint(true, 2024070002, 'local', 'lai_connector');
+    }
+
     return true;
 }

@@ -235,12 +235,15 @@ window.addEventListener('load', function () {
                 data: {
                     action: 'createNewBrain',
                     brainname: newbrainname,
+                    userid: 1234,
                     sesskey: M.cfg.sesskey
                 },
                 dataType: "json",
                 success: function (data) {
-                    let textstring = JSON.stringify(data);
-                    window.console.log("AJAX DONE: tarsus_ajax_brainpage_createnewbrain");
+                    // Refresh the page
+                    location.reload();
+                    // let textstring = JSON.stringify(data);
+                    // window.console.log("AJAX DONE: tarsus_ajax_brainpage_createnewbrain " + textstring);
                 },
                 fail: function (data) {
                     let textstring = JSON.stringify(data);
@@ -280,9 +283,9 @@ window.addEventListener('load', function () {
                 dataType: "json",
                 success: function (data) {
                     // Refresh the page
-                    // location.reload();
-                    let textstring = JSON.stringify(data);
-                    window.console.log("AJAX DONE: tarsus_ajax_brainpage_deletebrain " + textstring);
+                    location.reload();
+                    // let textstring = JSON.stringify(data);
+                    // window.console.log("AJAX DONE: tarsus_ajax_brainpage_deletebrain " + textstring);
                 },
                 fail: function (data) {
                     let textstring = JSON.stringify(data);

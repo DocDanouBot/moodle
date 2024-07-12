@@ -62,6 +62,7 @@ $string['lai_connector:assetdelete'] = 'Darf alle verfügbaren Assets und Ressou
 
 // Events and related texts:
 $string['event_brain_created'] = 'Event: Ein Tarsus Brain wurde erstellt.';
+$string['event_brain_updated'] = 'Event: Ein Tarsus Brain wurde aktualisiert.';
 $string['event_brain_deleted'] = 'Event: Ein Tarsus Brain wurde gelöscht.';
 $string['event_nugged_entry_created'] = 'Event: Ein einzelner Nugget wurde erstellt.';
 $string['event_nugged_entry_deleted'] = 'Event: Ein einzelner Nugget wurde gelöscht.';

@@ -15,45 +15,30 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * A Tarsus Brain was updated - event.
+ *
  * @package     local_lai_connector
  * @copyright   lern.link GmbH
  * @author      Danou Nauck
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace local_lai_connector\output;
+namespace local_lai_connector\event;
 
 defined('MOODLE_INTERNAL') || die();
 
-/**
- * Renderer for the local plugin local_lai_connector
- */
-class renderer extends \plugin_renderer_base {
+class brain_updated extends \core\event\base {
 
     /**
-     * Just making sure, that the doctype is definetly set, so we do not get any debug messages.
+     * Init method.
      */
-    public function header() {
-        global $OUTPUT;
-        // Set the standard
-        $this->page->theme->doctype = 'html5';
-
-        // Print the page heading.
-        echo $OUTPUT->header();
+    protected function init() {
+        $this->data['crud'] = 'u';
+        $this->data['edulevel'] = self::LEVEL_TEACHING;
+        $this->data['objecttable'] = 'local_lai_connector_brains';
     }
 
-    /**
-     * render_brains - Renders all available Brains from TARSUS
-     *
-     * @param  \stdClass $content
-     * @return string
-     */
-    public function render_brains($content) {
-        $templatedata = new \local_lai_connector\output\templatedata\page_brains($content);
-
-        $output = $this->render_from_template('local_lai_connector/page_brains',
-            $templatedata->export_for_template($this));
-        return $output;
+    public static function get_name() {
+        return get_string('event_brain_updated', 'local_lai_connector');
     }
-
 }

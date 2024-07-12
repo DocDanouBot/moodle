@@ -33,7 +33,6 @@
     }
 }}
 
-{{#str}}report_allbrains_currenttoken, local_lai_connector{{/str}} {{#token}}{{{.}}}{{/token}}
 <table id="reports_allbrains" class="resultlist">
     <thead>
         <tr class="headerrow grey_bg">
@@ -47,8 +46,11 @@
     <tbody>
     {{#brains}}
         <tr class="brainrow">
-            <td colspan="2">
+            <td colspan="1">
                 {{brainname}}
+            </td>
+            <td colspan="1">
+                {{brainid}}
             </td>
             <td colspan="2">
                 {{brainquota}}
@@ -60,14 +62,16 @@
         <tr>
             <td colspan="5">{{#str}}report_allbrains_no_results, local_lai_connector{{/str}}</td>
         </tr>
-        <tr>
-            <td colspan="5"> </td>
-        </tr>
-        <tr>
-            <td colspan="1"><label for="tarsus_ajax_create_new_brain_name">{{#str}}button_api_call_createbrain_label, local_lai_connector{{/str}}</label></td>
-            <td colspan="3"><input id="tarsus_ajax_create_new_brain_name" name="create_new_brain" type="text"></td>
-            <td><span id="tarsus_ajax_brainpage_createnewbrain" class="btn btn-primary">{{#str}}button_api_call_createbrain, local_lai_connector{{/str}}</span></td>
-        </tr>
     {{/brains}}
+    <tr>
+        <td colspan="5"><hr></td>
+    </tr>
+    <tr>
+        <td colspan="1"><label for="tarsus_ajax_create_new_brain_name">{{#str}}button_api_call_createbrain_label, local_lai_connector{{/str}}</label></td>
+        <td colspan="3"><input id="tarsus_ajax_create_new_brain_name" name="create_new_brain" type="text"></td>
+        <td><span id="tarsus_ajax_brainpage_createnewbrain" class="btn btn-primary">{{#str}}button_api_call_createbrain, local_lai_connector{{/str}}</span></td>
+    </tr>
     </tbody>
 </table>
+<br>
+<sub>{{#str}}report_allbrains_currenttoken, local_lai_connector{{/str}} {{#token}}{{{.}}}{{/token}}</sub>
