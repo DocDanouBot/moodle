@@ -239,6 +239,16 @@ class ai_connector {
         return $api_token;
     }
 
+    public function create_new_brain($brainname) {
+        $allbrains = $this->_api->create_new_brain($brainname);
+        return $allbrains;
+    }
+
+    public function delete_brain($brainname) {
+        $allbrains = $this->_api->delete_brain($brainname);
+        return $allbrains;
+    }
+
     public function list_brains() {
         $allbrains = $this->_api->list_brains();
         return $allbrains;

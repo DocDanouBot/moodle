@@ -61,6 +61,8 @@ $string['lai_connector:assetmydelete'] = 'Darf seine eigenen Assets und Ressourc
 $string['lai_connector:assetdelete'] = 'Darf alle verfügbaren Assets und Ressource aus dem Brain löschen';
 
 // Events and related texts:
+$string['event_brain_created'] = 'Event: Ein Tarsus Brain wurde erstellt.';
+$string['event_brain_deleted'] = 'Event: Ein Tarsus Brain wurde gelöscht.';
 $string['event_nugged_entry_created'] = 'Event: A single nugget was created.';
 $string['event_nugged_entry_deleted'] = 'Event: A single nugget was deleted.';
 $string['event_coursesettings_extended_updated'] = 'Event: Die erweiterten Kurseinstellungen zum TARSUS import wurden aktualisiert.';
@@ -84,6 +86,7 @@ $string['report_allbrains_brainname'] = 'Name of the brain';
 $string['report_allbrains_brainid'] = 'BrainID';
 $string['report_allbrains_braincreationdate'] = 'Created on';
 $string['report_allbrains_brainsize'] = 'Size of the brain';
+$string['report_allbrains_brainaction'] = 'Action';
 $string['report_allbrains_no_results'] = 'Sorry, no brains were found, or you do not have the necessary rights to see them.';
 $string['report_allbrains_currenttoken'] = 'Ihr aktueller Token: ';
 
@@ -96,6 +99,7 @@ $string['button_api_call_testbutton'] = 'API Testknopf';
 $string['button_api_call_resultarea'] = 'Ergebnisbereich';
 $string['button_api_call_generateapitoken'] = 'Beantrage API Token';
 $string['button_api_call_createbrain'] = 'Erstelle Brain';
+$string['button_api_call_createbrain_label'] = 'Neuen Brainnamen eingeben: ';
 $string['button_api_call_deletebrain'] = 'Lösche Brain';
 $string['button_api_call_listbrain'] = 'Zeige alle Brains';
 $string['button_api_call_listbrainquota'] = 'Zeige Brain Datenverbrauch';

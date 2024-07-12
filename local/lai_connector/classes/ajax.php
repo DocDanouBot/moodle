@@ -68,6 +68,24 @@ switch ($action) {
         );
         echo json_encode($returndata);
         break;
+    case "createNewBrain":
+        $brainname = required_param('newbrainname', PARAM_ALPHAEXT);
+        $result = $api->create_new_brain($brainname);
+        $returndata = array(
+            'result' => $result,
+            'function' => "createNewBrain"
+        );
+        echo json_encode($returndata);
+        break;
+    case "deleteBrain":
+        $brainname = required_param('newbrainname', PARAM_ALPHAEXT);
+        $result = $api->delete_brain($brainname);
+        $returndata = array(
+            'result' => $result,
+            'function' => "createNewBrain"
+        );
+        echo json_encode($returndata);
+        break;
     case "showAllBrains":
         $result = $api->list_brains();
         $returndata = array(
@@ -78,8 +96,8 @@ switch ($action) {
         echo json_encode($returndata);
         break;
     case "showBrainsQuotas":
-        $brainid = "customer_demo";
-        $result = $api->get_brain_usage($brainid);
+        $brainname = required_param('newbrainname', PARAM_ALPHAEXT);
+        $result = $api->get_brain_usage($brainname);
         $returndata = array(
             'token' => $token,
             'result' => $result,

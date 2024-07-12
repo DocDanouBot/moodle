@@ -37,6 +37,9 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_title(get_string('brainpage_title', 'local_lai_connector'));
 $PAGE->set_heading($PAGE->title);
 $PAGE->set_url(new moodle_url('/local/lai_connector/brains.php'));
+$PAGE->requires->jquery();
+$PAGE->requires->jquery_plugin('ui');
+$PAGE->requires->jquery_plugin('ui-css');
 
 // Load the lib.js to allow ajax communication with server
 $PAGE->requires->js(new moodle_url('/local/lai_connector/lib.js'));
@@ -47,12 +50,14 @@ $brains =  $api->list_brains();
 
 // Define empty Array
 $subpages = array();
-
 $templatedata['indexpageurl'] =  new moodle_url('/local/lai_connector/index.php');
 $templatedata['token'] = \local_lai_connector\ai_connector::get_instance()::get_api_token();
 $templatedata['brains'] = $brains;
 
+$renderer = $PAGE->get_renderer('local_lai_connector');
+$maincontent = $renderer->render_brains($templatedata);
+
 // Output content.
 echo $OUTPUT->header();
-echo $OUTPUT->render_from_template('local_lai_connector/page_brains', $templatedata);
+echo $maincontent;
 echo $OUTPUT->footer();

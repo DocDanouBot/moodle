@@ -183,8 +183,58 @@ class api_connector_tarsus
         return $response;
     }
 
+    public function create_new_brain($brain_id = 'customer-demo') {
+        global $CFG;
+        $curl = curl_init();
 
-    public function get_brain_usage($start_timestamp = 0, $end_timestamp = 0, $brainid = 'customer-demo') {
+        $postfieldarray['api_key'] = $this->_api_key;
+        $postfieldarray['brain_id'] = $brain_id;
+        $postfieldarray['language'] = 'en';
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $this->_api_baseurl . '/brain/awareness/create/memory',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $postfieldarray,
+        ));
+
+        $braincreated = curl_exec($curl);
+
+        curl_close($curl);
+        return $braincreated;
+    }
+
+    public function delete_brain($brain_id) {
+        $curl = curl_init();
+
+        $postfieldarray['api_key'] = $this->_api_key;
+        $postfieldarray['brain_id'] = $brain_id;
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $this->_api_baseurl . '/brain/awareness/delete/memory',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'DELETE',
+            CURLOPT_POSTFIELDS => $postfieldarray,
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        return $response;
+    }
+
+
+    public function get_brain_usage($brainid = 'customer-demo', $start_timestamp = 0, $end_timestamp = 0) {
         global $CFG;
         $curl = curl_init();
 
@@ -249,4 +299,45 @@ class api_connector_tarsus
         curl_close($curl);
         echo $response;
     }
+}
+
+
+
+class tarsus_brain
+{
+    /**
+     * Singleton instance of this class. We cache the instance in this Class.
+     * so we can use it again without re-creating it.
+     *
+     * @var  $_self
+     */
+    private static $_self;
+
+    //* Component constructor.
+    public function __construct() {
+        global $CFG;
+
+    }
+
+
+    /**
+     * Factory method to get an instance of the AI connector. We use this method to get the instance.
+     * of the AI connector ONLY once! We do not want to redo the job many times, if we need the API.
+     * again and again in multiple spots on the same page. Thus we -basically- cache it in the protected $_self variable.
+     *
+     * @return the TARSUS Connector
+     * @throws \lai_exception
+     */
+    public static function get_instance() {
+        global $CFG;
+
+        # We also need to check, that the self->id is NOT the same as before,
+        # otherwise in a loop he would always return the first element he cached
+        if ((!self::$_self)) {
+            self::$_self = new self();
+        }
+
+        return self::$_self;
+    }
+
 }

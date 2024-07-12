@@ -33,6 +33,7 @@
     }
 }}
 
+{{#str}}report_allbrains_currenttoken, local_lai_connector{{/str}} {{#token}}{{{.}}}{{/token}}
 <table id="reports_allbrains" class="resultlist">
     <thead>
         <tr class="headerrow grey_bg">
@@ -40,29 +41,33 @@
             <th>{{#str}}report_allbrains_brainid, local_lai_connector{{/str}}</th>
             <th>{{#str}}report_allbrains_braincreationdate, local_lai_connector{{/str}}</th>
             <th>{{#str}}report_allbrains_brainsize, local_lai_connector{{/str}}</th>
+            <th>{{#str}}report_allbrains_brainaction, local_lai_connector{{/str}}</th>
         </tr>
     </thead>
     <tbody>
-    <tr>
-        <td colspan="2">
-            {{#str}}report_allbrains_currenttoken, local_lai_connector{{/str}}
-        </td>
-        <td colspan="2">
-            {{#token}}{{{.}}}{{/token}}
-        </td>
-    </tr>
     {{#brains}}
-        <tr class="{{{parentclass}}} brainrow" id="row{{{brainid}}}">
-            <td colspan="4">
-            {{{.}}}
+        <tr class="brainrow">
+            <td colspan="2">
+                {{brainname}}
             </td>
+            <td colspan="2">
+                {{brainquota}}
+            </td>
+            <td> <button type="button" class="btn btn-primary tarsus_ajax_brainpage_deletebrain" data-attribute='{{brainid}}' >{{#str}}button_api_call_deletebrain, local_lai_connector{{/str}}</button></td>
         </tr>
     {{/brains}}
     {{^brains}}
         <tr>
-            <td colspan="4">{{#str}}report_allbrains_no_results, local_lai_connector{{/str}}</td>
+            <td colspan="5">{{#str}}report_allbrains_no_results, local_lai_connector{{/str}}</td>
+        </tr>
+        <tr>
+            <td colspan="5"> </td>
+        </tr>
+        <tr>
+            <td colspan="1"><label for="tarsus_ajax_create_new_brain_name">{{#str}}button_api_call_createbrain_label, local_lai_connector{{/str}}</label></td>
+            <td colspan="3"><input id="tarsus_ajax_create_new_brain_name" name="create_new_brain" type="text"></td>
+            <td><span id="tarsus_ajax_brainpage_createnewbrain" class="btn btn-primary">{{#str}}button_api_call_createbrain, local_lai_connector{{/str}}</span></td>
         </tr>
     {{/brains}}
-
     </tbody>
 </table>

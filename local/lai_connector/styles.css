@@ -33,7 +33,8 @@ code, code a {
 
 }
 
-.resultlist td:first-child {
+.resultlist tr td:first-child,
+.resultlist tr th:first-child {
     width: 42%;
     text-align: left;
 }

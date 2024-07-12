@@ -24,8 +24,8 @@
 namespace local_lai_connector;
 
 global $CFG;
-require_once($CFG->dirroot . '/local/lai_connector/classes/event/coursesettings_extended_created.php');
-require_once($CFG->dirroot . '/local/lai_connector/classes/event/coursesettings_extended_updated.php');
+# require_once($CFG->dirroot . '/local/lai_connector/classes/event/coursesettings_extended_created.php');
+# require_once($CFG->dirroot . '/local/lai_connector/classes/event/coursesettings_extended_updated.php');
 
 class coursesettings_extended {
 

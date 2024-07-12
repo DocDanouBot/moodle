@@ -44,16 +44,18 @@ class renderer extends \plugin_renderer_base {
         echo $OUTPUT->header();
     }
 
-
     /**
-     * render - Renders one report page
+     * render_facility - Renders one facility
      *
-     * @param  \stdClass $data
+     * @param  \stdClass $content
      * @return string
      */
-    public function render_lai_connector_reports($data) {
-        $templatedata = new \local_lai_connector\output\templatedata\page_reports($data);
-        $output = $this->render_from_template('local_lai_connector/page_reports',
+    public function render_brains($content) {
+        $templatedata = new \local_lai_connector\output\templatedata\page_brains($content);
+
+         echo("<br><br><br><hr>");
+         var_dump($templatedata);
+        $output = $this->render_from_template('local_lai_connector/page_brains',
             $templatedata->export_for_template($this));
         return $output;
     }

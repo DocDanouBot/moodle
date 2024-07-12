@@ -209,4 +209,87 @@ window.addEventListener('load', function () {
         });
     });
 
+
+    /**
+     * get all the latest and most used keywords from this brain
+     *
+     * @module      local_lai_connector/classes/ajax.php
+     * @package     local_lai_connector
+     * @copyright   lern.link GmbH
+     * @author      Danou Nauck
+     * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+     */
+    $('#tarsus_ajax_brainpage_createnewbrain').click(function() {
+        window.console.log("tarsus_ajax_brainpage_createnewbrain clicked");
+
+        let newbrainname = $('#tarsus_ajax_create_new_brain_name').val();
+        // alert("newbrainname: " + newbrainname);
+
+        if(newbrainname.length < 3) {
+            $('#tarsus_ajax_create_new_brain_name').html('Bitte tragen Sie einen Brainnamen ein');
+        } else {
+            // Save the new order in the db.
+            $.ajax({
+                type: "POST",
+                url: M.cfg.wwwroot + "/local/lai_connector/classes/ajax.php",
+                data: {
+                    action: 'createNewBrain',
+                    brainname: newbrainname,
+                    sesskey: M.cfg.sesskey
+                },
+                dataType: "json",
+                success: function (data) {
+                    let textstring = JSON.stringify(data);
+                    window.console.log("AJAX DONE: tarsus_ajax_brainpage_createnewbrain");
+                },
+                fail: function (data) {
+                    let textstring = JSON.stringify(data);
+                    window.console.log("ERROR " + textstring);
+                }
+            });
+        }
+    });
+
+
+    /**
+     * get all the latest and most used keywords from this brain
+     *
+     * @module      local_lai_connector/classes/ajax.php
+     * @package     local_lai_connector
+     * @copyright   lern.link GmbH
+     * @author      Danou Nauck
+     * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+     */
+    $('.tarsus_ajax_brainpage_deletebrain').click(function(e) {
+        // Get the brainname from the data-attribute.
+        let oldbrainname = $(this).attr('data-attribute');
+        window.console.log("tarsus_ajax_brainpage_deletebrain " + oldbrainname);
+
+        if(oldbrainname.length < 3) {
+            $('#tarsus_ajax_create_new_brain_name').html('Der Brainname ist zu kurz');
+        } else {
+            // Save the new order in the db.
+            $.ajax({
+                type: "POST",
+                url: M.cfg.wwwroot + "/local/lai_connector/classes/ajax.php",
+                data: {
+                    action: 'deleteBrain',
+                    brainname: oldbrainname,
+                    sesskey: M.cfg.sesskey
+                },
+                dataType: "json",
+                success: function (data) {
+                    // Refresh the page
+                    // location.reload();
+                    let textstring = JSON.stringify(data);
+                    window.console.log("AJAX DONE: tarsus_ajax_brainpage_deletebrain " + textstring);
+                },
+                fail: function (data) {
+                    let textstring = JSON.stringify(data);
+                    window.console.log("ERROR " + textstring);
+                }
+            });
+        }
+    });
+
 });
