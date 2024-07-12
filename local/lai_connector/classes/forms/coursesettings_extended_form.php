@@ -53,7 +53,6 @@ class CourseSettingsExtendedTarsusForm extends \moodleform
      */
     public function definition()
     {
-
         // The instance to the mform object.
         $mform =& $this->_form; // Don't forget the underscore
 
@@ -68,10 +67,42 @@ class CourseSettingsExtendedTarsusForm extends \moodleform
             $mform->addElement('header', 'second_tarsus_header', get_string('setting_courseext_addnow_title', 'local_lai_connector'));
             $mform->addElement('html', get_string('setting_courseext_addnow_description', 'local_lai_connector'));
             $mform->addElement('html', '<br>');
-            $mform->addElement('html', '<div style="text-align: center"><button class="btn btn-primary">'.get_string('setting_courseext_addnow_action', 'local_lai_connector').'</button></div>');
+            $mform->addElement('html', '<div style="text-align: center"><span class="btn btn-primary" id="tarsus_ajax_add_course_to_brain">'.get_string('setting_courseext_addnow_action', 'local_lai_connector').'</span> <span id="tarsus_ajax_add_course_to_brain_result"> </span></div>');
             $mform->addElement('html', '<br>');
 
             $this->add_action_buttons(true);
         }
     }
+
+    public function set_data($defaultvalues)    {
+        if (is_object($defaultvalues)) {
+            $defaultvalues = (array)$defaultvalues;
+        }
+
+        if ($defaultvalues['enabled'] <= 0) {
+
+            $defaultvalues['enabled'] = 1;
+
+            parent::set_data($defaultvalues); // Now set the prepared data with the parent method.
+        }
+    }
+
+    /**
+     * Returns the data the user has submitted.
+     *
+     * @return \stdClass The post data.
+     */
+    public function get_data($data = null) {
+        if (is_object($data)) {
+            $data = (array)$data;
+        }
+
+        if ($data == null) {
+            $data = parent::get_data();
+        }
+
+        return $data;
+    }
+
+
 }

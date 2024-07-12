@@ -38,6 +38,10 @@ $PAGE->set_title(get_string('indexpage_title', 'local_lai_connector'));
 $PAGE->set_heading($PAGE->title);
 $PAGE->set_url(new moodle_url('/local/lai_connector/index.php'));
 
+// Define and start the AI connector
+$api = \local_lai_connector\ai_connector::get_instance();
+$brains =  $api->list_brains();
+
 // Define empty Array
 $subpages = array();
 
@@ -50,6 +54,10 @@ if (has_capability('local/lai_connector:settingsview', $PAGE->context)) {
 }
 
 $templatedata['indexpages'] = $subpages;
+$templatedata['token'] = \local_lai_connector\ai_connector::get_instance()::get_api_token();
+$templatedata['brains'] = $brains;
+
+#$icon = new pix_icon('human_brain', 'randomIcon', 'local_lai_connector');
 
 // Output content.
 echo $OUTPUT->header();

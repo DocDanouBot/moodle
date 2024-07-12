@@ -54,7 +54,6 @@ $string['lai_connector:settingsmanage'] = 'Can change the settings of the compon
 $string['lai_connector:brainadd'] = 'Can add a new brain ';
 $string['lai_connector:braindelete'] = 'Can delete a specific brain';
 $string['lai_connector:brainview'] = 'Can see the overview of all brains';
-$string['lai_connector:brainview'] = 'Darf die Übersicht über alle Brains sehen';
 $string['lai_connector:assetadd'] = 'Darf weitere Assets und Ressource dem Brain hinzufügen';
 $string['lai_connector:assetmydelete'] = 'Darf seine eigenen Assets und Ressource aus dem Brain löschen';
 $string['lai_connector:assetdelete'] = 'Darf alle verfügbaren Assets und Ressource aus dem Brain löschen';
@@ -69,12 +68,32 @@ $string['indexpage_title'] = 'LAI main page';
 $string['indexpage_subbrains_title'] = 'Main page for subbrains';
 $string['indexpage_subbrains_info'] = 'Here you can find all subbrains';
 
+// Info for the frontend. Edit Menu in the Course overview.
+$string['frontend_cm_tarsus_status'] = 'Der Tarsus status von diesem Element';
+$string['frontend_cm_tarsus_status_submitted'] = 'Dieses Element wurde dem Brain bereits hinzugefügt';
+$string['frontend_cm_tarsus_status_submit'] = 'Dieses Element dem Brain jetzt hinzufügen';
+$string['frontend_cm_tarsus_status_delete'] = 'Dieses Element aus dem Brain löschen';
+$string['frontend_cm_tarsus_status_norights'] = 'Sie haben nicht das Recht, diesen Status zu ändern.';
+
 // strings for the report comp_brain page.
 $string['report_allbrains_brainname'] = 'Name of the brain';
 $string['report_allbrains_brainid'] = 'BrainID';
 $string['report_allbrains_braincreationdate'] = 'Created on';
 $string['report_allbrains_brainsize'] = 'Size of the brain';
 $string['report_allbrains_no_results'] = 'Sorry, no brains were found, or you do not have the necessary rights to see them.';
+$string['report_allbrains_currenttoken'] = 'Ihr aktueller Token: ';
+
+// Different buttons for the API call page. as a sandbox test.
+$string['button_api_title_testarea'] = 'Testbereich mit Demoknöpfen';
+$string['button_api_call_testbutton'] = 'API Testknopf';
+$string['button_api_call_resultarea'] = 'Ergebnisbereich';
+$string['button_api_call_gethotkeywords'] = 'Beantrage API Token';
+$string['button_api_call_createbrain'] = 'Erstelle Brain';
+$string['button_api_call_deletebrain'] = 'Lösche Brain';
+$string['button_api_call_listbrain'] = 'Zeige alle Brains';
+$string['button_api_call_listbrainquota'] = 'Zeige Brain Datenverbrauch';
+$string['button_api_call_listclonevoices'] = 'Zeige alle verfügbaren Stimmen';
+$string['button_api_call_gethotkeywords'] = 'Hole alle vielbenutzten Schlagworte';
 
 // strings for the explain comp_legend page.
 $string['legend_comp_title'] = 'Legend for explanation';
@@ -112,6 +131,8 @@ $string['setting_claude_apiurl'] = 'URL to the CLAUDE API';
 $string['setting_claude_apiurl_help'] = 'Enter the general URL to the CLAUDE API here so that the system can receive data from CLAUDE.';
 $string['setting_tarsus_apikey'] = 'API key for the TARSUS interface';
 $string['setting_tarsus_apikey_help'] = 'Enter your personal API key for the TARSUS interface here so that the system can receive data from TARSUS.';
+$string['setting_tarsus_apikey_generate'] = 'Beantrage API Key für TARSUS';
+$string['setting_tarsus_apikey_generate_description'] = 'Um die API von TARSUS benutzen zu können, müssen sie erst einen API Key beantragen. Dieser muss erst von TARSUS freigeschaltet werden. Dies ist eine kostenpflichtige Dienstleistung von TARSUS';
 $string['setting_tarsus_apiurl'] = 'URL to the TARSUS API';
 $string['setting_tarsus_apiurl_help'] = 'Enter the general URL to the TARSUS API here so that the system can receive data from TARSUS. The complete API description can be found at <a href="https://documenter.getpostman.com/view/23991933/2s9YJXYQT2" target="_blank">https://documenter.getpostman.com/view/23991933/2s9YJXYQT2</a>.';
 $string['setting_general_tab_title'] = 'General configuration overviewht';

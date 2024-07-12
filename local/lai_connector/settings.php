@@ -27,6 +27,8 @@ defined('MOODLE_INTERNAL') || die;
 global $CFG, $DB;
 
 if ($hassiteconfig) {
+    # require_once($CFG->dirroot. '/local/lai_connector/lib.js');
+    # $PAGE->requires->js(new moodle_url('/h5p/js/embed.js'));
 
     $settings = new theme_boost_admin_settingspage_tabs('local_lai_connector', get_string('pluginname', 'local_lai_connector'));
 
@@ -102,7 +104,7 @@ if ($hassiteconfig) {
     $name = 'local_lai_connector_tarsus_api_url';
     $title = get_string('setting_tarsus_apiurl', 'local_lai_connector');
     $hint = get_string('setting_tarsus_apiurl_help', 'local_lai_connector');
-    $default = 'https://gateway.flexudy.com/api/v1'; // Default TARSUS Api URL
+    $default = 'https://brain.flexudy.com/api/v1'; // Default TARSUS Api URL
     $setting->add(new admin_setting_configtext($name, $title, $hint, $default));
     $setting->hide_if('local_lai_connector_tarsus_api_url', 'local_lai_connector_current_api', 'neq', '1');
 
@@ -145,11 +147,22 @@ if ($hassiteconfig) {
     $setting->add(new admin_setting_configtext($name, $title, $hint, $default));
     $setting->hide_if('local_lai_connector_tarsus_customer_email', 'local_lai_connector_current_api', 'neq', '1');
 
+    $html = html_writer::div(get_string('setting_tarsus_apikey_generate_description', 'local_lai_connector'), '') ."<br>";
+    $attributes = array('id' => 'tarsus_ajax_generateapitoken');
+    $actionbutton = $html . html_writer::div(get_string('setting_tarsus_apikey_generate', 'local_lai_connector'), 'btn btn-primary', $attributes) ."<br><br><br>";
+    $completeparagraph = new admin_setting_description('tarsusbutton_startapi', null, $actionbutton);
+    $setting->add($completeparagraph);
+
+    #$link = '<div style="text-align: center"><button class="btn btn-primary">'.get_string('setting_courseext_addnow_action', 'local_lai_connector').'</button></div>';
+    #$settings->add(new admin_setting_heading('newbuttontarsus', get_string('local_lai_connector', 'game'), $link));
+
+
+
     $settings->add($setting);
 
     /* -------------------------------------------------------------------- */
 
-    /* Maintbrain and Sub Brain settings */
+    /* Mainbrain and Sub Brain settings */
     $setting = new admin_settingpage('local_lai_connector_tarsus_brains',
         get_string('setting_tarsus_brain_tab_title', 'local_lai_connector'));
 

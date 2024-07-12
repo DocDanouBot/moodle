@@ -44,9 +44,11 @@ class api_connector_claude
      */
     public $_api_token = "";
 
-    // get the current token from the API
-    public function get_api_token(): string {
-        $this->_api_token = "CLAUDE_API_TOKEN";
-        return $this->_api_token;
+    // get the current token from the API settings
+    public function get_api_token(): string
+    {
+        global $CFG;
+        // Prepare the customer data array.
+        return $CFG->local_lai_connector_claude_api_key;
     }
 }

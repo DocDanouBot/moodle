@@ -69,12 +69,32 @@ $string['indexpage_title'] = 'LAI Hauptseite';
 $string['indexpage_subbrains_title'] = 'Hauptseite für Subbrains';
 $string['indexpage_subbrains_info'] = 'Hier finden sie alle Unterbrains';
 
+// Info for the frontend. Edit Menu in the Course overview.
+$string['frontend_cm_tarsus_status'] = 'Der Tarsus status von diesem Element';
+$string['frontend_cm_tarsus_status_submitted'] = 'Dieses Element wurde dem Brain bereits hinzugefügt';
+$string['frontend_cm_tarsus_status_submit'] = 'Dieses Element dem Brain jetzt hinzufügen';
+$string['frontend_cm_tarsus_status_delete'] = 'Dieses Element aus dem Brain löschen';
+$string['frontend_cm_tarsus_status_norights'] = 'Sie haben nicht das Recht, diesen Status zu ändern.';
+
 // strings for the report comp_brain page.
 $string['report_allbrains_brainname'] = 'Name des Brains';
 $string['report_allbrains_brainid'] = 'BrainID';
 $string['report_allbrains_braincreationdate'] = 'Erstellt am';
 $string['report_allbrains_brainsize'] = 'Größe des Brains';
 $string['report_allbrains_no_results'] = 'Entschuldigung, Es wurden keine Brains gefunden, oder sie haben nicht die nötigen Rechte diese zu sehen.';
+$string['report_allbrains_currenttoken'] = 'Ihr aktueller Token: ';
+
+// Different buttons for the API call page. as a sandbox test.
+$string['button_api_title_testarea'] = 'Testbereich mit Demoknöpfen';
+$string['button_api_call_testbutton'] = 'API Testknopf';
+$string['button_api_call_resultarea'] = 'Ergebnisbereich';
+$string['button_api_call_gethotkeywords'] = 'Beantrage API Token';
+$string['button_api_call_createbrain'] = 'Erstelle Brain';
+$string['button_api_call_deletebrain'] = 'Lösche Brain';
+$string['button_api_call_listbrain'] = 'Zeige alle Brains';
+$string['button_api_call_listbrainquota'] = 'Zeige Brain Datenverbrauch';
+$string['button_api_call_listclonevoices'] = 'Zeige alle verfügbaren Stimmen';
+$string['button_api_call_gethotkeywords'] = 'Hole alle vielbenutzten Schlagworte';
 
 // strings for the explain comp_legend page.
 $string['legend_comp_title'] = 'Legende zur Erklärung';
@@ -110,6 +130,8 @@ $string['setting_claude_apikey'] = 'API Key für die CLAUDE Schnittstelle';
 $string['setting_claude_apikey_help'] = 'Tragen Sie hier Ihren persönlichen API Key für die CLAUDE Schnittstelle ein, damit das System von CLAUDE Daten empfangen kann.';
 $string['setting_claude_apiurl'] = 'URL zu der CLAUDE API';
 $string['setting_claude_apiurl_help'] = 'Tragen Sie hier die allgemeine URL zur CLAUDE API ein, damit das System von CLAUDE Daten empfangen kann.';
+$string['setting_tarsus_apikey_generate'] = 'Beantrage API Key für TARSUS';
+$string['setting_tarsus_apikey_generate_description'] = 'Um die API von TARSUS benutzen zu können, müssen sie erst einen API Key beantragen. Dieser muss erst von TARSUS freigeschaltet werden. Dies ist eine kostenpflichtige Dienstleistung von TARSUS';
 $string['setting_tarsus_apikey'] = 'API Key für die TARSUS Schnittstelle';
 $string['setting_tarsus_apikey_help'] = 'Tragen Sie hier Ihren persönlichen API Key für die TARSUS Schnittstelle ein, damit das System von TARSUS Daten empfangen kann.';
 $string['setting_tarsus_apiurl'] = 'URL zu der TARSUS API';

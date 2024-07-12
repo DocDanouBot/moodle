@@ -29,6 +29,10 @@ use stdClass;
 use moodle_url;
 
 class ai_connector {
+    /*
+    *  The whole foreign API referenced into this class to be uses as object
+    */
+    private $_api;
 
     /*
      *  The var that saves the name of the currently used API.
@@ -107,6 +111,9 @@ class ai_connector {
                         // Now we fill in the other values directly from the constant array:
                         self::$_api_icon  = $thisAIAPI['icon'];
                         self::$_api_color = $thisAIAPI['color'];
+
+                        $this->_api = \local_lai_connector\api_connector_tarsus::get_instance();
+
                         break;
                     } else {
                         // This API is sadly disabled in the constant setting. check definitions.php
@@ -151,6 +158,7 @@ class ai_connector {
         if ((!self::$_self) || (self::$_api_provider_id != $local_api_provider_id)) {
             self::$_self = new self($local_api_provider_id);
         }
+
         return self::$_self;
     }
 
@@ -210,15 +218,37 @@ class ai_connector {
         self::$_api_provider = $api_provider;
     }
 
-    public function get_api_token():string {
-        $dynamicfunction = '\local_lai_connector\api_connector_'.strtolower(self::$_api_provider).'::get_api_token()';
-        if (function_exists('$dynamicfunction')) {
-            $api_token = $dynamicfunction();
-        } else {
-            $api_token = "The function $dynamicfunction does not exist.";
-        }
+    public static function get_api_token():string {
         $api_token = \local_lai_connector\api_connector_tarsus::get_api_token();
+        #$dynamicfunction = '\local_lai_connector\api_connector_'.strtolower(self::$_api_provider).'::get_api_token()';
+       # if (function_exists($dynamicfunction)) {
+        #    $api_token = $dynamicfunction();
+        #} else {
+        #    $api_token = "The function $dynamicfunction does not exist.";
+        #}
+
+        #$api_token = call_user_func($dynamicfunction);
         return $api_token;
     }
 
+
+    public function validate_api_token():string {
+        $api_token = \local_lai_connector\api_connector_tarsus::validate_api_token();
+        return $api_token;
+    }
+
+    public function list_brains() {
+        $allbrains = \local_lai_connector\api_connector_tarsus::list_brains();
+        return $allbrains;
+    }
+
+    public function get_brain_usage($brainid) {
+        $brainusage = \local_lai_connector\api_connector_tarsus::get_brain_usage($brainid);
+        return $brainusage;
+    }
+
+    public function add_course_to_brain($courseid) {
+        $addresult = $this->_api->add_course_to_brain($courseid);
+        return $addresult;
+    }
 }

@@ -18,3 +18,45 @@ code, code a {
     background-color: #009900;
     background-image: none;
 }
+
+
+
+
+/*
+############################################################
+###########     Edit Icon in activity     ##################
+############################################################
+*/
+
+.activity-item .activity-tarsus-info {
+
+    justify-self: end;
+}
+.activity-item .activity-tarsus-info .tarsus-information {
+    height: 32px;
+    width: 32px;
+    border-radius: 0.5rem;
+}
+.activity-item .activity-tarsus-info .tarsus-icon-info {
+    display: none;
+}
+@media (max-width: 575.98px) {
+    .activity-item .activity-tarsus-info {
+        width: 100%;
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid #dee2e6;
+    }
+    .activity-item .activity-tarsus-info .tarsus-information {
+        width: auto;
+        font-size: inherit;
+        padding: 0 0.5rem;
+    }
+    .activity-item .activity-tarsus-info .tarsus-icon-info {
+        display: inline;
+    }
+    .activity-item .activity-tarsus-info .v-parent-focus {
+        opacity: 1;
+        visibility: visible;
+    }
+}

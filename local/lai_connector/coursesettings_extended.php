@@ -41,6 +41,7 @@ $PAGE->set_url($CFG->wwwroot.'/local/lai_connector/coursesettings_extended.php',
 $PAGE->set_pagelayout('admin');
 $PAGE->set_title(get_string("setting_courseext_pagetitle",  "local_lai_connector"));
 $PAGE->set_heading(get_string("setting_courseext_header",  "local_lai_connector"));
+$PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/lai_connector/lib.js'));
 
 $baseurl = $CFG->wwwroot."/local/lai_connector/coursesettings_extended.php";
 

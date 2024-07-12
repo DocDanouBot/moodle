@@ -44,10 +44,12 @@ class api_connector_chatgpt
      */
     public $_api_token = "";
 
-    // get the current token from the API
-    public function get_api_token(): string {
-        $this->_api_token = "chatgpt-api-token";
-        return $this->_api_token;
+    // get the current token from the API settings
+    public function get_api_token(): string
+    {
+        global $CFG;
+        // Prepare the customer data array.
+        return $CFG->local_lai_connector_chatgpt_api_key;
     }
 
 }

@@ -43,20 +43,26 @@
         </tr>
     </thead>
     <tbody>
-    {{#allbrains}}
+    <tr>
+        <td colspan="2">
+            {{#str}}report_allbrains_currenttoken, local_lai_connector{{/str}}
+        </td>
+        <td colspan="2">
+            {{#token}}{{{.}}}{{/token}}
+        </td>
+    </tr>
+    {{#brains}}
         <tr class="{{{parentclass}}} brainrow" id="row{{{brainid}}}">
-            <td class="vlr" colspan="4">
-                {{#shownolinks}}{{{participants_handed_in}}}{{/shownolinks}}
+            <td colspan="4">
+            {{{.}}}
             </td>
         </tr>
-
-        {{>local_lai_connector/comp_report_subbrains}}
-    {{/allbrains}}
-
-    {{^allbrains}}
+    {{/brains}}
+    {{^brains}}
         <tr>
             <td colspan="4">{{#str}}report_allbrains_no_results, local_lai_connector{{/str}}</td>
         </tr>
-    {{/allbrains}}
+    {{/brains}}
+
     </tbody>
 </table>

@@ -34,6 +34,15 @@ use moodle_url;
 class api_connector_tarsus
 {
 
+
+    /**
+     * Singleton instance of this class. We cache the instance in this Class.
+     * so we can use it again without re-creating it.
+     *
+     * @var  $_self
+     */
+    private static $_self;
+
     /* Get the API token from the API server.
      * This is the token that is used to authenticate the API calls.
      * The token is returned as a string.
@@ -41,6 +50,28 @@ class api_connector_tarsus
      * @return string
      */
     public $_api_token = "";
+
+    /**
+     * Factory method to get an instance of the AI connector. We use this method to get the instance.
+     * of the AI connector ONLY once! We do not want to redo the job many times, if we need the API.
+     * again and again in multiple spots on the same page. Thus we -basically- cache it in the protected $_self variable.
+     *
+     * @return the TARSUS Connector
+     * @throws \lai_exception
+     */
+    public static function get_instance() {
+        global $CFG;
+
+        # We also need to check, that the self->id is NOT the same as before,
+        # otherwise in a loop he would always return the first element he cached
+        if ((!self::$_self)) {
+            self::$_self = new self();
+        }
+
+        return self::$_self;
+    }
+
+
 
     /**
      * Get a descriptive name for this AI Connection
@@ -57,8 +88,17 @@ class api_connector_tarsus
         return new moodle_url('/local/lai_connector/api_tarsus.php');
     }
 
-    // get the current token from the API
-    public function get_api_token(): string {
+
+    // get the current token from the API settings
+    public static function get_api_token(): string
+    {
+        global $CFG;
+        // Prepare the customer data array.
+        return $CFG->local_lai_connector_tarsus_api_key;
+    }
+
+    // hand in the company info to get a valid token for the API
+    public function validate_api_token(): string {
         global $CFG;
 
         // Prepare the customer data array.
@@ -86,9 +126,66 @@ class api_connector_tarsus
         #echo $response;
         #return $response;
 
-        $this->_api_token = "TARSUS_API_TOKEN";
+        $this->_api_token = $response;
         echo $this->_api_token;
         return $this->_api_token;
+    }
+
+
+    public static function list_brains() {
+        global $CFG;
+        $curl = curl_init();
+        $baseurl = $CFG->local_lai_connector_tarsus_api_url;
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $baseurl.'/brain/awareness/list/memories',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_POSTFIELDS => array('api_key' => $CFG->local_lai_connector_tarsus_api_key),
+        ));
+
+        $response = curl_exec($curl);
+
+        # print_r($response);
+        # die($response);
+
+        curl_close($curl);
+        return $response;
+    }
+
+
+    public static function get_brain_usage($brainid) {
+        global $CFG;
+        $curl = curl_init();
+        $baseurl = $CFG->local_lai_connector_tarsus_api_url;
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $baseurl.'/brain/awareness/get/usage',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_POSTFIELDS => array('api_key' => $CFG->local_lai_connector_tarsus_api_key,'brain_id' => $brainid,'start_timestamp' => '1706698560','end_timestamp' => '1712527199'),
+        ));
+
+        $brainusage = curl_exec($curl);
+
+        curl_close($curl);
+        return $brainusage;
+    }
+
+    public function add_course_to_brain($courseid) {
+        // adding_course_to_brain($courseid);
+        $result = "No Usage for course id " . $courseid ;
+        return $result;
     }
 
 }
