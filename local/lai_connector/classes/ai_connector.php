@@ -76,6 +76,8 @@ class ai_connector {
     public function __construct() {
         global $CFG;
 
+        $this->_api = \local_lai_connector\api_connector_tarsus::get_instance();
+
         // Which API are we currently using? Check from main component
         // We need to get the stuph from the config settings
         if(isset($CFG->local_lai_connector_current_api) && $CFG->local_lai_connector_current_api != '') {
@@ -112,7 +114,7 @@ class ai_connector {
                         self::$_api_icon  = $thisAIAPI['icon'];
                         self::$_api_color = $thisAIAPI['color'];
 
-                        $this->_api = \local_lai_connector\api_connector_tarsus::get_instance();
+
 
                         break;
                     } else {
@@ -233,22 +235,41 @@ class ai_connector {
 
 
     public function validate_api_token():string {
-        $api_token = \local_lai_connector\api_connector_tarsus::validate_api_token();
+        $api_token = $this->_api->validate_api_token();
         return $api_token;
     }
 
     public function list_brains() {
-        $allbrains = \local_lai_connector\api_connector_tarsus::list_brains();
+        $allbrains = $this->_api->list_brains();
         return $allbrains;
     }
 
     public function get_brain_usage($brainid) {
-        $brainusage = \local_lai_connector\api_connector_tarsus::get_brain_usage($brainid);
+        $brainusage = $this->_api->get_brain_usage($brainid);
         return $brainusage;
     }
 
     public function add_course_to_brain($courseid) {
         $addresult = $this->_api->add_course_to_brain($courseid);
         return $addresult;
+    }
+
+    public function get_clone_voices() {
+        $result = $this->_api->get_clone_voices();
+        return $result;
+    }
+
+    public function get_hot_keywords($starttime = 0, $endtime = 0) {
+        if ($endtime == 0) {
+            // Endtime was not set, so we always assume the person meant the last weeks / months untill now
+            $endtime = time();
+        }
+        if ($starttime == 0) {
+            // Starttime was not set, so we always assume the person meant exactly a half year brackend from before the endtime
+            $starttime = $endtime - (\local_lai_connector\definitions::LL_TIME_CONSTANTS['SECONDS_PER_YEAR'] / 2 );
+        }
+
+        $result = $this->_api->get_hot_keywords($starttime,$endtime);
+        return $result;
     }
 }

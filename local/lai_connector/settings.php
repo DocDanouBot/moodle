@@ -96,7 +96,9 @@ if ($hassiteconfig) {
     $name = 'local_lai_connector_tarsus_api_key';
     $title = get_string('setting_tarsus_apikey', 'local_lai_connector');
     $hint = get_string('setting_tarsus_apikey_help', 'local_lai_connector');
-    $default = '7517fd28-8cb4-4304-b9f0-0312b8c92ef1'; // Default TARSUS Api Key
+    // Danous API Key: 856f67f4-c0dd-4e63-a1eb-3da60dc59343
+    // Default TARSUS Api Key: 7517fd28-8cb4-4304-b9f0-0312b8c92ef1
+    $default = '856f67f4-c0dd-4e63-a1eb-3da60dc59343'; // Default API Key as preset
     $setting->add(new admin_setting_configtext($name, $title, $hint, $default));
     $setting->hide_if('local_lai_connector_tarsus_api_key', 'local_lai_connector_current_api', 'neq', '1');
 

@@ -36,6 +36,28 @@ $capabilities = array(
             'manager' => CAP_ALLOW,
         ),
     ),
+
+    // The User can visit the brainpage of this plugin
+    'local/lai_connector:viewbrainpage' => array(
+        'captype' => 'write',
+        'riskbitmask' => RISK_SPAM,
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'editingteacher' => CAP_PREVENT,
+            'manager' => CAP_ALLOW,
+        ),
+    ),
+    // The User can visit the brainpage of this plugin
+    'local/lai_connector:viewcuratedatapage' => array(
+        'captype' => 'write',
+        'riskbitmask' => RISK_SPAM,
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW,
+        ),
+    ),
     // The User can view the settings
     'local/lai_connector:settingsview' => array(
         'captype' => 'read',

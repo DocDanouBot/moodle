@@ -14,13 +14,29 @@ code, code a {
 ###########    NEW : index.php listing    ##################
 ############################################################
 */
-#page-local-lai_connector-index {
-    background-color: #009900;
+#page-local-lai_connector-index,
+#page-local-lai_connector-brains {
+    background-color: #EEEEEE;
     background-image: none;
 }
 
 
+#lai_comp_testbuttons {
+    margin: 40px 0px 10px 0px;
+}
 
+#lai_comp_testbuttons tr td {
+    vertical-align: top;
+}
+
+.resultlist {
+
+}
+
+.resultlist td:first-child {
+    width: 42%;
+    text-align: left;
+}
 
 /*
 ############################################################

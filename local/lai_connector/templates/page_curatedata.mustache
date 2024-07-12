@@ -36,7 +36,7 @@
 
 
 <div>
-    <h3>{{#str}}pluginname, local_lai_connector{{/str}}</h3>
+    <h3><a href="{{indexpageurl}}" target="_self">{{#str}}pluginname, local_lai_connector{{/str}}</a></h3>
     <br />
     <div class="filtercontainer">
         {{{formhtml}}}
@@ -46,9 +46,7 @@
         {{{.}}}
     {{/pagingbar}}
 
-    {{> local_lai_connector/comp_subpage}}
-
-    {{> local_lai_connector/comp_testbuttons}}
+    {{> local_lai_connector/comp_curate_data}}
 
     {{#pagingbar}}
         {{{.}}}

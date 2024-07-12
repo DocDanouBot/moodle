@@ -43,13 +43,33 @@ class api_connector_tarsus
      */
     private static $_self;
 
+    /** @var Where is the API connector being found
+     *
+     */
+    private $_api_baseurl;
+
+
+
     /* Get the API token from the API server.
      * This is the token that is used to authenticate the API calls.
      * The token is returned as a string.
      *
      * @return string
      */
-    public $_api_token = "";
+    private $_api_key = "";
+
+
+
+    //* Component constructor.
+    public function __construct() {
+        global $CFG;
+
+        // We need to check, if the API is available.
+        $this->_api_baseurl = $CFG->local_lai_connector_tarsus_api_url;
+        $this->_api_key = $CFG->local_lai_connector_tarsus_api_key;
+
+    }
+
 
     /**
      * Factory method to get an instance of the AI connector. We use this method to get the instance.
@@ -98,6 +118,17 @@ class api_connector_tarsus
     }
 
     // hand in the company info to get a valid token for the API
+    /*
+     * yeah die erste resonse war hier:
+     * {"result":
+     * "{"api":
+     * {"active":false,
+     * "api_key":"856f67f4-c0dd-4e63-a1eb-3da60dc59343",
+     * "message":"Request api key activation by mailing us with: Danou@web-wizards.it",
+     * "organisation_address":"21 vjal Portomaso, Appartment 2121",
+     * "organisation_email":"Danou@web-wizards.it",
+     * "organisation_name":"Web-Wizards.it"}}"}
+     */
     public function validate_api_token(): string {
         global $CFG;
 
@@ -106,11 +137,9 @@ class api_connector_tarsus
         $postfieldarray['legal_billing_organisation_address'] = $CFG->local_lai_connector_tarsus_customer_address;
         $postfieldarray['legal_billing_organisation_email'] = $CFG->local_lai_connector_tarsus_customer_email;
 
-
-        $baseurl = $CFG->local_lai_connector_tarsus_api_url;
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $baseurl.'/auth/key/generate',
+            CURLOPT_URL => $this->_api_baseurl . '/auth/key/generate',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -123,22 +152,18 @@ class api_connector_tarsus
         $response = curl_exec($curl);
 
         curl_close($curl);
-        #echo $response;
-        #return $response;
-
-        $this->_api_token = $response;
-        echo $this->_api_token;
-        return $this->_api_token;
+        return  $response;
     }
 
 
-    public static function list_brains() {
+    public function list_brains() {
         global $CFG;
         $curl = curl_init();
-        $baseurl = $CFG->local_lai_connector_tarsus_api_url;
+
+        $postfieldarray['api_key'] = $this->_api_key;
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $baseurl.'/brain/awareness/list/memories',
+            CURLOPT_URL => $this->_api_baseurl . '/brain/awareness/list/memories',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -146,7 +171,7 @@ class api_connector_tarsus
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_POSTFIELDS => array('api_key' => $CFG->local_lai_connector_tarsus_api_key),
+            CURLOPT_POSTFIELDS => $postfieldarray,
         ));
 
         $response = curl_exec($curl);
@@ -159,13 +184,17 @@ class api_connector_tarsus
     }
 
 
-    public static function get_brain_usage($brainid) {
+    public function get_brain_usage($start_timestamp = 0, $end_timestamp = 0, $brainid = 'customer-demo') {
         global $CFG;
         $curl = curl_init();
-        $baseurl = $CFG->local_lai_connector_tarsus_api_url;
+
+        $postfieldarray['api_key'] = $this->_api_key;
+        $postfieldarray['brain_id'] = $brainid;
+        $postfieldarray['start_timestamp'] = $start_timestamp;
+        $postfieldarray['end_timestamp'] = $end_timestamp;
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $baseurl.'/brain/awareness/get/usage',
+            CURLOPT_URL => $this->_api_baseurl . '/brain/awareness/get/usage',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -173,7 +202,7 @@ class api_connector_tarsus
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_POSTFIELDS => array('api_key' => $CFG->local_lai_connector_tarsus_api_key,'brain_id' => $brainid,'start_timestamp' => '1706698560','end_timestamp' => '1712527199'),
+            CURLOPT_POSTFIELDS =>  $postfieldarray,
         ));
 
         $brainusage = curl_exec($curl);
@@ -183,9 +212,41 @@ class api_connector_tarsus
     }
 
     public function add_course_to_brain($courseid) {
+        global $CFG;
         // adding_course_to_brain($courseid);
         $result = "No Usage for course id " . $courseid ;
         return $result;
     }
 
+
+    public function get_clone_voices() {
+        global $CFG;
+    }
+
+    public function get_hot_keywords($start_timestamp = 0, $end_timestamp = 0, $brainid = 'customer-demo') {
+        global $CFG;
+        $curl = curl_init();
+
+        $postfieldarray['api_key'] = $this->_api_key;
+        $postfieldarray['brain_id'] = $brainid;
+        $postfieldarray['start_timestamp'] = $start_timestamp;
+        $postfieldarray['end_timestamp'] = $end_timestamp;
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $this->_api_baseurl . '/brain/advisory/get/hot-keywords',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS =>  $postfieldarray,
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        echo $response;
+    }
 }

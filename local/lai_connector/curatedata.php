@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/** Index page for this plugin
+/** curatedata page for this plugin
  *
  * @package     local_lai_connector
  * @copyright   lern.link GmbH
@@ -29,14 +29,14 @@ global $PAGE, $OUTPUT;
 
 // Check access.
 require_login(null, false);
-require_capability('local/lai_connector:viewindexpage', $context);
+require_capability('local/lai_connector:viewcuratedatapage', $context);
 
 // Set up $PAGE.
 $PAGE->set_context($context);
 $PAGE->set_pagelayout('standard');
-$PAGE->set_title(get_string('indexpage_title', 'local_lai_connector'));
+$PAGE->set_title(get_string('curatedatapage_title', 'local_lai_connector'));
 $PAGE->set_heading($PAGE->title);
-$PAGE->set_url(new moodle_url('/local/lai_connector/index.php'));
+$PAGE->set_url(new moodle_url('/local/lai_connector/curatedata.php'));
 
 // Load the lib.js to allow ajax communication with server
 $PAGE->requires->js(new moodle_url('/local/lai_connector/lib.js'));
@@ -46,32 +46,13 @@ $api = \local_lai_connector\ai_connector::get_instance();
 $brains =  $api->list_brains();
 
 // Define empty Array
-$subpages = null;
-
-// What kind of subpages or additional pages do we display according to the rights of the user.
-if (has_capability('local/lai_connector:viewbrainpage', $PAGE->context)) {
-    $subpages[] = array(
-        'subpagelink' => new moodle_url('/local/lai_connector/brains.php'),
-        'subpagename' => get_string('brainpage_title', 'local_lai_connector'),
-        'subpageinfo' => get_string('button_subpage_brains_description', 'local_lai_connector'),
-        'subpageicon' => 'fa-users');
-}
-if (has_capability('local/lai_connector:viewbrainpage', $PAGE->context)) {
-    $subpages[] = array(
-        'subpagelink' => new moodle_url('/local/lai_connector/curatedata.php'),
-        'subpagename' => get_string('curatedatapage_title', 'local_lai_connector'),
-        'subpageinfo' => get_string('button_subpage_curatedata_description', 'local_lai_connector'),
-        'subpageicon' => 'fa-address-card');
-}
+$subpages = array();
 
 $templatedata['indexpageurl'] =  new moodle_url('/local/lai_connector/index.php');
-$templatedata['subpages'] = $subpages;
 $templatedata['token'] = \local_lai_connector\ai_connector::get_instance()::get_api_token();
 $templatedata['brains'] = $brains;
 
-#$icon = new pix_icon('human_brain', 'randomIcon', 'local_lai_connector');
-
 // Output content.
 echo $OUTPUT->header();
-echo $OUTPUT->render_from_template('local_lai_connector/page_index', $templatedata);
+echo $OUTPUT->render_from_template('local_lai_connector/page_curatedata', $templatedata);
 echo $OUTPUT->footer();

@@ -36,9 +36,8 @@ switch ($action) {
     case "generateAPIToken":
         $result = $api->validate_api_token();
         $returndata = array(
-            'token' => $token,
             'result' => $result,
-            'courseid' => $courseid
+            'function' => "generateAPIToken"
         );
         echo json_encode($returndata);
         break;
@@ -47,14 +46,7 @@ switch ($action) {
         $returndata = array(
             'token' => $token,
             'status' => $status,
-        );
-        echo json_encode($returndata);
-        break;
-    case "dropToken":
-        $token = "Token DEAD";
-        $returndata = array(
-            'token' => $token,
-            'status' => "OFF"
+            'function' => "getToken"
         );
         echo json_encode($returndata);
         break;
@@ -92,6 +84,24 @@ switch ($action) {
             'token' => $token,
             'result' => $result,
             'function' => "showBrainsQuotas"
+        );
+        echo json_encode($returndata);
+        break;
+    case "listCloneVoices":
+        $result = $api->get_clone_voices();
+        $returndata = array(
+            'token' => $token,
+            'result' => $result,
+            'function' => "listCloneVoices"
+        );
+        echo json_encode($returndata);
+        break;
+    case "getHotKeywords":
+        $result = $api->get_hot_keywords();
+        $returndata = array(
+            'token' => $token,
+            'result' => $result,
+            'function' => "getHotKeywords"
         );
         echo json_encode($returndata);
         break;

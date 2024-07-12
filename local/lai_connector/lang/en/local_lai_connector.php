@@ -49,6 +49,8 @@ $string['api_tarsus_mainname'] = 'TARSUS';
 
 // Rights and Roles
 $string['lai_connector:viewindexpage'] = 'Can visit the main page of the component ';
+$string['lai_connector:viewbrainpage'] = 'Darf die Seite mit den Brains der Komponente besuchen ';
+$string['lai_connector:viewcuratedatapage'] = 'Darf die Seite zum Kuratieren der Inhalte besuchen.';
 $string['lai_connector:settingsview'] = 'Can see the settings of the component ';
 $string['lai_connector:settingsmanage'] = 'Can change the settings of the component';
 $string['lai_connector:brainadd'] = 'Can add a new brain ';
@@ -65,8 +67,10 @@ $string['event_coursesettings_extended_updated'] = 'Event: Die erweiterten Kurse
 
 // info for the main page.
 $string['indexpage_title'] = 'LAI main page';
-$string['indexpage_subbrains_title'] = 'Main page for subbrains';
-$string['indexpage_subbrains_info'] = 'Here you can find all subbrains';
+$string['brainpage_title'] = 'Hauptseite für Brains';
+$string['brainpage_description'] = 'Hier finden sie alle Brains';
+$string['curatedatapage_title'] = 'Inhalte kuratieren';
+$string['curatedatapage_description'] = 'Hauptseite für das Kuratieren von Inhalten';
 
 // Info for the frontend. Edit Menu in the Course overview.
 $string['frontend_cm_tarsus_status'] = 'Der Tarsus status von diesem Element';
@@ -84,16 +88,24 @@ $string['report_allbrains_no_results'] = 'Sorry, no brains were found, or you do
 $string['report_allbrains_currenttoken'] = 'Ihr aktueller Token: ';
 
 // Different buttons for the API call page. as a sandbox test.
+$string['button_api_title_indexpage'] = 'Wähle den Bereich zum Konfigurieren';
+$string['button_api_call_featurebutton'] = 'Knopf zur nächsten Seite';
+$string['button_api_call_featurebutton_description'] = 'Was können Sie hier einstellen';
 $string['button_api_title_testarea'] = 'Testbereich mit Demoknöpfen';
 $string['button_api_call_testbutton'] = 'API Testknopf';
 $string['button_api_call_resultarea'] = 'Ergebnisbereich';
-$string['button_api_call_gethotkeywords'] = 'Beantrage API Token';
+$string['button_api_call_generateapitoken'] = 'Beantrage API Token';
 $string['button_api_call_createbrain'] = 'Erstelle Brain';
 $string['button_api_call_deletebrain'] = 'Lösche Brain';
 $string['button_api_call_listbrain'] = 'Zeige alle Brains';
 $string['button_api_call_listbrainquota'] = 'Zeige Brain Datenverbrauch';
 $string['button_api_call_listclonevoices'] = 'Zeige alle verfügbaren Stimmen';
 $string['button_api_call_gethotkeywords'] = 'Hole alle vielbenutzten Schlagworte';
+$string['button_subpage_brains'] = 'Brains Konfiguration';
+$string['button_subpage_brains_description'] = 'Hier können sie alle Brains einsehen, konfigurieren, anlegen, löschen und die Quotas sehen.';
+$string['button_subpage_curatedata'] = 'Inhalte kuratieren';
+$string['button_subpage_curatedata_description'] = 'Hier können sie Inhalte der Brains, anlegen, löschen und kuratieren.';
+$string['button_subpage_none'] = 'Es stehen Ihnen keine Unterseiten zum Konfigurieren zur Verfügung. Wahrscheinlich haben sie nicht genügend Rechte und müssen erst Ihre Rollenberechtigung anpassen.';
 
 // strings for the explain comp_legend page.
 $string['legend_comp_title'] = 'Legend for explanation';

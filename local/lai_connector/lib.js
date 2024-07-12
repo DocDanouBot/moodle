@@ -8,6 +8,39 @@ window.addEventListener('load', function () {
     }
 
     /**
+     * generate a new API Token
+     *
+     * @module      local_lai_connector/classes/ajax.php
+     * @package     local_lai_connector
+     * @copyright   lern.link GmbH
+     * @author      Danou Nauck
+     * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+     */
+    $('#tarsus_ajax_generateapitoken').click(function() {
+        window.console.log("tarsus_ajax_generateapitoken clicked");
+        // Save the new order in the db.
+        $.ajax({
+            type: "POST",
+            url: M.cfg.wwwroot + "/local/lai_connector/classes/ajax.php",
+            data: {
+                action: 'generateAPIToken',
+                sesskey: M.cfg.sesskey
+            },
+            dataType: "json",
+            success: function(data) {
+                let textstring = JSON.stringify(data);
+                window.console.log("AJAX DONE: tarsus_ajax_generateapitoken");
+                $('#tarsus_ajax_resultarea').html(textstring);
+            },
+            fail: function (data) {
+                let textstring = JSON.stringify(data);
+                window.console.log( "ERROR" );
+                $('#tarsus_ajax_resultarea').html("ERROR: " + textstring);
+            }
+        });
+    });
+
+    /**
      * transmit_anything code.
      *
      * @module      local_lai_connector/classes/ajax.php
@@ -109,9 +142,8 @@ window.addEventListener('load', function () {
         });
     });
 
-
     /**
-     * generate a new API Token
+     * get all the available voices from the api for TARSUS
      *
      * @module      local_lai_connector/classes/ajax.php
      * @package     local_lai_connector
@@ -119,20 +151,54 @@ window.addEventListener('load', function () {
      * @author      Danou Nauck
      * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
      */
-    $('#tarsus_ajax_generateapitoken').click(function() {
-        window.console.log("tarsus_ajax_generateapitoken clicked");
+    $('#tarsus_ajax_listclonevoices').click(function() {
+        window.console.log("tarsus_ajax_listclonevoices clicked");
         // Save the new order in the db.
         $.ajax({
             type: "POST",
             url: M.cfg.wwwroot + "/local/lai_connector/classes/ajax.php",
             data: {
-                action: 'generateAPIToken',
+                action: 'listCloneVoices',
                 sesskey: M.cfg.sesskey
             },
             dataType: "json",
             success: function(data) {
                 let textstring = JSON.stringify(data);
-                window.console.log("AJAX DONE: tarsus_ajax_generateapitoken");
+                window.console.log("AJAX DONE: tarsus_ajax_listclonevoices");
+                $('#tarsus_ajax_resultarea').html(textstring);
+            },
+            fail: function (data) {
+                let textstring = JSON.stringify(data);
+                window.console.log( "ERROR" );
+                $('#tarsus_ajax_resultarea').html("ERROR: " + textstring);
+            }
+        });
+    });
+
+
+    /**
+     * get all the latest and most used keywords from this brain
+     *
+     * @module      local_lai_connector/classes/ajax.php
+     * @package     local_lai_connector
+     * @copyright   lern.link GmbH
+     * @author      Danou Nauck
+     * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+     */
+    $('#tarsus_ajax_gethotkeywords').click(function() {
+        window.console.log("tarsus_ajax_gethotkeywords clicked");
+        // Save the new order in the db.
+        $.ajax({
+            type: "POST",
+            url: M.cfg.wwwroot + "/local/lai_connector/classes/ajax.php",
+            data: {
+                action: 'getHotKeywords',
+                sesskey: M.cfg.sesskey
+            },
+            dataType: "json",
+            success: function(data) {
+                let textstring = JSON.stringify(data);
+                window.console.log("AJAX DONE: tarsus_ajax_gethotkeywords");
                 $('#tarsus_ajax_resultarea').html(textstring);
             },
             fail: function (data) {

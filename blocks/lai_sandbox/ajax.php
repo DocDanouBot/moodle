@@ -41,13 +41,4 @@ switch ($action) {
         );
         echo json_encode($returndata);
         break;
-    case "dropToken":
-        $token = "Token DEAD";
-
-        $returndata = array(
-            'token' => $token,
-            'status' => "OFF"
-        );
-        echo json_encode($returndata);
-        break;
 }

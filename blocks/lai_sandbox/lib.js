@@ -46,39 +46,6 @@ window.addEventListener('load', function () {
                 window.console.log( "complete" );
             });
     });
-    /**
-     * transmit_anything code.
-     *
-     * @module      block_lai_sandbox/ajax.php
-     * @package     block_lai_sandbox
-     * @copyright   lern.link GmbH
-     * @author      Danou Nauck
-     * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
-     */
-    jQuery('#lai_sandbox_droptoken').click(function() {
-        var element = jQuery(this);
-        var statsvalue = 123;
-        var langstring = "Wollen sie sich wirklich von der API abmelden?";
-        const response = confirm(langstring);
-        if (response) {
-            jQuery.ajax({
-                type: "POST",
-                url: "/blocks/lai_sandbox/ajax.php",
-                dataType: "json",
-                data: {
-                    action: 'dropToken',
-                    status: statsvalue,
-                }
-            })
-                .done(function(data) {
-                    window.console.log("AJAX SUCCESS: Token killed: " + data.token + " submitted: " + data.status);
-                    jQuery('#comp_button_token_result').html("");
-                });
-
-        } else {
-            window.console.log("Cancel was pressed");
-        }
-    });
 
 });
 

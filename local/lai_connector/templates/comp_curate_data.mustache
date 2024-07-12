@@ -15,8 +15,7 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template local_lai_connector/page_reports
-
+    @template local_lai_connector/comp_reports_allbrains.html
     ...
 
     Classes required for JS:
@@ -29,32 +28,23 @@
     ...
 
     Example context (json):
-    {
+
         ...
     }
 }}
 
-
-<div>
-    <h3>{{#str}}pluginname, local_lai_connector{{/str}}</h3>
-    <br />
-    <div class="filtercontainer">
-        {{{formhtml}}}
-    </div>
-
-    {{#pagingbar}}
-        {{{.}}}
-    {{/pagingbar}}
-
-    {{> local_lai_connector/comp_subpage}}
-
-    {{> local_lai_connector/comp_testbuttons}}
-
-    {{#pagingbar}}
-        {{{.}}}
-    {{/pagingbar}}
-
-    {{#legend}}
-        {{> local_lai_connector/comp_legend}}
-    {{/legend}}
-</div>
+<table id="reports_curatedata" class="resultlist">
+    <thead>
+        <tr class="headerrow grey_bg">
+            <th>{{#str}}report_allbrains_brainname, local_lai_connector{{/str}}</th>
+            <th>{{#str}}report_allbrains_brainid, local_lai_connector{{/str}}</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td colspan="2">
+         Curate data
+        </td>
+    </tr>
+    </tbody>
+</table>
