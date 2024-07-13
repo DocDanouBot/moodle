@@ -85,10 +85,11 @@ $string['frontend_cm_tarsus_status_norights'] = 'Sie haben nicht das Recht, dies
 
 // strings for the report comp_brain page.
 $string['report_allbrains_brainname'] = 'Name des Brains';
+$string['report_allbrains_braindescription'] = 'Beschreibung';
 $string['report_allbrains_brainid'] = 'BrainID';
 $string['report_allbrains_braincreationdate'] = 'Erstellt am';
 $string['report_allbrains_brainsize'] = 'Größe des Brains';
-$string['report_allbrains_brainaction'] = 'Aktion';
+$string['report_allbrains_brainaction'] = 'Aktionen';
 $string['report_allbrains_no_results'] = 'Entschuldigung, Es wurden keine Brains gefunden, oder sie haben nicht die nötigen Rechte diese zu sehen.';
 $string['report_allbrains_currenttoken'] = 'Ihr aktueller Token: ';
 

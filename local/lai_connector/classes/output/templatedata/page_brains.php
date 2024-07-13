@@ -58,20 +58,22 @@ class page_brains implements templatable {
         $brainsawareness = json_decode($content['brains']);
         $brainsobject = $brainsawareness->awareness;
 
-        // Look into what we got during dev times
-        // echo("<br>brainsobject<br>");
-        // var_dump($brainsobject);
+        // Initialize the API from TARSUS. We need to get the Brain quotas later on
+        $api = \local_lai_connector\api_connector_tarsus::get_instance();
 
         foreach ($brainsobject->brain_ids as $brain) {
             // For each element build a new object node and add additional data from another query to it.
+
+            // Therefore we must also fetch the additional data from our database
+            $localbrain = \local_lai_connector\tarsus_brain::get_instance($brain->id);
+            // And mapp this data also into the $newbrainobject
             $newbrainobjekt = new \stdClass();
-            $newbrainobjekt->brainname = "First Name ";
-            $newbrainobjekt->brainquota = "First Quota ";
+            $newbrainobjekt->brainname = $localbrain->brainname;
+            $newbrainobjekt->braindescription = $localbrain->braindescription;
+            $newbrainobjekt->braindate = date("d.m.Y H:s", $localbrain->timecreated);
+            $newbrainobjekt->brainquota =  "extra page"; // $api->get_brain_usage($brain->id); // this curl takes too long, makes no sense to do it here.
             $newbrainobjekt->brainid = $brain->id;
-            # $newbrainobjekt->braindeleteurl = "First Quota ";
             $allbrains[] = $newbrainobjekt;
-            var_dump($newbrainobjekt);
-            echo("<hr>");
         }
         $this->brains = $allbrains;
     }

@@ -249,6 +249,32 @@ class api_connector_tarsus
     }
 
 
+    /** Gets a long list of nodes that werde used. It takes some time, therefore we should cache it in our DB
+     * It looks like this
+     *
+     * {"awareness":
+     * {"usage":[
+     * {"ai_credits":0,"api":"assistance","brain_id":"designerbrain","count":0,"end_timestamp":0,"service":"openQuestionEvaluation","start_timestamp":0},
+     * {"ai_credits":0,"api":"assistance","brain_id":"designerbrain","count":0,"end_timestamp":0,"service":"questionAnalytics","start_timestamp":0},
+     * {"ai_credits":0,"api":"assistance","brain_id":"designerbrain","count":0,"end_timestamp":0,"service":"oqGeneration","start_timestamp":0},
+     * {"ai_credits":0,"api":"assistance","brain_id":"designerbrain","count":0,"end_timestamp":0,"service":"mcqGeneration","start_timestamp":0},
+     * {"ai_credits":0,"api":"assistance","brain_id":"designerbrain","count":0,"end_timestamp":0,"service":"tfqGeneration","start_timestamp":0},
+     * {"ai_credits":0,"api":"assistance","brain_id":"designerbrain","count":0,"end_timestamp":0,"service":"mcqDistractorGeneration","start_timestamp":0},
+     * {"ai_credits":0,"api":"assistance","brain_id":"designerbrain","count":0,"end_timestamp":0,"service":"audioGeneration","start_timestamp":0},
+     * {"ai_credits":0,"api":"automation","brain_id":"designerbrain","count":0,"end_timestamp":0,"service":"oqGeneration","start_timestamp":0},
+     * {"ai_credits":0,"api":"automation","brain_id":"designerbrain","count":0,"end_timestamp":0,"service":"mcqGeneration","start_timestamp":0},
+     * {"ai_credits":0,"api":"automation","brain_id":"designerbrain","count":0,"end_timestamp":0,"service":"tfqGeneration","start_timestamp":0},
+     * {"ai_credits":0,"api":"automation","brain_id":"designerbrain","count":0,"end_timestamp":0,"service":"objectiveValidation","start_timestamp":0},
+     * {"ai_credits":0,"api":"automation","brain_id":"designerbrain","count":0,"end_timestamp":0,"service":"summaryGeneration","start_timestamp":0},
+     * {"ai_credits":0,"api":"automation","brain_id":"designerbrain","count":0,"end_timestamp":0,"service":"bitsGeneration","start_timestamp":0},
+     * {"ai_credits":0,"api":"automation","brain_id":"designerbrain","count":0,"end_timestamp":0,"service":"blockGeneration","start_timestamp":0}
+     * ]}}
+     *
+     * @param $brainid
+     * @param $start_timestamp
+     * @param $end_timestamp
+     * @return bool|string
+     */
     public function get_brain_usage($brainid = 'customer-demo', $start_timestamp = 0, $end_timestamp = 0) {
         global $CFG;
         $curl = curl_init();

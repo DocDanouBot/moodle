@@ -85,6 +85,7 @@ $string['frontend_cm_tarsus_status_norights'] = 'Sie haben nicht das Recht, dies
 // strings for the report comp_brain page.
 $string['report_allbrains_brainname'] = 'Name of the brain';
 $string['report_allbrains_brainid'] = 'BrainID';
+$string['report_allbrains_braindescription'] = 'Beschreibung';
 $string['report_allbrains_braincreationdate'] = 'Created on';
 $string['report_allbrains_brainsize'] = 'Size of the brain';
 $string['report_allbrains_brainaction'] = 'Action';

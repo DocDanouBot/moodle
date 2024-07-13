@@ -33,13 +33,14 @@
     }
 }}
 
-<table id="reports_allbrains" class="resultlist">
+<table id="reports_allbrains" class="brainslist">
     <thead>
         <tr class="headerrow grey_bg">
-            <th>{{#str}}report_allbrains_brainname, local_lai_connector{{/str}}</th>
             <th>{{#str}}report_allbrains_brainid, local_lai_connector{{/str}}</th>
-            <th>{{#str}}report_allbrains_braincreationdate, local_lai_connector{{/str}}</th>
+            <th>{{#str}}report_allbrains_brainname, local_lai_connector{{/str}}</th>
+            <th>{{#str}}report_allbrains_braindescription, local_lai_connector{{/str}}</th>
             <th>{{#str}}report_allbrains_brainsize, local_lai_connector{{/str}}</th>
+            <th>{{#str}}report_allbrains_braincreationdate, local_lai_connector{{/str}}</th>
             <th>{{#str}}report_allbrains_brainaction, local_lai_connector{{/str}}</th>
         </tr>
     </thead>
@@ -47,13 +48,19 @@
     {{#brains}}
         <tr class="brainrow">
             <td colspan="1">
+                {{brainid}}
+            </td>
+            <td colspan="1">
                 {{brainname}}
             </td>
             <td colspan="1">
-                {{brainid}}
+                {{braindescription}}
             </td>
-            <td colspan="2">
+            <td colspan="1">
                 {{brainquota}}
+            </td>
+            <td colspan="1">
+                {{braindate}}
             </td>
             <td>
                 <a href="/local/lai_connector/edit_tarsus_brain.php?brainid={{brainid}}" class="btn btn-primary" title="{{#str}}button_api_call_editbrain, local_lai_connector{{/str}}"><i class="icon fa fa-file-edit fa-fw " aria-hidden="true"></i></a>

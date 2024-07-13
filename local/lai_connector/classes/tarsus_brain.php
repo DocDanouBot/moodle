@@ -52,6 +52,9 @@ class tarsus_brain
     // The reference to the name of TARSUS API.
     public $brainid = "";
 
+    // The reference for the factory to see, if we already have an entry.
+    protected static $_brainid = "";
+
     // Some natural name we gave interternally at lernlink.
     public $brainname = "";
 
@@ -85,12 +88,16 @@ class tarsus_brain
             // Safety fallback, we did not find the corresponding entry of the given TARSUS DB within our DB.
             // Therefore we quickly create it to continue smoothly
             $record = \local_lai_connector\tarsus_brain::create($brainid);
-            # $record = $DB->get_record($table, array('brainid' => $brainid));
             // throw new tarsus_brain_exception('except_brain_not_found', $brain_id);
         }
 
         $this->id = $record->id;
         $this->brainid = $record->brainid;
+
+        // We need to save it also statically so that the factory sees it when we try to build yet another instance.
+        // of the very same brainid.
+        self::$_brainid = $brainid;
+
         if($record->brainname != "") {
             $this->brainname = $record->brainname;
         }
@@ -111,14 +118,14 @@ class tarsus_brain
      * @return the TARSUS Connector
      * @throws \lai_exception
      */
-    public static function get_instance()
+    public static function get_instance($brainid = null)
     {
         global $CFG;
 
         # We also need to check, that the self->id is NOT the same as before,
         # otherwise in a loop he would always return the first element he cached
-        if ((!self::$_self)) {
-            self::$_self = new self();
+        if ((!self::$_self) || (self::$_brainid != $brainid)) {
+            self::$_self = new self($brainid);
         }
 
         return self::$_self;
@@ -160,7 +167,7 @@ class tarsus_brain
         //TODO catch this or not?
         $id = $DB->insert_record($table, $data);
 
-        return new self($id);
+        return new self($brainid);
     }
 
 

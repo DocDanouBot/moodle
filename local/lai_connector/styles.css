@@ -33,7 +33,8 @@ code, code a {
     vertical-align: top;
 }
 
-.resultlist i.icon {
+.resultlist i.icon,
+.brainslist i.icon {
     margin-right: 0!important;
 }
 
