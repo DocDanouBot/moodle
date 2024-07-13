@@ -30,33 +30,36 @@ function xmldb_local_lai_connector_upgrade($oldversion) {
 
     $dbman = $DB->get_manager();
 
-    if ($oldversion < 2024060600) {
-        // Just a dummy entry to have the structure ready
-        upgrade_plugin_savepoint(true, 2024060600, 'local', 'lai_connector');
-    }
-
-    if ($oldversion < 2024070000) {
-
-        // An old table that we want to delete, because it is outdated
-        $table = new xmldb_table('local_lai_connector');
-        if ($dbman->table_exists($table)) {
-            $dbman->drop_table($table);
-        }
+    if ($oldversion < 2024070006) {
 
         // A new table for the local_lai_connector_courses to save the TARSUS state of each course
         $table = new xmldb_table('local_lai_connector_brains');
+        if ($dbman->table_exists($table)) {
+            // lets make sure that we start from scratch, so we drop the table.
+            $dbman->drop_table($table);
+        }
         $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE);
-        $table->add_field('brainname', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'id');
-        $table->add_field('braindescription', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'courseid');
-        $table->add_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'enabled');
+        $table->add_field('brainid',XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, "", 'id');
+        $table->add_field('brainname',XMLDB_TYPE_CHAR, '255', null, null, null, null, 'brainid');
+        $table->add_field('braindescription',XMLDB_TYPE_CHAR, '255', null, null, null, null, 'brainname');
+        $table->add_field('userid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'braindescription');
+        $table->add_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'userid');
+        $table->add_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'timecreated');
         $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
-        $table->add_key('brainname', XMLDB_KEY_UNIQUE, array('brainname'));
+        // Define key brainid to be added as a unique key to local_lai_connector_courses.
+        $table->add_key('brainid', XMLDB_KEY_UNIQUE, array('brainid'));
+        // Define key userid (foreign) to be added to local_lai_connector_courses.
+        $table->add_key('userid', XMLDB_KEY_FOREIGN, ['userid'], 'user', ['id']);
         if (!$dbman->table_exists($table)) {
             $dbman->create_table($table);
         }
 
         // A new table for the local_lai_connector_courses to save the TARSUS state of each course
         $table = new xmldb_table('local_lai_connector_courses');
+        if ($dbman->table_exists($table)) {
+            // lets make sure that we start from scratch, so we drop the table.
+            $dbman->drop_table($table);
+        }
         $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE);
         $table->add_field('courseid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'id');
         $table->add_field('userid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'courseid');
@@ -75,12 +78,16 @@ function xmldb_local_lai_connector_upgrade($oldversion) {
 
         // A new table for the local_lai_connector to save all the assets that have been added to TARSUS
         $table = new xmldb_table('local_lai_connector_assets');
+        if ($dbman->table_exists($table)) {
+            // lets make sure that we start from scratch, so we drop the table.
+            $dbman->drop_table($table);
+        }
         $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE);
-        $table->add_field('brainid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'id');
-        $table->add_field('courseid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'brainid');
-        $table->add_field('userid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'courseid');
+        $table->add_field('brainid',XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, "", 'id');
+        $table->add_field('courseid', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'brainid');
+        $table->add_field('userid', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'courseid');
         $table->add_field('resourceid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'userid');
-        $table->add_field('assertid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'resourceid');
+        $table->add_field('assertid', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'resourceid');
         $table->add_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'assertid');
         $table->add_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'timecreated');
         $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
@@ -95,30 +102,7 @@ function xmldb_local_lai_connector_upgrade($oldversion) {
             $dbman->create_table($table);
         }
 
-        upgrade_plugin_savepoint(true, 2024070000, 'local', 'lai_connector');
-    }
-
-    if ($oldversion < 2024070002) {
-
-        // Add an extra field to save the TARSUS ID from the brain
-        $table = new xmldb_table('local_lai_connector_brains');
-        $field = new xmldb_field('brainid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'id');
-        // Conditionally launch add field pdfexportfont.
-        if (!$dbman->field_exists($table, $field)) {
-            $dbman->add_field($table, $field);
-            // Define key brainid to be added as a unique key to local_lai_connector_courses.
-            $table->add_key('brainid', XMLDB_KEY_UNIQUE, array('brainid'));
-        }
-
-        $field = new xmldb_field('userid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'braindescription');
-        // Conditionally launch add field pdfexportfont.
-        if (!$dbman->field_exists($table, $field)) {
-            $dbman->add_field($table, $field);
-            // Define key userid (foreign) to be added to local_lai_connector_courses.
-            $table->add_key('userid', XMLDB_KEY_FOREIGN, ['userid'], 'user', ['id']);
-        }
-
-        upgrade_plugin_savepoint(true, 2024070002, 'local', 'lai_connector');
+        upgrade_plugin_savepoint(true, 2024070006, 'local', 'lai_connector');
     }
 
     return true;

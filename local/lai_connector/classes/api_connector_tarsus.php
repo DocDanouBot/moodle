@@ -30,11 +30,16 @@ global $CFG;
 use pix_icon;
 use stdClass;
 use moodle_url;
+use local_lai_connector\event\brain_deleted;
+use local_lai_connector\event\brain_saved;
+use local_lai_connector\event\brain_updated;
+use local_lai_connector\event\nugged_entry_created;
+use local_lai_connector\event\nugged_entry_deleted;
+use local_lai_connector\exceptions\lai_exception;
+use local_lai_connector\exceptions\tarsus_brain_exception;
 
 class api_connector_tarsus
 {
-
-
     /**
      * Singleton instance of this class. We cache the instance in this Class.
      * so we can use it again without re-creating it.
@@ -318,6 +323,30 @@ class api_connector_tarsus
  */
 class tarsus_brain
 {
+    // lets define all the regular vars we also have in the DB local_lai_connector_brains table.
+    // so that this class has all the properties of the same table records.
+
+    // The regular incremental id is the primary key.
+    public $id;
+
+    // The reference to the name of TARSUS API.
+    public $brainid;
+
+    // Some natural name we gave interternally at lernlink.
+    public $brainname;
+
+    // Some natural language description of the db entry, Inner purpose only.
+    public $braindescription;
+
+    // Which user was creating or updating the entry. Its a foreign key to mdl_users.
+    public $userid;
+
+    // just a timestamp.
+    public $timecreated;
+
+    // Well, just another timestamp.
+    public $timemodified;
+
     /**
      * Singleton instance of this class. We cache the instance in this Class.
      * so we can use it again without re-creating it.
@@ -327,11 +356,149 @@ class tarsus_brain
     private static $_self;
 
     //* Component constructor. Still empty at the time.
-    public function __construct()
+    public function __construct($brain_id)
     {
-        global $CFG;
+        global $PAGE, $DB;
+        $table = 'local_lai_connector_brains';
+
+        if(!$record = $DB->get_record($table, array('brain_id' => $brain_id))) {
+            throw new tarsus_brain_exception('except_infofield_missing', $brain_id);
+        }
+
+        $this->id = $record->id;
+        $this->brain_id = $record->brain_id;
+        if($record->brainname != "") {
+            $this->brainname = $record->brainname;
+        }
+        if($record->braindescription != "") {
+            $this->braindescription = $record->braindescription;
+        }
+        $this->userid = $record->userid;
+        $this->timecreated = $record->timecreated;
+        $this->timemodified = $record->timemodified;
+    }
+
+
+    public static function create($facilityid, $title, $position,
+                                  $line1, $line2 = '', $line3 = '', $icon = '' ) {
+        global $DB;
+
+        $currenttime = time();
+
+        # Check if this position has already been taken.
+        # if so, move all the other infofields further down
+        if ($alreadytaken = $DB->get_record('local_iubh_facility_infos', array('facilityid' => $facilityid, 'position' => $position))) {
+            $facility = new \local_iubh_facility\iubh_facility($facilityid);
+            $facility->push_infofield_positions_from($position);
+        }
+
+        $data = new \stdClass;
+        $data->facilityid   = $facilityid;
+        $data->title        = $title;
+        $data->position     = $position;
+        $data->line1        = strip_tags($data->line1, '<a>');
+        if($line2 != "") {
+            $data->line2 = strip_tags($data->line2, '<a>');
+        }
+        if($line3 != "") {
+            $data->line3 = strip_tags($data->line3, '<a>');
+        }
+        if($icon != "") {
+            $data->icon  = $icon;
+        }
+        $data->timecreated  = $currenttime;
+
+        //TODO catch this or not?
+        $infofieldid = $DB->insert_record('local_iubh_facility_infos', $data);
+
+        return new self($infofieldid);
+    }
+
+
+    /**
+     * Updates the public values of the instance
+     *
+     * Values that can be changed:
+     * * name
+     * *
+     *
+     * @param $data
+     * @throws \moodle_exception
+     */
+    public function update(\stdClass $data) {
+        global $DB;
+
+        $update = false;
+
+        if(!empty($data->facilityid)) {
+            if($data->facilityid != $this->facilityid) {
+                $this->facilityid = $data->facilityid;
+                $update = true;
+            }
+        }
+
+        if(!empty($data->title)) {
+            if($data->title != $this->title) {
+                $this->title = $data->title;
+                $update = true;
+            }
+        }
+
+        if(!empty($data->position)) {
+            if($data->position != $this->position) {
+                $this->position = $data->position;
+                $update = true;
+            }
+        }
+
+        if(!empty($data->line1)) {
+            if($data->line1 != $this->line1) {
+                $this->line1 = strip_tags($data->line1, '<a>');
+                $update = true;
+            }
+        }
+
+        if($data->line2 != $this->line2) {
+            $this->line2 = strip_tags($data->line2, '<a>');
+            $update = true;
+        }
+
+        if($data->line3 != $this->line3) {
+            $this->line3 = strip_tags($data->line3, '<a>');
+            $update = true;
+        }
+
+        if($data->icon != $this->icon) {
+            $this->icon = $data->icon;
+            $update = true;
+        }
+
+        if($update) {
+            $this->timeupdated = time();
+
+            try {
+                //TODO catch this?
+                $DB->update_record('local_iubh_facility_infos', $this);
+            } catch(\Exception $e) {
+                $redirecturl = new \moodle_url('/local/iubh_facility/create_infofield.php', array('id'=>$this->id));
+                $redirectmessageerror = get_string('info_update_error', 'local_iubh_facility') . "<br>". $e->error;
+                redirect($redirecturl, $redirectmessageerror, null, \core\output\notification::NOTIFY_ERROR);
+                exit;
+            }
+        }
 
     }
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Factory method to get an instance of the AI connector. We use this method to get the instance.
@@ -418,7 +585,7 @@ class tarsus_brain
      * @throws \coding_exception
      * @throws \dml_exception
      */
-    public static function delete_brain($brain_id, $userid)
+    public function delete($brain_id, $userid)
     {
         global $DB;
 
@@ -429,9 +596,15 @@ class tarsus_brain
         if ($existingrecord = $DB->get_record($table, $params, '*', IGNORE_MULTIPLE)) {
             // Maybe we dont really need the line above, the line below should be sufficiant.
 
-            if ($DB->delete_records($table, $params)) {
-                // Successfully deleted, so we save everything in an event.
+            $a = new \stdClass();
+            $a->brain_id = "<span style='font-weight:bold;'>" . $this->brain_id . "</span>";
 
+            $transaction = $DB->start_delegated_transaction();
+            try {
+                $DB->delete_records($table, $params);
+                \core\notification::success(get_string('tarsus_brain_deleted', 'local_lai_connector', $a));
+
+                // Successfully deleted, so we save everything in an event.
                 // we always need a context for events and anything.
                 $context = 1;
                 // What should we memorize and track in the event?
@@ -445,6 +618,30 @@ class tarsus_brain
                 // Send the event to the DB
                 $event->trigger();
             }
+            catch(\Exception $e) {
+                \core\notification::error(get_string('tarsus_brain_not_deleted', 'local_lai_connector', $a));
+
+                // Lets spit out all the information we have.
+                $my_e = new tarsus_brain_exception(
+                    'except_dberror_delete_brain',
+                    $this->id,
+                    (get_string('tarsus_brain_not_deleted', 'local_lai_connector', $a)
+                        . $e->getMessage() . "\n" . $e->getTraceAsString())
+                );
+                $transaction->rollback($my_e);
+            }
+
+            $transaction->allow_commit();
         }
     }
+
+    /** just a static re-rooting into the class to dynamically delete the given brain.
+     * @param $brain_id
+     * @return bool
+     */
+    public static function delete_brain($brain_id) {
+        $tarsus_brain = new \local_lai_connector\tarsus_brain($brain_id);
+        return $tarsus_brain->delete();
+    }
+
 }

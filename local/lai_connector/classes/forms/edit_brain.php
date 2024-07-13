@@ -35,59 +35,70 @@ class edit_brain extends \moodleform {
      * Define the elements in this form.
      */
     public function definition() {
-        global $CFG, $DB, $OUTPUT;
 
         // The instance to the mform object.
         $mform =& $this->_form;
-
-
-        // Prepare some strings.
-        $strformtitle = get_string('form_edit_brain_title', 'local_lai_connector');
 
         $mform->addElement('header', 'general', get_string('general'));
 
         // With this element we can see if a training is edited or created.
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
+        $mform->addElement('hidden', 'userid');
+        $mform->setType('userid', PARAM_INT);
+        $mform->addElement('hidden', 'timecreated');
+        $mform->setType('timecreated', PARAM_INT);
+        $mform->addElement('hidden', 'timemodified');
+        $mform->setType('timemodified', PARAM_INT);
 
-        // The internal title of the related training.
-        $mform->addElement('text', 'title', $strrelatedtrainingtitle);
-        $mform->setType('title', PARAM_TEXT);
-        $mform->addRule('title', null, 'required', null, 'client');
+        // The internal Tarsus identifier of the brain.
+        $mform->addElement('text', 'brainid', get_string('form_edit_brainid', 'local_lai_connector'));
+        $mform->addHelpButton('brainid', 'form_edit_brainid', 'local_lai_connector');
+        $mform->setType('brainid', PARAM_TEXT);
+        $mform->addRule('brainid', null, 'required', null, 'client');
+        $mform->addRule('brainid', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
 
-        // The list of related trainings in DE.
-        $mform->addElement('text', 'trainingslist_de', $strrelatedtrainingslistde);
-        $mform->setType('trainingslist_de', PARAM_TEXT);
-        $mform->addRule('trainingslist_de', null, 'required', null, 'client');
-        $mform->addHelpButton('trainingslist_de', 'trainingslist_de', 'local_lai_connector');
+        // The Lernlink name of the brain
+        $mform->addElement('text', 'brainname', get_string('form_edit_brainname', 'local_lai_connector'));
+        $mform->addHelpButton('brainname', 'form_edit_brainname', 'local_lai_connector');
+        $mform->setType('brainname', PARAM_TEXT);
+        $mform->addRule('brainname', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
 
-        // The list of related trainings in EN.
-        $mform->addElement('text', 'trainingslist_en', $strrelatedtrainingslisten);
-        $mform->setType('trainingslist_en', PARAM_TEXT);
-        $mform->addHelpButton('trainingslist_en', 'trainingslist_en', 'local_lai_connector');
-
-
-        # Area to add Tags to Training
-        $tag_names = \local_eledia_cp_create_training\util::get_all_available_tags();
-
-        $tag_checkboxes=array();
-        $i = 0;
-        foreach ($tag_names as $index => $tag) {
-            # version 1 with dynamic id's
-            $tags[] =  $mform->createElement('advcheckbox', 'tags['.$i.']', $tag, null, array('group' => 1), array(null, $index));
-            $i++;
-        }
-        $mform->addGroup($tags, 'tagcheckboxgroup', get_string('iubh_turnitin_associated_tags', 'local_lai_connector'),array(''), false);
-        $mform->addHelpButton('tagcheckboxgroup', 'iubh_turnitin_associated_tags', 'local_lai_connector');
-
-        # $mform->setType('tagcheckboxgroup', PARAM_BOOL);
-        # $mform->addRule('tagcheckboxgroup', get_string('training_tagcheckboxgroup_validation', 'local_eledia_cp_create_training'), 'required', null, 'client');
+        // The Lernlink name of the brain
+        $mform->addElement('text', 'braindescription', get_string('form_edit_braindescription', 'local_lai_connector'));
+        $mform->addHelpButton('braindescription', 'form_edit_braindescription', 'local_lai_connector');
+        $mform->setType('braindescription', PARAM_TEXT);
+        $mform->addRule('braindescription', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
 
         // The buttons.
         $this->add_action_buttons(true, get_string('savechanges'));
-
     }
 
+
+    /**
+     * Set the data in this form to show on start.
+     *
+     * @param \stdClass|array $defaultvalues The data we want to set.
+     */
+    public function set_data($tarsusbrain) {
+        if ($tarsusbrain instanceof \local_lai_connector\tarsus_brain) {
+
+            $defaultvalues = array(
+                'id' => $tarsusbrain->id,
+                'brainid' => $tarsusbrain->brainid,
+                'brainname' => $tarsusbrain->brainname,
+                'braindescription' => $tarsusbrain->braindescription,
+                'userid'  => $tarsusbrain->userid,
+                'timecreated' => $tarsusbrain->timecreated,
+                'timemodified' => $tarsusbrain->timemodified,
+            );
+        } else {
+            // We want an array!
+            $defaultvalues = (array) $tarsusbrain;
+        }
+
+        parent::set_data($defaultvalues); // Now set the prepared data with the parent method.
+    }
 
     /**
      * Returns the data the user has submitted.
@@ -128,6 +139,6 @@ class edit_brain extends \moodleform {
         return $errors;
     }
 
-    
+
 
 }

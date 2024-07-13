@@ -93,8 +93,12 @@ $string['report_allbrains_no_results'] = 'Entschuldigung, Es wurden keine Brains
 $string['report_allbrains_currenttoken'] = 'Ihr aktueller Token: ';
 
 // Info for the different forms.
-$string['form_edit_brain_title'] = 'Braindetails bearbeiten';
-$string['form_edit_brain_title'] = 'Hauptseite für Brains';
+$string['form_edit_brainid'] = 'TARSUS Name des Brain';
+$string['form_edit_brainid_help'] = 'Dieser Name verbindet das Brain mit der API von TARSUS. Er muss unique sein und darf nicht geändert werden';
+$string['form_edit_brainname'] = 'Interner Brain-name von Lernlink';
+$string['form_edit_brainname_help'] = 'Diesen Namen können Sie frei wählen und später auch anpassen und verändern, ganz wie es Ihr Mandant für die Mandantenfähigkeit des Systems benötigt';
+$string['form_edit_braindescription'] = 'Interne Beschreibung des Brains';
+$string['form_edit_braindescription_help'] = 'Hier ist ein Bereich für einigen Freitext. Sie können hier weitere Notizen zum Brain hinterlassen.';
 
 // Different buttons for the API call page. as a sandbox test.
 $string['button_api_title_indexpage'] = 'Wähle den Bereich zum Konfigurieren';
@@ -116,6 +120,11 @@ $string['button_subpage_brains_description'] = 'Hier können sie alle Brains ein
 $string['button_subpage_curatedata'] = 'Inhalte kuratieren';
 $string['button_subpage_curatedata_description'] = 'Hier können sie Inhalte der Brains, anlegen, löschen und kuratieren.';
 $string['button_subpage_none'] = 'Es stehen Ihnen keine Unterseiten zum Konfigurieren zur Verfügung. Wahrscheinlich haben sie nicht genügend Rechte und müssen erst Ihre Rollenberechtigung anpassen.';
+
+// strings class tarsus_brain.
+$string['tarsus_brain_deleted'] = 'Das TARSUS Brain wurde erfolgreich gelöscht.';
+$string['tarsus_brain_not_deleted'] = 'Das TARSUS Brain {$a->brain_id} konnte nicht gelöscht werden.';
+$string['except_dberror_delete_brain'] = 'Fehler: Dieses BRAIN konnte nicht aus der DB gelöscht werden.';
 
 // strings for the explain comp_legend page.
 $string['legend_comp_title'] = 'Legende zur Erklärung';
