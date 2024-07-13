@@ -33,8 +33,8 @@ code, code a {
     vertical-align: top;
 }
 
-.resultlist {
-
+.resultlist i.icon {
+    margin-right: 0!important;
 }
 
 .resultlist tr td:first-child,

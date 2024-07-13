@@ -107,38 +107,7 @@ class edit_brain extends \moodleform {
      */
     public function get_data() {
         $data = parent::get_data();
-
-        // We have to assemble the data from the editor.
-        if ($data) {
-            $data->content_de = $data->content_de_editor['text'];
-            $data->content_en = $data->content_en_editor['text'];
-            $data->content_format = $data->content_de_editor['format'];
-        }
         return $data;
     }
-
-    /**
-     * Validates the data which are submitted by the user. All errors are collected in the $errors array.
-     *
-     * @param \stdClass $data
-     * @param \stdClass $files
-     * @return array The error strings to print out on the form page
-     */
-    public function validation($data, $files) {
-        global $DB;
-
-        $errors = parent::validation($data, $files);
-
-        if (isset($data['tags']) and is_array($data['tags'])) {
-            foreach ($data['tags'] as $key => $value) {
-                if ($value == 0) {
-                    unset($data['tags'][$key]);
-                }
-            }
-        }
-        return $errors;
-    }
-
-
 
 }

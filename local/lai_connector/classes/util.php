@@ -29,7 +29,12 @@ global $CFG;
 use pix_icon;
 use stdClass;
 use moodle_url;
+use local_lai_connector\tarsus_brain;
 
+
+/**
+ * Utility class for the local_lai_connector plugin.
+ */
 class util
 {
 
@@ -48,61 +53,33 @@ class util
         return $returnboolean;
     }
 
-    /** Getting all the courses that have TII elements
-     * and limit them by min ./. max values
-     * @param
-     * @return mixed
-     * @throws \lai_exception
+
+
+    /** Creates a new tarsus_brain using the tarsus_brain class
+     * @param stdClass $formdata
+     * @return tarsus_brain
+     * @throws \moodle_exception
+     * @throws exceptions
      */
-    public static function get_cached_tii_course_ids()
+    public static function create_tarsus_brain(\stdClass $formdata)
     {
-        global $DB;
-        $cache = \cache::make('local_lai_connector', 'tiicourses');
-        $cache_key = "tiicourse-ids";
-        $cache_data = $cache->get($cache_key);
-        if ($cache_data !== false) {
-            # echo("<br><br><h3>Show existing TII Course IDs from cache</h3>");
-            # echo("<br>tiicourseidsarray<pre>");
-            # print_r($cache_data['turnitin-tiicourse-ids']);
-            # echo("</pre>");
-            return $cache_data['turnitin-tiicourse-ids'];
-        } else {
-            # echo("<br><br><h3>Building new array of TII Course IDs</h3>");
-            $tiicourseidsarray = array();
-            $params['sectionid'] = 0;
-            $sql = "
-                SELECT DISTINCT tii.course as id
-                           FROM {turnitintooltwo} tii
-                       ORDER BY id ASC";
-            $courses = $DB->get_records_sql($sql, $params);
-            foreach ($courses as $onecourse) {
-                $course_ext = \local_iubh_generic\course_extended::get_instance($onecourse->id);
+        $tarsus_brain = \local_lai_connector\tarsus_brain::create($formdata->brain_id, $formdata->brainname, $formdata->braindescription);
+        return $tarsus_brain;
+    }
 
-                # take all course ids to cache them into memory
-                $course_obj = new \stdClass();
-                $course_obj->id = $course_ext->id;
-                $course_obj->fullname = $course_ext->fullname;
-                $course_obj->shortname = $course_ext->shortname;
-                $course_obj->startdate = $course_ext->startdate;
-                $course_obj->category = $course_ext->category;
-                $course_obj->pfs = $course_ext->get_pfs();
-                $course_obj->turnitin_amount = $course_ext->get_turnitin_amount() ;
-                $course_obj->participants_amount = $course_ext->get_participants_amount() ;
-                $course_obj->turnitin_amount_handed_in = $course_ext->get_turnitin_amount_handed_in(false);
 
-                #$course_obj->vlo_groups_with_user_grades = $course_ext->get_vlo_groups_with_user_grades(false, false);
-
-                $tiicourseidsarray[$course_ext->id] = $course_obj;
-            }
-
-            usort($tiicourseidsarray, function($a, $b) {return strcmp($a->fullname, $b->fullname); });
-            # echo("<br><br><h3>Rebuild cache for TII Course IDs</h3>");
-            #echo("<br>tiicourseidsarray<pre>");
-            #print_r($tiicourseidsarray);
-            #echo("</pre>");
-            $cache->set($cache_key, array('turnitin-tiicourse-ids' => $tiicourseidsarray));
-            return $tiicourseidsarray;
-        }
+    /** Updates an existing tarsus_brain using the tarsus_brain class
+     * @param stdClass $formdata
+     * @return tarsus_brain
+     * @throws \moodle_exception
+     * @throws exceptions\tarsus_brain_exception
+     */
+    public static function update_tarsus_brain(\stdClass $formdata)
+    {
+        $tarsus_brain = new \local_lai_connector\tarsus_brain($formdata->brainid);
+        $tarsus_brain->update($formdata);
+        return $tarsus_brain;
     }
 
 }
+

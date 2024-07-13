@@ -36,7 +36,7 @@ require_once($CFG->libdir . "/formslib.php");
  * Class CourseSettingsForm
  *
  */
-class CourseSettingsExtendedTarsusForm extends \moodleform
+class CourseSettingsExtendedForm extends \moodleform
 {
     protected $permissions;
 

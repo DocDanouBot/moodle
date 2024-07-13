@@ -93,6 +93,8 @@ $string['report_allbrains_no_results'] = 'Entschuldigung, Es wurden keine Brains
 $string['report_allbrains_currenttoken'] = 'Ihr aktueller Token: ';
 
 // Info for the different forms.
+$string['form_edit_pagetitle_new'] = 'Ein neues TARSUS Brain anlegen';
+$string['form_edit_pagetitle_edit'] = 'Dieses TARSUS Brain bearbeiten';
 $string['form_edit_brainid'] = 'TARSUS Name des Brain';
 $string['form_edit_brainid_help'] = 'Dieser Name verbindet das Brain mit der API von TARSUS. Er muss unique sein und darf nicht geändert werden';
 $string['form_edit_brainname'] = 'Interner Brain-name von Lernlink';
@@ -111,6 +113,7 @@ $string['button_api_call_generateapitoken'] = 'Beantrage API Token';
 $string['button_api_call_createbrain'] = 'Erstelle Brain';
 $string['button_api_call_createbrain_label'] = 'Neuen Brainnamen eingeben: ';
 $string['button_api_call_deletebrain'] = 'Lösche Brain';
+$string['button_api_call_editbrain'] = 'Brain bearbeiten';
 $string['button_api_call_listbrain'] = 'Zeige alle Brains';
 $string['button_api_call_listbrainquota'] = 'Zeige Brain Datenverbrauch';
 $string['button_api_call_listclonevoices'] = 'Zeige alle verfügbaren Stimmen';
@@ -122,8 +125,11 @@ $string['button_subpage_curatedata_description'] = 'Hier können sie Inhalte der
 $string['button_subpage_none'] = 'Es stehen Ihnen keine Unterseiten zum Konfigurieren zur Verfügung. Wahrscheinlich haben sie nicht genügend Rechte und müssen erst Ihre Rollenberechtigung anpassen.';
 
 // strings class tarsus_brain.
-$string['tarsus_brain_deleted'] = 'Das TARSUS Brain wurde erfolgreich gelöscht.';
-$string['tarsus_brain_not_deleted'] = 'Das TARSUS Brain {$a->brain_id} konnte nicht gelöscht werden.';
+$string['tarsus_brain_created'] = 'Das TARSUS Brain {$a->brainid} wurde erfolgreich erstellt.';
+$string['tarsus_brain_updated'] = 'Das TARSUS Brain {$a->brainid} wurde erfolgreich aktualisiert.';
+$string['tarsus_brain_update_error'] = 'Das TARSUS Brain {$a->brainid} konnte nicht aktualisiert werden.';
+$string['tarsus_brain_deleted'] = 'Das TARSUS Brain {$a->brainid} wurde erfolgreich gelöscht.';
+$string['tarsus_brain_not_deleted'] = 'Das TARSUS Brain {$a->brainid} konnte nicht gelöscht werden.';
 $string['except_dberror_delete_brain'] = 'Fehler: Dieses BRAIN konnte nicht aus der DB gelöscht werden.';
 
 // strings for the explain comp_legend page.

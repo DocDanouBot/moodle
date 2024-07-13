@@ -22,7 +22,7 @@ use local_lai_connector\exceptions\lai_exception;
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . '../../config.php';
 require_once($CFG->dirroot . '/local/lai_connector/classes/coursesettings_extended.php');
-require_once($CFG->dirroot . '/local/lai_connector/classes/forms/coursesettings_extended_form.php');
+require_once($CFG->dirroot . '/local/lai_connector/classes/forms/coursesettings_extended.php');
 
 
 $courseid = required_param('course', PARAM_INT);
@@ -51,7 +51,7 @@ $permissions['coursesettings_tarsus_enable'] = has_capability('local/lai_connect
 $permissions['coursesettings_tarsus_addnow'] = has_capability('local/lai_connector:assetadd', $context);
 
 // Get the form element to toggle the status
-$tarsusenabledform   = new \local_lai_connector\forms\CourseSettingsExtendedTarsusForm($baseurl.'?course=' . $courseid, $permissions);
+$tarsusenabledform   = new \local_lai_connector\forms\CourseSettingsExtendedForm($baseurl.'?course=' . $courseid, $permissions);
 
 // Now comes all the output.
 echo $OUTPUT->header();

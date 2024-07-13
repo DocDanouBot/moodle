@@ -55,7 +55,10 @@
             <td colspan="2">
                 {{brainquota}}
             </td>
-            <td> <button type="button" class="btn btn-primary tarsus_ajax_brainpage_deletebrain" data-attribute='{{brainid}}' >{{#str}}button_api_call_deletebrain, local_lai_connector{{/str}}</button></td>
+            <td>
+                <a href="/local/lai_connector/edit_tarsus_brain.php?brainid={{brainid}}" class="btn btn-primary" title="{{#str}}button_api_call_editbrain, local_lai_connector{{/str}}"><i class="icon fa fa-file-edit fa-fw " aria-hidden="true"></i></a>
+                <span class="btn btn-primary tarsus_ajax_brainpage_deletebrain" data-attribute='{{brainid}}' title="{{#str}}button_api_call_deletebrain, local_lai_connector{{/str}}"><i class="icon fa fa-trash fa-fw " aria-hidden="true"></i></span>
+            </td>
         </tr>
     {{/brains}}
     {{^brains}}
@@ -69,7 +72,7 @@
     <tr>
         <td colspan="1"><label for="tarsus_ajax_create_new_brain_name">{{#str}}button_api_call_createbrain_label, local_lai_connector{{/str}}</label></td>
         <td colspan="3"><input id="tarsus_ajax_create_new_brain_name" name="create_new_brain" type="text"></td>
-        <td><span id="tarsus_ajax_brainpage_createnewbrain" class="btn btn-primary">{{#str}}button_api_call_createbrain, local_lai_connector{{/str}}</span></td>
+        <td><span id="tarsus_ajax_brainpage_createnewbrain" class="btn btn-primary" title="{{#str}}button_api_call_createbrain, local_lai_connector{{/str}}"><i class="icon fa fa-plus-square-o fa-fw " aria-hidden="true"></i></span></td>
     </tr>
     </tbody>
 </table>
