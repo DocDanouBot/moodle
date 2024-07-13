@@ -34,8 +34,10 @@ require_capability('local/lai_connector:viewcuratedatapage', $context);
 // Set up $PAGE.
 $PAGE->set_context($context);
 $PAGE->set_pagelayout('standard');
+$pageheading = '<a href="/local/lai_connector/index.php" target="_self">'.get_string('indexpage_title', 'local_lai_connector').'</a>';
+$pageheading .= ' | ' . get_string('curatedatapage_title', 'local_lai_connector');
 $PAGE->set_title(get_string('curatedatapage_title', 'local_lai_connector'));
-$PAGE->set_heading($PAGE->title);
+$PAGE->set_heading($pageheading, false, false);
 $PAGE->set_url(new moodle_url('/local/lai_connector/curatedata.php'));
 
 // Load the lib.js to allow ajax communication with server

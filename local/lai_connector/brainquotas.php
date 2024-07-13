@@ -27,6 +27,8 @@ $context = context_system::instance();
 
 global $PAGE, $OUTPUT;
 
+$brainid = optional_param('brainid', null, PARAM_ALPHANUM);
+
 // Check access.
 require_login(null, false);
 require_capability('local/lai_connector:viewbrainpage', $context);
@@ -35,12 +37,11 @@ require_capability('local/lai_connector:viewbrainpage', $context);
 $PAGE->set_context($context);
 $PAGE->set_pagelayout('standard');
 
-
 $pageheading = '<a href="/local/lai_connector/index.php" target="_self">'.get_string('indexpage_title', 'local_lai_connector').'</a>';
-$pageheading .= ' | ' . get_string('brainpage_title', 'local_lai_connector');
-$PAGE->set_title(get_string('brainpage_title', 'local_lai_connector'));
+$pageheading .= ' | ' . get_string('brainquotaspage_title', 'local_lai_connector');
+$PAGE->set_title(get_string('brainquotaspage_title', 'local_lai_connector'));
 $PAGE->set_heading($pageheading, false, false);
-$PAGE->set_url(new moodle_url('/local/lai_connector/brains.php'));
+$PAGE->set_url(new moodle_url('/local/lai_connector/brainquotas.php'));
 $PAGE->requires->jquery();
 $PAGE->requires->jquery_plugin('ui');
 $PAGE->requires->jquery_plugin('ui-css');
@@ -48,20 +49,37 @@ $PAGE->requires->jquery_plugin('ui-css');
 // Load the lib.js to allow ajax communication with server
 $PAGE->requires->js(new moodle_url('/local/lai_connector/lib.js'));
 
-// Define and start the AI connector
-$api = \local_lai_connector\ai_connector::get_instance();
-$brains =  $api->list_brains();
+// Initialize some empty vars so we do not run into any error later on.
+$brainquotas = array();
+$brains = new stdClass();
+
+// Initialize the API from TARSUS. We need to get the Brain quotas later on
+$api = \local_lai_connector\api_connector_tarsus::get_instance();
+if(isset($brainid)) {
+    $brainquotas =  $api->get_brain_usage($brainid);
+    $selectedbrain =  \local_lai_connector\tarsus_brain::get_instance($brainid);
+   # if(is_object($selectedbrain)) {
+        $brains->brainid = $brainid;
+        $brains->brainname = $selectedbrain->brainname;
+        $brains->braindescription = $selectedbrain->braindescription;
+        $brains->braindate = date("d.m.Y H:s", $selectedbrain->timecreated);
+   # }
+}
 
 // Define empty Array
-$subpages = array();
-$templatedata['indexpageurl'] =  new moodle_url('/local/lai_connector/index.php');
-$templatedata['token'] = \local_lai_connector\ai_connector::get_instance()::get_api_token();
 $templatedata['brains'] = $brains;
-
-$renderer = $PAGE->get_renderer('local_lai_connector');
-$maincontent = $renderer->render_brains($templatedata);
+$templatedata['brainquotas'] = $brainquotas;
+$templatedata['token'] = \local_lai_connector\ai_connector::get_instance()::get_api_token();
 
 // Output content.
 echo $OUTPUT->header();
-echo $maincontent;
+echo $OUTPUT->render_from_template('local_lai_connector/page_brainquotas', $templatedata);
+
+
+echo('<br>brains <br>');
+var_dump($brains);
+echo('<br><br>brainquotas <br>');
+var_dump($brainquotas);
+
+
 echo $OUTPUT->footer();

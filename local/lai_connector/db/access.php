@@ -44,6 +44,17 @@ $capabilities = array(
         'contextlevel' => CONTEXT_SYSTEM,
         'archetypes' => array(
             'editingteacher' => CAP_PREVENT,
+            'manager' => CAP_PREVENT,
+        ),
+    ),
+
+    // The User can visit the brainpage of this plugin
+    'local/lai_connector:viewbrainquotaspage' => array(
+        'captype' => 'read',
+        'riskbitmask' => RISK_SPAM,
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'editingteacher' => CAP_PREVENT,
             'manager' => CAP_ALLOW,
         ),
     ),

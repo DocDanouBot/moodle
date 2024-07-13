@@ -279,6 +279,12 @@ class api_connector_tarsus
         global $CFG;
         $curl = curl_init();
 
+        if ($end_timestamp == 0) {
+            // In case that we did not enter any timestamps, we will automatically look at the last half year.
+            $end_timestamp = time();
+            $start_timestamp = $end_timestamp - (\local_lai_connector\definitions::LL_TIME_CONSTANTS['SECONDS_PER_YEAR'] / 2);
+        }
+
         $postfieldarray['api_key'] = $this->_api_key;
         $postfieldarray['brain_id'] = $brainid;
         $postfieldarray['start_timestamp'] = $start_timestamp;
@@ -318,6 +324,12 @@ class api_connector_tarsus
         global $CFG;
         $curl = curl_init();
 
+        if ($end_timestamp == 0) {
+            // In case that we did not enter any timestamps, we will automatically look at the last half year.
+            $end_timestamp = time();
+            $start_timestamp = $end_timestamp - (\local_lai_connector\definitions::LL_TIME_CONSTANTS['SECONDS_PER_YEAR'] / 2);
+        }
+        
         $postfieldarray['api_key'] = $this->_api_key;
         $postfieldarray['brain_id'] = $brainid;
         $postfieldarray['start_timestamp'] = $start_timestamp;

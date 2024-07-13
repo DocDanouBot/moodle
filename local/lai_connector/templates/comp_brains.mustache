@@ -1,0 +1,93 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_lai_connector/comp_reports_allbrains.html
+    ...
+
+    Classes required for JS:
+    * none
+
+    Data attributes required for JS:
+    * none
+
+    Context variables required for this template:
+    ...
+
+    Example context (json):
+
+        ...
+    }
+}}
+
+<table id="reports_allbrains" class="brainslist">
+    <thead>
+        <tr class="headerrow grey_bg">
+            <th>{{#str}}report_allbrains_brainid, local_lai_connector{{/str}}</th>
+            <th>{{#str}}report_allbrains_brainname, local_lai_connector{{/str}}</th>
+            <th>{{#str}}report_allbrains_braindescription, local_lai_connector{{/str}}</th>
+            <th>{{#str}}report_allbrains_brainsize, local_lai_connector{{/str}}</th>
+            <th>{{#str}}report_allbrains_braincreationdate, local_lai_connector{{/str}}</th>
+            <th class="actionrow">{{#str}}report_allbrains_brainaction, local_lai_connector{{/str}}</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{#brains}}
+        <tr class="brainrow">
+            <td colspan="1">
+                {{brainid}}
+            </td>
+            <td colspan="1">
+                {{brainname}}
+            </td>
+            <td colspan="1">
+                {{braindescription}}
+            </td>
+            <td colspan="1">
+                <a href="/local/lai_connector/brainquotas.php?brainid={{brainid}}" class="btn btn-primary" title="{{#str}}button_api_call_listbrainquota, local_lai_connector{{/str}}"><i class="icon fa fa-eye fa-fw " aria-hidden="true"></i></a>
+            </td>
+            <td colspan="1">
+                {{braindate}}
+            </td>
+            <td class="actionrow">
+                <a href="/local/lai_connector/edit_tarsus_brain.php?brainid={{brainid}}" class="btn btn-primary" title="{{#str}}button_api_call_editbrain, local_lai_connector{{/str}}"><i class="icon fa fa-file-edit fa-fw " aria-hidden="true"></i></a>
+                <span class="btn btn-primary tarsus_ajax_brainpage_deletebrain" data-attribute='{{brainid}}' title="{{#str}}button_api_call_deletebrain, local_lai_connector{{/str}}"><i class="icon fa fa-trash fa-fw " aria-hidden="true"></i></span>
+            </td>
+        </tr>
+    {{/brains}}
+    {{^brains}}
+        <tr>
+            <td colspan="6"><br>{{#str}}report_allbrains_no_results, local_lai_connector{{/str}}<br></td>
+        </tr>
+        <tr>
+            <td colspan="6"><hr><br><h3>{{#str}}report_allbrains_create_new_brain, local_lai_connector{{/str}}</h3></td>
+        </tr>
+        <tr>
+            <td colspan="2"><label for="tarsus_ajax_create_new_brain_name">{{#str}}button_api_call_createbrain_label, local_lai_connector{{/str}}</label></td>
+            <td colspan="3"><input id="tarsus_ajax_create_new_brain_name" name="create_new_brain" type="text"></td>
+            <td><span id="tarsus_ajax_brainpage_createnewbrain" class="btn btn-primary" title="{{#str}}button_api_call_createbrain, local_lai_connector{{/str}}"><i class="icon fa fa-plus-square-o fa-fw " aria-hidden="true"></i></span></td>
+        </tr>
+        <tr>
+            <td colspan="5"><br><br><blockquote>{{#str}}report_allbrains_email_von_pascal, local_lai_connector{{/str}}</blockquote></td>
+        </tr>
+    {{/brains}}
+
+    </tbody>
+</table>
+<br>
+<div>
+<sub style="text-align: right;">{{#str}}report_allbrains_currenttoken, local_lai_connector{{/str}} {{#token}}{{{.}}}{{/token}}</sub>
+</div>

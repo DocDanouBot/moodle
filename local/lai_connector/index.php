@@ -34,8 +34,8 @@ require_capability('local/lai_connector:viewindexpage', $context);
 // Set up $PAGE.
 $PAGE->set_context($context);
 $PAGE->set_pagelayout('standard');
-$PAGE->set_title(get_string('indexpage_title', 'local_lai_connector'));
-$PAGE->set_heading($PAGE->title);
+$PAGE->set_title(get_string('pluginname', 'local_lai_connector'));
+$PAGE->set_heading(get_string('indexpage_title', 'local_lai_connector'));
 $PAGE->set_url(new moodle_url('/local/lai_connector/index.php'));
 
 // Load the lib.js to allow ajax communication with server
@@ -56,6 +56,13 @@ if (has_capability('local/lai_connector:viewbrainpage', $PAGE->context)) {
         'subpageinfo' => get_string('button_subpage_brains_description', 'local_lai_connector'),
         'subpageicon' => 'fa-users');
 }
+if (has_capability('local/lai_connector:viewbrainquotaspage', $PAGE->context)) {
+    $subpages[] = array(
+        'subpagelink' => new moodle_url('/local/lai_connector/brainquotas.php'),
+        'subpagename' => get_string('brainquotaspage_title', 'local_lai_connector'),
+        'subpageinfo' => get_string('button_subpage_brainquotas_description', 'local_lai_connector'),
+        'subpageicon' => 'fa-chart-line');
+}
 if (has_capability('local/lai_connector:viewbrainpage', $PAGE->context)) {
     $subpages[] = array(
         'subpagelink' => new moodle_url('/local/lai_connector/curatedata.php'),
@@ -68,8 +75,6 @@ $templatedata['indexpageurl'] =  new moodle_url('/local/lai_connector/index.php'
 $templatedata['subpages'] = $subpages;
 $templatedata['token'] = \local_lai_connector\ai_connector::get_instance()::get_api_token();
 $templatedata['brains'] = $brains;
-
-#$icon = new pix_icon('human_brain', 'randomIcon', 'local_lai_connector');
 
 // Output content.
 echo $OUTPUT->header();

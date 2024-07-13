@@ -39,9 +39,7 @@
             <th>{{#str}}report_allbrains_brainid, local_lai_connector{{/str}}</th>
             <th>{{#str}}report_allbrains_brainname, local_lai_connector{{/str}}</th>
             <th>{{#str}}report_allbrains_braindescription, local_lai_connector{{/str}}</th>
-            <th>{{#str}}report_allbrains_brainsize, local_lai_connector{{/str}}</th>
             <th>{{#str}}report_allbrains_braincreationdate, local_lai_connector{{/str}}</th>
-            <th>{{#str}}report_allbrains_brainaction, local_lai_connector{{/str}}</th>
         </tr>
     </thead>
     <tbody>
@@ -57,31 +55,44 @@
                 {{braindescription}}
             </td>
             <td colspan="1">
-                {{brainquota}}
-            </td>
-            <td colspan="1">
                 {{braindate}}
-            </td>
-            <td>
-                <a href="/local/lai_connector/edit_tarsus_brain.php?brainid={{brainid}}" class="btn btn-primary" title="{{#str}}button_api_call_editbrain, local_lai_connector{{/str}}"><i class="icon fa fa-file-edit fa-fw " aria-hidden="true"></i></a>
-                <span class="btn btn-primary tarsus_ajax_brainpage_deletebrain" data-attribute='{{brainid}}' title="{{#str}}button_api_call_deletebrain, local_lai_connector{{/str}}"><i class="icon fa fa-trash fa-fw " aria-hidden="true"></i></span>
             </td>
         </tr>
     {{/brains}}
     {{^brains}}
         <tr>
-            <td colspan="5">{{#str}}report_allbrains_no_results, local_lai_connector{{/str}}</td>
+            <td colspan="6"><br>{{#str}}report_allbrains_no_results, local_lai_connector{{/str}}<br></td>
         </tr>
     {{/brains}}
-    <tr>
-        <td colspan="5"><hr></td>
-    </tr>
-    <tr>
-        <td colspan="1"><label for="tarsus_ajax_create_new_brain_name">{{#str}}button_api_call_createbrain_label, local_lai_connector{{/str}}</label></td>
-        <td colspan="3"><input id="tarsus_ajax_create_new_brain_name" name="create_new_brain" type="text"></td>
-        <td><span id="tarsus_ajax_brainpage_createnewbrain" class="btn btn-primary" title="{{#str}}button_api_call_createbrain, local_lai_connector{{/str}}"><i class="icon fa fa-plus-square-o fa-fw " aria-hidden="true"></i></span></td>
-    </tr>
     </tbody>
 </table>
 <br>
-<sub>{{#str}}report_allbrains_currenttoken, local_lai_connector{{/str}} {{#token}}{{{.}}}{{/token}}</sub>
+<table id="reports_brainquotas" class="brainslist">
+    <thead>
+    <tr class="headerrow grey_bg">
+        <th>{{#str}}report_allbrains_brainid, local_lai_connector{{/str}}</th>
+        <th>{{#str}}report_allbrains_brainname, local_lai_connector{{/str}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#brainquotas}}
+        <tr class="brainrow">
+            <td colspan="2">
+                art
+            </td>
+            <td colspan="4">
+                {{{.}}}
+            </td>
+        </tr>
+    {{/brainquotas}}
+    {{^brainquotas}}
+        <tr>
+            <td colspan="6"><br>{{#str}}report_brainquotas_no_results, local_lai_connector{{/str}}<br></td>
+        </tr>
+    {{/brainquotas}}
+    </tbody>
+</table>
+
+<div>
+<sub style="text-align: right;">{{#str}}report_allbrains_currenttoken, local_lai_connector{{/str}} {{#token}}{{{.}}}{{/token}}</sub>
+</div>

@@ -50,6 +50,7 @@ $string['api_tarsus_mainname'] = 'TARSUS';
 // Rights and Roles
 $string['lai_connector:viewindexpage'] = 'Darf die Hauptseite der Komponente besuchen.';
 $string['lai_connector:viewbrainpage'] = 'Darf die Seite mit den Brains der Komponente besuchen.';
+$string['lai_connector:viewbrainquotaspage'] = 'Darf die Seite mit den Brains Quotas besuchen.';
 $string['lai_connector:viewcuratedatapage'] = 'Darf die Seite zum Kuratieren der Inhalte besuchen.';
 $string['lai_connector:settingsview'] = 'Darf die Einstellungen der Komponente sehen ';
 $string['lai_connector:settingsmanage'] = 'Darf die Einstellungen der Komponente ändern';
@@ -71,8 +72,10 @@ $string['event_coursesettings_extended_updated'] = 'Event: Die erweiterten Kurse
 
 // info for the main page.
 $string['indexpage_title'] = 'LAI Hauptseite';
-$string['brainpage_title'] = 'Hauptseite für Brains';
-$string['brainpage_description'] = 'Hier finden sie alle Brains';
+$string['brainpage_title'] = 'Brains konfigurieren';
+$string['brainpage_description'] = 'Hier finden sie alle Brains und deren Einstellungen';
+$string['brainquotaspage_title'] = 'Übersicht Brain Quotas';
+$string['brainquotaspage_description'] = 'Hier finden sie alle Informationen zu den Nutzungen der Brains';
 $string['curatedatapage_title'] = 'Inhalte kuratieren';
 $string['curatedatapage_description'] = 'Hauptseite für das Kuratieren von Inhalten';
 
@@ -89,9 +92,14 @@ $string['report_allbrains_braindescription'] = 'Beschreibung';
 $string['report_allbrains_brainid'] = 'BrainID';
 $string['report_allbrains_braincreationdate'] = 'Erstellt am';
 $string['report_allbrains_brainsize'] = 'Größe des Brains';
+$string['report_allbrains_create_new_brain'] = 'Neues Brain anlegen';
 $string['report_allbrains_brainaction'] = 'Aktionen';
-$string['report_allbrains_no_results'] = 'Entschuldigung, Es wurden keine Brains gefunden, oder sie haben nicht die nötigen Rechte diese zu sehen.';
+$string['report_allbrains_no_results'] = 'Entschuldigung, es wurden keine Brains gefunden, oder sie haben nicht die nötigen Rechte diese zu sehen.';
 $string['report_allbrains_currenttoken'] = 'Ihr aktueller Token: ';
+$string['report_allbrains_email_von_pascal'] = 'Hinweis von TARSUS: Die Erstellung eines Brains kostet extrem viel Geld und kann tausende von Euros an Kosten erzeugen. Bitte nur ein Brain erzeugen und damit arbeiten. In der Zukunft ist es gedacht, dass ihr für jeden einzelnen Kunden ein Brain erzeugt, denn die Kunden werden für jedes Brain zahlen.<br><br><i>Cheers<br>Pascal Zoleko</i>';
+
+// strings for the report comp_brainquotas page.
+$string['report_brainquotas_no_results'] = 'Entschuldigung, es wurden keine Datennutzungsstatistiken oder Brainsquotas gefunden, oder sie haben nicht die nötigen Rechte diese zu sehen.';
 
 // Info for the different forms.
 $string['form_edit_pagetitle_new'] = 'Ein neues TARSUS Brain anlegen';
@@ -120,7 +128,9 @@ $string['button_api_call_listbrainquota'] = 'Zeige Brain Datenverbrauch';
 $string['button_api_call_listclonevoices'] = 'Zeige alle verfügbaren Stimmen';
 $string['button_api_call_gethotkeywords'] = 'Hole alle vielbenutzten Schlagworte';
 $string['button_subpage_brains'] = 'Brain Konfiguration';
-$string['button_subpage_brains_description'] = 'Hier können sie alle Brains einsehen, konfigurieren, anlegen, löschen und die Quotas sehen.';
+$string['button_subpage_brains_description'] = 'Hier können sie alle Brains einsehen, konfigurieren, anlegen und löschen.';
+$string['button_subpage_brainquotas'] = 'Brain Quotas Übersicht';
+$string['button_subpage_brainquotas_description'] = 'Hier können Sie die Nutzungsstatistiken der Brains einsehen und evaluieren.';
 $string['button_subpage_curatedata'] = 'Inhalte kuratieren';
 $string['button_subpage_curatedata_description'] = 'Hier können sie Inhalte der Brains, anlegen, löschen und kuratieren.';
 $string['button_subpage_none'] = 'Es stehen Ihnen keine Unterseiten zum Konfigurieren zur Verfügung. Wahrscheinlich haben sie nicht genügend Rechte und müssen erst Ihre Rollenberechtigung anpassen.';

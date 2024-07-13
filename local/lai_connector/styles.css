@@ -38,6 +38,11 @@ code, code a {
     margin-right: 0!important;
 }
 
+.resultlist .actionrow,
+.brainslist .actionrow {
+    min-width: 100px;
+}
+
 .resultlist tr td:first-child,
 .resultlist tr th:first-child {
     width: 42%;
