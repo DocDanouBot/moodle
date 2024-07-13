@@ -278,6 +278,7 @@ window.addEventListener('load', function () {
                 data: {
                     action: 'deleteBrain',
                     brainname: oldbrainname,
+                    userid: 1234,
                     sesskey: M.cfg.sesskey
                 },
                 dataType: "json",

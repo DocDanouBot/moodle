@@ -20,6 +20,10 @@ code, code a {
     background-image: none;
 }
 
+#page-local-lai_connector-brains .overflowmask {
+
+ /*   opacity: 0.3; */
+}
 
 #lai_comp_testbuttons {
     margin: 40px 0px 10px 0px;

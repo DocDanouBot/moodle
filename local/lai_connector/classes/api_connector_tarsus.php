@@ -206,6 +206,11 @@ class api_connector_tarsus
         $braincreated = curl_exec($curl);
 
         curl_close($curl);
+
+        $userid = 1234;
+        // We save a copy of the content also in our local db. there we can also store lost of additional data.
+        $savedintolocaldb = \local_lai_connector\tarsus_brain::create_new_brain($brain_id, $userid);
+
         return $braincreated;
     }
 
@@ -230,6 +235,11 @@ class api_connector_tarsus
         $response = curl_exec($curl);
 
         curl_close($curl);
+
+        $userid = 1234;
+        // We delete the copy of the content also from our local db. just to clean everything up.
+        $deletedfromlocaldb = \local_lai_connector\tarsus_brain::delete_brain($brain_id, $userid);
+
         return $response;
     }
 
@@ -357,7 +367,7 @@ class tarsus_brain
     {
         global $DB;
         // we always need a context for events and anything.
-        $context = context_system::instance();
+        $context = 1;
         $table = 'local_lai_connector_brains';
 
         // Is there already a record with this brainid identifier? Than update it, otherwise create it.
@@ -423,7 +433,7 @@ class tarsus_brain
                 // Successfully deleted, so we save everything in an event.
 
                 // we always need a context for events and anything.
-                $context = context_system::instance();
+                $context = 1;
                 // What should we memorize and track in the event?
                 $fieldsToEvent['userid'] = $userid;
                 $fieldsToEvent['timedeleted'] = time();

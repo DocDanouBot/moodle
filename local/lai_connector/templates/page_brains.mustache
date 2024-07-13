@@ -35,16 +35,9 @@
 }}
 
 
-<div>
+<div class="overflowmask">
     <h3><a href="{{indexpageurl}}" target="_self">{{#str}}pluginname, local_lai_connector{{/str}}</a></h3>
     <br />
-    <div class="filtercontainer">
-        {{{formhtml}}}
-    </div>
-
-    {{#pagingbar}}
-        {{{.}}}
-    {{/pagingbar}}
 
     {{> local_lai_connector/comp_report_brains}}
 

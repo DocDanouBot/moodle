@@ -70,13 +70,9 @@ switch ($action) {
         break;
     case "createNewBrain":
         $brainname = required_param('brainname', PARAM_ALPHAEXT);
-        $userid = required_param('userid', PARAM_INT);
         $result = $api->create_new_brain($brainname);
-        // We save a copy of the content also in our local db. there we can also store lost of additional data.
-        $savedintolocaldb = \local_lai_connector\tarsus_brain::create_new_brain($brainname, $userid);
         $returndata = array(
             'result' => $result,
-            'localdb' => $savedintolocaldb,
             'function' => "createNewBrain"
         );
         echo json_encode($returndata);
@@ -84,11 +80,8 @@ switch ($action) {
     case "deleteBrain":
         $brainname = required_param('brainname', PARAM_ALPHAEXT);
         $result = $api->delete_brain($brainname);
-        // We delete the copy of the content also from our local db. just to clean everything up.
-        $deletedfromlocaldb = \local_lai_connector\tarsus_brain::delete_brain($brainname);
         $returndata = array(
             'result' => $result,
-            'localdb' => $deletedfromlocaldb,
             'function' => "deleteBrain"
         );
         echo json_encode($returndata);

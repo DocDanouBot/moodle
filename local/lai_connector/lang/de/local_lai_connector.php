@@ -92,6 +92,10 @@ $string['report_allbrains_brainaction'] = 'Aktion';
 $string['report_allbrains_no_results'] = 'Entschuldigung, Es wurden keine Brains gefunden, oder sie haben nicht die nötigen Rechte diese zu sehen.';
 $string['report_allbrains_currenttoken'] = 'Ihr aktueller Token: ';
 
+// Info for the different forms.
+$string['form_edit_brain_title'] = 'Braindetails bearbeiten';
+$string['form_edit_brain_title'] = 'Hauptseite für Brains';
+
 // Different buttons for the API call page. as a sandbox test.
 $string['button_api_title_indexpage'] = 'Wähle den Bereich zum Konfigurieren';
 $string['button_api_call_featurebutton'] = 'Knopf zur nächsten Seite';
