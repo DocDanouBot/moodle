@@ -30,7 +30,7 @@ function xmldb_local_lai_connector_upgrade($oldversion) {
 
     $dbman = $DB->get_manager();
 
-    if ($oldversion < 2024070006) {
+    if ($oldversion < 2024070010) {
 
         // A new table for the local_lai_connector_courses to save the TARSUS state of each course
         $table = new xmldb_table('local_lai_connector_brains');
@@ -77,7 +77,7 @@ function xmldb_local_lai_connector_upgrade($oldversion) {
         }
 
         // A new table for the local_lai_connector to save all the assets that have been added to TARSUS
-        $table = new xmldb_table('local_lai_connector_assets');
+        $table = new xmldb_table('local_lai_connector_tracked_assets');
         if ($dbman->table_exists($table)) {
             // lets make sure that we start from scratch, so we drop the table.
             $dbman->drop_table($table);
@@ -102,7 +102,7 @@ function xmldb_local_lai_connector_upgrade($oldversion) {
             $dbman->create_table($table);
         }
 
-        upgrade_plugin_savepoint(true, 2024070006, 'local', 'lai_connector');
+        upgrade_plugin_savepoint(true, 2024070010, 'local', 'lai_connector');
     }
 
     return true;

@@ -308,14 +308,6 @@ class api_connector_tarsus
         return $brainusage;
     }
 
-    public function add_course_to_brain($courseid) {
-        global $CFG;
-        // adding_course_to_brain($courseid);
-        $result = "No Usage for course id " . $courseid ;
-        return $result;
-    }
-
-
     public function get_clone_voices() {
         global $CFG;
     }
@@ -329,7 +321,7 @@ class api_connector_tarsus
             $end_timestamp = time();
             $start_timestamp = $end_timestamp - (\local_lai_connector\definitions::LL_TIME_CONSTANTS['SECONDS_PER_YEAR'] / 2);
         }
-        
+
         $postfieldarray['api_key'] = $this->_api_key;
         $postfieldarray['brain_id'] = $brainid;
         $postfieldarray['start_timestamp'] = $start_timestamp;
@@ -352,5 +344,108 @@ class api_connector_tarsus
         curl_close($curl);
         echo $response;
     }
+
+    public function add_course_to_brain($brain_id, $courseid) {
+        global $DB;
+        $result = "";
+
+        // first we should get the course
+        if (!$course = $DB->get_record('course', array('id' => $courseid))) {
+            throw new lai_exception('exception_lai_missing', $courseid);
+        }
+
+        // We need the sections first and all their titles and descriptions. So we can feed it all to the brain
+        $sections = $DB->get_records('course_sections', ['course' => $course->id], 'section ASC', 'id,section,sequence,visible');
+
+        foreach ($sections as $section) {
+            // We add all the section titles and descriptions to the brain.
+            $this->track_text_bits($brain_id);
+
+        }
+
+        // Now we should get all the different modules element
+        $allcms = $DB->get_records('course_modules', array('course' => $course->id, 'deletioninprogress' => 0),'','id,module,instance,section');
+        $allmodules = $DB->get_records('modules', array(), '','id,name');
+
+
+        // we could use these transformers to see in the console, what the arrays are like
+        // $result = json_encode($allcms);
+        // $result .= json_encode($allmodules);
+
+        // Save them in a long list
+        // and map them individually to different kind of Brain elements.
+        $mappingresult = \local_lai_connector\util::map_cm_to_tarsus_brain($allcms,$allmodules);
+
+        // Now we have got all the elements of this course and need to insert them into the brain
+
+
+
+        // adding_course_to_brain($courseid);
+        # $result = "No Usage for course id " . $courseid ;
+        return $result . implode('|', $mappingresult);
+    }
+
+
+
+    /** Track some basic plain texts and their titles into the brain
+     * @param $brain_id
+     * @param $title
+     * @param $text
+     * @param $resource_id
+     * @param $asset_id
+     * @param $asset_type
+     * @param
+     * */
+    public function track_text_bits($brain_id, $title, $text = "", $resource_id,
+                                    $asset_id = '', $asset_type = '', $user_id = '',
+                                    $user_role = '', $group_ids = '', $poison_index = false) {
+        global $DB;
+        $curl = curl_init();
+
+        /** structure definition */
+        /*
+        array('api_key' => '7517fd28-8cb4-4304-b9f0-0312b8c92ef1',
+            'brain_id' => 'customer-demo',
+            'text' => 'Artificial Intelligence is somthing a lot of people cannot understand if they are on another planet.',
+            'title' => 'My Text Title',
+            'resource_id' => 'text-id-123',
+            'ignore_language' => 'false',
+            'asset_id' => 'myAssetID',
+            'asset_type' => 'MyAssetType',
+            'shop_url' => 'https://your-shop.url'),
+        */
+        $postfieldarray['api_key'] = $this->_api_key;
+        $postfieldarray['brain_id'] = $brain_id;
+        $postfieldarray['title'] = $title;
+        $postfieldarray['text'] = $text;
+        $postfieldarray['resource_id'] = $resource_id; // marketing-definition-text - This text must be assigned a unique identifier.
+        $postfieldarray['ignore_language'] = false; // Should stay false to let the brain determine the language
+        $postfieldarray['asset_id'] = $asset_id; // optional marketing-course;
+        $postfieldarray['asset_type'] = $asset_type; // optional MyAssetType;
+        $postfieldarray['user_id'] = $user_id; // optional max-musterman-id;
+        $postfieldarray['user_role'] = $user_role; // optional Marketing BSc. Student;
+        $postfieldarray['group_ids'] = $group_ids; // optional ['group-a', 'group-b']
+        $postfieldarray['poison_index'] = $poison_index; // optional,
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $this->_api_baseurl . '/brain/access/track/text-bits',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $postfieldarray,
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        echo $response;
+    }
+
+
+
 }
 

@@ -109,7 +109,6 @@ class tarsus_brain
         $this->timemodified = $record->timemodified;
     }
 
-
     /**
      * Factory method to get an instance of the AI connector. We use this method to get the instance.
      * of the AI connector ONLY once! We do not want to redo the job many times, if we need the API.
@@ -131,7 +130,6 @@ class tarsus_brain
         return self::$_self;
     }
 
-
     /** regular static funtion to add a new entry into our own database.
      * @param $brainid
      * @param $brainname
@@ -148,7 +146,8 @@ class tarsus_brain
         $table = 'local_lai_connector_brains';
 
         $data = new \stdClass;
-        $data->brainid = $brainid;
+        // Reduce the brainid to only alphanumeric characters and numbers, as Tarsus is not accepting anything else.
+        $data->brainid = preg_replace('/[^A-Za-z0-9]/i', '', $brainid);
         if($brainname != "") {
             $data->brainname = strip_tags($data->brainname, '<a>');
         }
@@ -170,7 +169,6 @@ class tarsus_brain
         return new self($brainid);
     }
 
-
     /**
      * Updates the public values of the instance
      *
@@ -183,12 +181,12 @@ class tarsus_brain
      */
     public function update(\stdClass $data) {
         global $DB;
-
         $update = false;
 
         if(!empty($data->brainid)) {
             if($data->brainid != $this->brainid) {
-                $this->brainid = $data->brainid;
+                // Reduce the brainid to only alphanumeric characters and numbers, as Tarsus is not accepting anything else.
+                $this->brainid = preg_replace('/[^A-Za-z0-9]/i', '', $data->brainid);
                 $update = true;
             }
         }

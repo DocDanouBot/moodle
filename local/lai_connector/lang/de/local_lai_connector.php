@@ -22,7 +22,7 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
+defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'LernLink AI Connector';
 $string['pluginname_admin'] = 'LernLink AI Connector Verwaltung';
@@ -65,10 +65,28 @@ $string['lai_connector:assetdelete'] = 'Darf alle verfügbaren Assets und Ressou
 $string['event_brain_created'] = 'Event: Ein Tarsus Brain wurde erstellt.';
 $string['event_brain_updated'] = 'Event: Ein Tarsus Brain wurde aktualisiert.';
 $string['event_brain_deleted'] = 'Event: Ein Tarsus Brain wurde gelöscht.';
-$string['event_nugged_entry_created'] = 'Event: Ein einzelner Nugget wurde erstellt.';
-$string['event_nugged_entry_deleted'] = 'Event: Ein einzelner Nugget wurde gelöscht.';
 $string['event_coursesettings_extended_created'] = 'Event: Die erweiterten Kurseinstellungen zum TARSUS import wurden erstellt.';
 $string['event_coursesettings_extended_updated'] = 'Event: Die erweiterten Kurseinstellungen zum TARSUS import wurden aktualisiert.';
+$string['event_nugged_entry_created'] = 'Event: Ein einzelner Nugget wurde erstellt.';
+$string['event_nugged_entry_deleted'] = 'Event: Ein einzelner Nugget wurde gelöscht.';
+$string['event_track_audio_bits_created'] = 'Event: Ein Audio-Bit wurde dem Brain hinzugefügt.';
+$string['event_track_audio_bits_deleted'] = 'Event: Ein Audio-Bit wurde aus dem Brain entfernt.';
+$string['event_track_document_bits_created'] = 'Event: Ein Dokument-Bit wurde dem Brain hinzugefügt.';
+$string['event_track_document_bits_deleted'] = 'Event: Ein Dokument-Bit wurde aus dem Brain entfernt.';
+$string['event_track_image_bits_created'] = 'Event: Ein Bild-Bit wurde dem Brain hinzugefügt.';
+$string['event_track_image_bits_deleted'] = 'Event: Ein Bild-Bit wurde aus dem Brain entfernt.';
+$string['event_track_question_bits_created'] = 'Event: Ein Frage-Bit wurde dem Brain hinzugefügt.';
+$string['event_track_question_bits_deleted'] = 'Event: Ein Frage-Bit wurde aus dem Brain entfernt.';
+$string['event_track_question_bool_bits_created'] = 'Event: Ein Boolsches Frage-Bit wurde dem Brain hinzugefügt.';
+$string['event_track_question_bool_bits_deleted'] = 'Event: Ein Boolsches Frage-Bit wurde aus dem Brain entfernt.';
+$string['event_track_question_open_bits_created'] = 'Event: Ein offenes Frage-Bit wurde dem Brain hinzugefügt.';
+$string['event_track_question_open_bits_deleted'] = 'Event: Ein offenes Frage-Bit wurde aus dem Brain entfernt.';
+$string['event_track_text_bits_created'] = 'Event: Ein Text-Bit wurde dem Brain hinzugefügt.';
+$string['event_track_text_bits_deleted'] = 'Event: Ein Text-Bit wurde aus dem Brain entfernt.';
+$string['event_track_url_bits_created'] = 'Event: Ein URL-Bit wurde dem Brain hinzugefügt.';
+$string['event_track_url_bits_deleted'] = 'Event: Ein URL-Bit wurde aus dem Brain entfernt.';
+$string['event_track_video_bits_created'] = 'Event: Ein Video-Bit wurde dem Brain hinzugefügt.';
+$string['event_track_video_bits_deleted'] = 'Event: Ein Video-Bit wurde aus dem Brain entfernt.';
 
 // info for the main page.
 $string['indexpage_title'] = 'LAI Hauptseite';

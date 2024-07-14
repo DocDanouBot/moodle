@@ -51,7 +51,8 @@ switch ($action) {
         echo json_encode($returndata);
         break;
     case "addCourseToBrain":
-        $result = $api->add_course_to_brain($courseid);
+        $brainname = required_param('brainname', PARAM_ALPHAEXT);
+        $result = $api->add_course_to_brain($brainname,$courseid);
         $returndata = array(
             'token' => $token,
             'result' => $result,

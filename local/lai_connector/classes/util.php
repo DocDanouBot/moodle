@@ -53,7 +53,27 @@ class util
         return $returnboolean;
     }
 
-
+    /** Maps elements for this course to modules with their instances and return and associative array.
+     * @param array $allcms
+     * @param array $allmodules
+     * @return array
+     * @throws \lai_exception
+     */
+    public static function map_cm_to_tarsus_brain($allcms, $allmodules) {
+        $allmappingentries = array();
+        foreach ($allcms as $cmid=>$cm) {
+            $mappingentry = array();
+            // First we map the id of the module to query it later
+            $mappingentry['moduleid'] =  $allmodules[$cm->module]->id;
+            // Than we map the name of the module to query it later
+            $mappingentry['module'] =  $allmodules[$cm->module]->name;
+            // Than we need the real instanceID from the CMID to find it in the other DB
+            $mappingentry['instanceid'] = $cm->instance;
+            $allmappingentries[] = $mappingentry;
+            # $allmappingentries[] = implode('-', $mappingentry);
+        }
+        return $allmappingentries;
+    }
 
     /** Creates a new tarsus_brain using the tarsus_brain class
      * @param stdClass $formdata

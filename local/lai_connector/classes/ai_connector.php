@@ -259,8 +259,8 @@ class ai_connector {
         return $brainusage;
     }
 
-    public function add_course_to_brain($courseid) {
-        $addresult = $this->_api->add_course_to_brain($courseid);
+    public function add_course_to_brain($brainid, $courseid) {
+        $addresult = $this->_api->add_course_to_brain($brainid, $courseid);
         return $addresult;
     }
 
