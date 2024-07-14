@@ -56,3 +56,10 @@ moodle-plugin-ci.phar
 .hugo_build.lock
 phpcs.xml
 jsconfig.json
+
+# My own components
+/local/lai_connector
+/blocks/lai_sandbox
+/local/ai_manager
+/blocks/ai_chat
+/mod/individualfeedback
