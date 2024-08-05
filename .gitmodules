@@ -1,3 +1,6 @@
 [submodule "admin/tool/admin/tool/useranonymization"]
 	path = admin/tool/admin/tool/useranonymization
 	url = git@github.com:DocDanouBot/moodle-tool_useranonymization.git
+[submodule "admin/tool/useranonymization"]
+	path = admin/tool/useranonymization
+	url = git@github.com:DocDanouBot/moodle-tool_useranonymization.git
