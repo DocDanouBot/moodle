@@ -46,3 +46,5 @@ M.availability_minduration.form.getNode = function(json) {
 M.availability_minduration.form.fillValue = function(value, node) {
     value.e = parseInt(node.one('select[name=e]').get('value'), 10);
 };
+
+//
