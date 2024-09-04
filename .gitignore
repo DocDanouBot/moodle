@@ -58,9 +58,13 @@ phpcs.xml
 jsconfig.json
 
 # My own components
+/local/ai_manager
 /local/lai_connector
 /blocks/lai_sandbox
-/local/ai_manager
+/blocks/lai_chatbot
 /blocks/ai_chat
 /mod/individualfeedback
+/mod/bycs_feedback
+/theme/boost_union
+/admin/tool/usersuspension
 
