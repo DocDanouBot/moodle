@@ -53,38 +53,74 @@ class CourseSettingsExtendedForm extends \moodleform
      */
     public function definition()
     {
+        global $PAGE;
         // The instance to the mform object.
         $mform =& $this->_form; // Don't forget the underscore
 
+
         if (!empty($this->permissions['coursesettings_tarsus_enable']) && $this->permissions['coursesettings_tarsus_enable'] === true) {
             $mform->addElement('header', 'first_tarsus_header', get_string('setting_courseext_header', 'local_lai_connector'));
-            $mform->addElement('html', get_string('setting_courseext_description', 'local_lai_connector'));
-            $mform->addElement('html', '<br><br>');
+            $mform->addElement('html', get_string('setting_courseext_description', 'local_lai_connector').'<br><br>');
             $mform->addElement('checkbox', 'enabled', get_string('setting_courseext_enable', 'local_lai_connector'));
             $mform->addElement('html', '<br>');
+
         }
+
+        # echo( "Element value " . $mform->getElementValue('enabled') . "<hr>");
+        # var_dump($mform);
+
+        // Deactivate this whole section as it is not ready and fully functional yet
+        /*
         if (!empty($this->permissions['coursesettings_tarsus_addnow']) && $this->permissions['coursesettings_tarsus_addnow'] === true) {
             $mform->addElement('header', 'second_tarsus_header', get_string('setting_courseext_addnow_title', 'local_lai_connector'));
-            $mform->addElement('html', get_string('setting_courseext_addnow_description', 'local_lai_connector'));
-            $mform->addElement('html', '<br>');
-            $mform->addElement('html', '<div style="text-align: center"><span class="btn btn-primary" id="tarsus_ajax_add_course_to_brain">'.get_string('setting_courseext_addnow_action', 'local_lai_connector').'</span> <span id="tarsus_ajax_add_course_to_brain_result"> </span></div>');
-            $mform->addElement('html', '<br>');
+            $mform->setExpanded('second_tarsus_header');
+            $mform->addElement('static', 'second_tarsus_text', '', get_string('setting_courseext_addnow_description', 'local_lai_connector'), ['class' => 'breitesfenster']);
+
+            $mform->addElement('button', 'addto_tarsus_button', get_string('setting_courseext_addnow_action', 'local_lai_connector'));
+            // Add js.
+            # $mform->addElement('hidden', 'buttonelementconfiguration', '', array('id' => 'tool_lp_scaleconfiguration'));
+            #$mform->setType('buttonelementconfiguration', PARAM_RAW);
+            # $PAGE->requires->js_call_amd('tool_lp/scaleconfig', 'init', array('#id_scaleid','#tool_lp_scaleconfiguration', '#id_buttonelement'));
 
             $this->add_action_buttons(true);
         }
+        */
     }
 
-    public function set_data($defaultvalues)    {
-        if (is_object($defaultvalues)) {
-            $defaultvalues = (array)$defaultvalues;
+    public function definition_after_data() {
+        parent::definition_after_data();
+        $mform =& $this->_form;
+        $course_checkbox =& $mform->getElement('enabled');
+
+        if (!isset($course_checkbox->_attributes['checked'])) {
+            $mform->removeElement('second_tarsus_header');
+            $mform->removeElement('second_tarsus_text');
+            $mform->removeElement('addto_tarsus_button');
         }
+        // Example 2
+        # $mform->insertElementBefore( $mform->createElement('submit', 'cancel', get_string('cancel')), 'course_text');
 
-        if ($defaultvalues['enabled'] <= 0) {
+    } // definition_after_data
 
-            $defaultvalues['enabled'] = 1;
 
-            parent::set_data($defaultvalues); // Now set the prepared data with the parent method.
+    /**
+     * Set the data in this form to show on start.
+     *
+     * @param \stdClass|array $defaultvalues The data we want to set.
+     */
+    public function set_data($data = null) {
+        global $DB, $COURSE;
+
+        if (is_object($data)) {
+            $defaultvalues = (array)$data;
+        } else {
+            $checkbox = $DB->get_record('local_lai_connector_courses', array('courseid' => $COURSE->id), 'enabled', IGNORE_MULTIPLE);
+            // Lets get this stupid value from DB
+            $defaultvalues = array(
+                'enabled' => $checkbox->enabled, # $data->enabled,
+            );
         }
+        parent::set_data($defaultvalues); // Now set the prepared data with the parent method.
     }
 
     /**
@@ -92,17 +128,9 @@ class CourseSettingsExtendedForm extends \moodleform
      *
      * @return \stdClass The post data.
      */
-    public function get_data($data = null) {
-        if (is_object($data)) {
-            $data = (array)$data;
-        }
-
-        if ($data == null) {
-            $data = parent::get_data();
-        }
-
+    public function get_data() {
+        $data = parent::get_data();
         return $data;
     }
-
 
 }

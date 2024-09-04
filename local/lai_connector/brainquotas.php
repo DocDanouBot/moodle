@@ -42,12 +42,13 @@ $pageheading .= ' | ' . get_string('brainquotaspage_title', 'local_lai_connector
 $PAGE->set_title(get_string('brainquotaspage_title', 'local_lai_connector'));
 $PAGE->set_heading($pageheading, false, false);
 $PAGE->set_url(new moodle_url('/local/lai_connector/brainquotas.php'));
+$PAGE->requires->css('/local/lai_connector/styles.css');
 $PAGE->requires->jquery();
 $PAGE->requires->jquery_plugin('ui');
 $PAGE->requires->jquery_plugin('ui-css');
 
 // Load the lib.js to allow ajax communication with server
-$PAGE->requires->js(new moodle_url('/local/lai_connector/lib.js'));
+$PAGE->requires->js_call_amd('local_lai_connector/ajaxbuttons', 'init()', []);
 
 // Initialize some empty vars so we do not run into any error later on.
 $brainquotas = array();
@@ -56,7 +57,7 @@ $brains = new stdClass();
 // Initialize the API from TARSUS. We need to get the Brain quotas later on
 $api = \local_lai_connector\api_connector_tarsus::get_instance();
 if(isset($brainid)) {
-    $brainquotas =  $api->get_brain_usage($brainid);
+    $brainquotas =  $api->get_brain_usage($brainid, 0, time());
     $selectedbrain =  \local_lai_connector\tarsus_brain::get_instance($brainid);
    # if(is_object($selectedbrain)) {
         $brains->brainid = $brainid;
@@ -76,10 +77,10 @@ echo $OUTPUT->header();
 echo $OUTPUT->render_from_template('local_lai_connector/page_brainquotas', $templatedata);
 
 
-echo('<br>brains <br>');
-var_dump($brains);
-echo('<br><br>brainquotas <br>');
-var_dump($brainquotas);
+#echo('<br>brains <br>');
+#var_dump($brains);
+#echo('<br><br>brainquotas <br>');
+#var_dump($brainquotas);
 
 
 echo $OUTPUT->footer();

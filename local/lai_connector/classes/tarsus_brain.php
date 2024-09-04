@@ -49,11 +49,11 @@ class tarsus_brain
     // The regular incremental id is the primary key.
     public $id;
 
-    // The reference to the name of TARSUS API.
-    public $brainid = "";
-
     // The reference for the factory to see, if we already have an entry.
     protected static $_brainid = "";
+
+    // The reference for the factory to see, if we already have an entry.
+    public $brainid = "";
 
     // Some natural name we gave interternally at lernlink.
     public $brainname = "";
@@ -79,24 +79,40 @@ class tarsus_brain
     private static $_self;
 
     //* Component constructor. Still empty at the time.
-    public function __construct($brainid)
+    public function __construct($brainid = null)
     {
         global $DB;
+
+        if ($brainid == null) {
+            $api = \local_lai_connector\api_connector_tarsus::get_instance();
+            $allbrainsresponsejson =  $api->list_brains(); // show and get all the brains available.
+            $parsedbrains = json_decode($allbrainsresponsejson, true); // parse the response json into an array.
+            $allbrains = $parsedbrains['awareness']['brain_ids'];
+            $newestbrain = end($allbrains); // get the first brain.
+            self::$_brainid = $newestbrain['id']; // get the first brain id.
+        }
+
         $table = 'local_lai_connector_brains';
 
-        if(!$record = $DB->get_record($table, array('brainid' => $brainid))) {
-            // Safety fallback, we did not find the corresponding entry of the given TARSUS DB within our DB.
-            // Therefore we quickly create it to continue smoothly
-            $record = \local_lai_connector\tarsus_brain::create($brainid);
-            // throw new tarsus_brain_exception('except_brain_not_found', $brain_id);
+        // found orphan table --> delete it
+        if ($DB->get_manager()->table_exists($table)) {
+            if (!$record = $DB->get_record($table, array('brainid' => $brainid))) {
+                // Safety fallback, we did not find the corresponding entry of the given TARSUS DB within our DB.
+                // Therefore we quickly create it to continue smoothly
+                $record = \local_lai_connector\tarsus_brain::create($brainid);
+                // throw new tarsus_brain_exception('except_brain_not_found', $brain_id);
+            }
+        } else {
+            return false; // no table found
         }
 
         $this->id = $record->id;
-        $this->brainid = $record->brainid;
+        // $this->brainid = $record->brainid;
 
         // We need to save it also statically so that the factory sees it when we try to build yet another instance.
         // of the very same brainid.
         self::$_brainid = $brainid;
+        $this->brainid = $brainid;
 
         if($record->brainname != "") {
             $this->brainname = $record->brainname;
@@ -147,7 +163,9 @@ class tarsus_brain
 
         $data = new \stdClass;
         // Reduce the brainid to only alphanumeric characters and numbers, as Tarsus is not accepting anything else.
-        $data->brainid = preg_replace('/[^A-Za-z0-9]/i', '', $brainid);
+         // $data->brainid = preg_replace('/[^A-Za-z0-9]/i', '', $brainid); // WRONG! They accept also Underscores
+        $data->brainid = $brainid; // RIGHT!
+
         if($brainname != "") {
             $data->brainname = strip_tags($data->brainname, '<a>');
         }
@@ -180,11 +198,13 @@ class tarsus_brain
      * @throws \moodle_exception
      */
     public function update(\stdClass $data) {
-        global $DB;
+        global $DB, $USER;
         $update = false;
 
         if(!empty($data->brainid)) {
             if($data->brainid != $this->brainid) {
+                // Memorize the old and new brainid for saving it into the event later on. (Versionierung / Protokollierung)
+                $fieldsToEvent['changed-brainid'] = "New: '" .$data->brainid. "' | Old: '". $this->brainid ."' ";
                 // Reduce the brainid to only alphanumeric characters and numbers, as Tarsus is not accepting anything else.
                 $this->brainid = preg_replace('/[^A-Za-z0-9]/i', '', $data->brainid);
                 $update = true;
@@ -193,6 +213,10 @@ class tarsus_brain
 
         if(!empty($data->brainname)) {
             if($data->brainname != $this->brainname) {
+                // Memorize the old and new brainname for saving it into the event later on. (Versionierung / Protokollierung)
+                $fieldsToEvent['changed-brainname'] = "New: '" . $data->brainname . "' | Old: '" . $this->brainname ."' ";
+                // We dont need to decode it, the German Sonderzeichen will be saved as Unicode.
+                // $fieldsToEvent['changed-brainname'] = "New: " .\local_lai_connector\util::utf8_for_xml($data->brainname). " | Old: " . \local_lai_connector\util::utf8_for_xml($this->brainname);
                 $this->brainname = strip_tags($data->brainname, '<a>');
                 $update = true;
             }
@@ -200,18 +224,34 @@ class tarsus_brain
 
         if(!empty($data->braindescription)) {
             if($data->braindescription != $this->braindescription) {
+                // Memorize the old and new braindescription for saving it into the event later on. (Versionierung / Protokollierung)
+                $fieldsToEvent['changed-braindescription'] = "New: '" .$data->braindescription. "' | Old: '". $this->braindescription ."' ";
                 $this->braindescription = strip_tags($data->braindescription, '<a>');
                 $update = true;
             }
         }
 
         if($update) {
-            $this->timeupdated = time();
+            $this->timemodified = time();
+            $this->userid = $USER->id;
 
             try {
                 //TODO catch this?
                 $table = 'local_lai_connector_brains';
                 $DB->update_record($table, $this);
+
+                // Successfully updated, so we save everything in an event.
+                // we always need a context for events and anything.
+                $context = \context_system::instance();
+                // What should we memorize and track in the event?
+                $fieldsToEvent['userid'] = $USER->id;
+                $event = \local_lai_connector\event\brain_updated::create(
+                    array('context' => $context,
+                        'objectid' => $data->id,
+                        'other' => $fieldsToEvent)
+                );
+                $event->trigger();
+
             } catch(\Exception $e) {
                 $a = new \stdClass();
                 $a->brainid = "<span style='font-weight:bold;'>" . $data->brainid . "</span>";
@@ -234,23 +274,24 @@ class tarsus_brain
      * @throws \coding_exception
      * @throws \dml_exception
      */
-    public static function create_new_brain($brain_id, $userid)
+    public static function create_new_brain($brain_id)
     {
-        global $DB;
+        global $DB, $USER;
+        // Successfully created, so we save everything in an event.
         // we always need a context for events and anything.
-        $context = 1;
+        $context = \context_system::instance();
         $table = 'local_lai_connector_brains';
 
         // Is there already a record with this brainid identifier? Than update it, otherwise create it.
         if ($existingrecord = $DB->get_record($table, array('brainid' => $brain_id), '*', IGNORE_MULTIPLE)) {
-            $existingrecord->userid = $userid;
+            $existingrecord->userid = $USER->id;
             $existingrecord->timemodified = time();
             $successfullyupdated = $DB->update_record($table, $existingrecord);
 
             // Did the update run smoothly?
             if ($successfullyupdated) {
                 // What should we memorize and track in the event?
-                $fieldsToEvent['userid'] = $userid;
+                $fieldsToEvent['userid'] = $USER->id;
                 $fieldsToEvent['timemodified'] = $existingrecord->timemodified;
                 $event = \local_lai_connector\event\brain_updated::create(
                     array('context' => $context, 'objectid' => $existingrecord->id, 'other' => $fieldsToEvent)
@@ -263,7 +304,7 @@ class tarsus_brain
             // we have not yet found a record with this brainid, so we create it.
             $newrecord = new stdClass();
             $newrecord->brainid = $brain_id;
-            $newrecord->userid = $userid;
+            $newrecord->userid = $USER->id;
             $newrecord->timecreated = time();
             $newrecord->timemodified = 0;  // This entry is brand new, it has never been modified.
 
@@ -289,14 +330,14 @@ class tarsus_brain
      * @throws \coding_exception
      * @throws \dml_exception
      */
-    public function delete($brain_id, $userid)
+    public function delete($brain_id)
     {
-        global $DB;
+        global $DB, $USER;
 
         $table = 'local_lai_connector_brains';
         $params = array('brainid' => $brain_id);
 
-        // Is there already a record with this brainid identifier? Than update it, otherwise create it.
+        // Is there already a record with this brainid identifier? Than delete it.
         if ($existingrecord = $DB->get_record($table, $params, '*', IGNORE_MULTIPLE)) {
             // Maybe we dont really need the line above, the line below should be sufficiant.
             $a = new \stdClass();
@@ -309,9 +350,10 @@ class tarsus_brain
 
                 // Successfully deleted, so we save everything in an event.
                 // we always need a context for events and anything.
-                $context = 1;
+                $context = \context_system::instance();
+
                 // What should we memorize and track in the event?
-                $fieldsToEvent['userid'] = $userid;
+                $fieldsToEvent['userid'] = $USER->id;
                 $fieldsToEvent['timedeleted'] = time();
 
                 $event = \local_lai_connector\event\brain_deleted::create(
@@ -344,7 +386,7 @@ class tarsus_brain
      */
     public static function delete_brain($brainid) {
         $tarsus_brain = new \local_lai_connector\tarsus_brain($brainid);
-        return $tarsus_brain->delete();
+        return $tarsus_brain->delete($tarsus_brain->brainid);
     }
 
 }

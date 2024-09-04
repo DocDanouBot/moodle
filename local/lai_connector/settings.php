@@ -115,15 +115,15 @@ if ($hassiteconfig) {
     /* -------------------------------------------------------------------- */
 
     /* General TARSUS settings and customer information */
-    $setting = new admin_settingpage('local_lai_connector_tarsus',
+    $setting = new admin_settingpage('local_lai_connector_tarsus_brain',
         get_string('setting_tarsus_tab_title', 'local_lai_connector'));
 
     // Hide this element. Only show, if TARSUS is selected and in use
     $setting->hide_if('local_lai_connector_tarsus', 'local_lai_connector_current_api', 'neq', '1');
 
-    $setting->add(new admin_setting_heading('headerconnectormainbrain',
-        get_string('setting_tarsus_title', 'local_lai_connector'),
-        get_string('setting_tarsus_title_help', 'local_lai_connector')));
+    $setting->add(new admin_setting_heading('headerconnectorsubbrain',
+        get_string('setting_tarsus_brain_title', 'local_lai_connector'),
+        get_string('setting_tarsus_brain_title_help', 'local_lai_connector')));
 
     // Customer Name for TARSUS API.
     $name = 'local_lai_connector_tarsus_customer_name';
@@ -164,16 +164,28 @@ if ($hassiteconfig) {
 
     /* -------------------------------------------------------------------- */
 
-    /* Mainbrain and Sub Brain settings */
-    $setting = new admin_settingpage('local_lai_connector_tarsus_brains',
-        get_string('setting_tarsus_brain_tab_title', 'local_lai_connector'));
+    /* Tarsus BITS settings */
+    $setting = new admin_settingpage('local_lai_connector_tarsus_bits',
+        get_string('setting_tarsus_bits_tab_title', 'local_lai_connector'));
 
     // Hide this element. Only show, if TARSUS is selected and in use
     $setting->hide_if('local_lai_connector_tarsus_brains', 'local_lai_connector_current_api', 'neq', '1');
 
-    $setting->add(new admin_setting_heading('headerconnectorsubbrain',
-        get_string('setting_tarsus_brain_title', 'local_lai_connector'),
-        get_string('setting_tarsus_brain_title_help', 'local_lai_connector')));
+    $setting->add(new admin_setting_heading('headerconnectormainbrain',
+        get_string('setting_tarsus_bits_title', 'local_lai_connector'),
+        get_string('setting_tarsus_bits_title_help', 'local_lai_connector')));
+
+    // Enable / Disable available layouts.
+    $choices = \local_lai_connector\util::get_trackable_activities();
+    $choicesDefault = \local_lai_connector\util::get_trackable_activities(true);
+
+    $setting->add(new admin_setting_configmulticheckbox(
+        'local_lai_connector_tarsus_bits',
+        get_string('setting_tarsus_bits_usage', 'local_lai_connector'),
+        get_string('setting_tarsus_bits_usage_help', 'local_lai_connector'),
+        $choicesDefault,
+        $choices));
+
 
     $settings->add($setting);
 

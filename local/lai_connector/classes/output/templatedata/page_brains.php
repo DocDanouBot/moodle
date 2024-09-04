@@ -49,6 +49,7 @@ class page_brains implements templatable {
     public function __construct($content) {
         // init empty var
         $allbrains = array();
+        $brainsobject = new \stdClass();
 
         // Save all the other content for later
         $this->content = $content;
@@ -56,24 +57,27 @@ class page_brains implements templatable {
         // Generate static content for testing
 
         $brainsawareness = json_decode($content['brains']);
-        $brainsobject = $brainsawareness->awareness;
+        if(isset($brainsawareness->awareness)) {
+            $brainsobject = $brainsawareness->awareness;
+        }
 
         // Initialize the API from TARSUS. We need to get the Brain quotas later on
-        $api = \local_lai_connector\api_connector_tarsus::get_instance();
+        // $api = \local_lai_connector\api_connector_tarsus::get_instance();
+        if(isset($brainsobject->brain_ids) && is_array($brainsobject->brain_ids)) {
+            foreach ($brainsobject->brain_ids as $brain) {
+                // For each element build a new object node and add additional data from another query to it.
 
-        foreach ($brainsobject->brain_ids as $brain) {
-            // For each element build a new object node and add additional data from another query to it.
-
-            // Therefore we must also fetch the additional data from our database
-            $localbrain = \local_lai_connector\tarsus_brain::get_instance($brain->id);
-            // And mapp this data also into the $newbrainobject
-            $newbrainobjekt = new \stdClass();
-            $newbrainobjekt->brainname = $localbrain->brainname;
-            $newbrainobjekt->braindescription = $localbrain->braindescription;
-            $newbrainobjekt->braindate = date("d.m.Y H:s", $localbrain->timecreated);
-            $newbrainobjekt->brainquota =  "extra page"; // $api->get_brain_usage($brain->id); // this curl takes too long, makes no sense to do it here.
-            $newbrainobjekt->brainid = $brain->id;
-            $allbrains[] = $newbrainobjekt;
+                // Therefore we must also fetch the additional data from our database
+                $localbrain = \local_lai_connector\tarsus_brain::get_instance($brain->id);
+                // And mapp this data also into the $newbrainobject
+                $newbrainobjekt = new \stdClass();
+                $newbrainobjekt->brainname = $localbrain->brainname;
+                $newbrainobjekt->braindescription = $localbrain->braindescription;
+                $newbrainobjekt->braindate = date("d.m.Y H:s", $localbrain->timecreated);
+                $newbrainobjekt->brainquota = "extra page"; // $api->get_brain_usage($brain->id); // this curl takes too long, makes no sense to do it here.
+                $newbrainobjekt->brainid = $brain->id;
+                $allbrains[] = $newbrainobjekt;
+            }
         }
         $this->brains = $allbrains;
     }

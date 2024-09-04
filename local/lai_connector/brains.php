@@ -41,12 +41,13 @@ $pageheading .= ' | ' . get_string('brainpage_title', 'local_lai_connector');
 $PAGE->set_title(get_string('brainpage_title', 'local_lai_connector'));
 $PAGE->set_heading($pageheading, false, false);
 $PAGE->set_url(new moodle_url('/local/lai_connector/brains.php'));
+$PAGE->requires->css('/local/lai_connector/styles.css');
 $PAGE->requires->jquery();
 $PAGE->requires->jquery_plugin('ui');
 $PAGE->requires->jquery_plugin('ui-css');
 
 // Load the lib.js to allow ajax communication with server
-$PAGE->requires->js(new moodle_url('/local/lai_connector/lib.js'));
+$PAGE->requires->js_call_amd('local_lai_connector/ajaxbuttons', 'init()', []);
 
 // Define and start the AI connector
 $api = \local_lai_connector\ai_connector::get_instance();

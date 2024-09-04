@@ -254,13 +254,18 @@ class ai_connector {
         return $allbrains;
     }
 
-    public function get_brain_usage($brainid) {
-        $brainusage = $this->_api->get_brain_usage($brainid);
+    public function get_brain_usage($brainid, $start_timestamp = 0, $end_timestamp = 0) {
+        $brainusage = $this->_api->get_brain_usage($brainid, $start_timestamp, $end_timestamp);
         return $brainusage;
     }
 
-    public function add_course_to_brain($brainid, $courseid) {
-        $addresult = $this->_api->add_course_to_brain($brainid, $courseid);
+    public function add_course_to_brain($courseid, $brainid = "", $currentuserid = 0) {
+        $addresult = $this->_api->add_course_to_brain($courseid, $brainid, $currentuserid);
+        return $addresult;
+    }
+
+    public function add_element_to_brain($courseid, $brainid = "", $currentuserid = 0) {
+        $addresult = $this->_api->add_element_to_brain($courseid, $brainid, $currentuserid);
         return $addresult;
     }
 

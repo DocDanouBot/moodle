@@ -46,6 +46,8 @@ $string['api_claude_mainname'] = 'CLAUDE3';
 
 // Texts for the API connecting to TARSUS.
 $string['api_tarsus_mainname'] = 'TARSUS';
+$string['api_tarsus_v1'] = 'Version 1.0';
+$string['api_tarsus_v2'] = 'Version 2.0';
 
 // Rights and Roles
 $string['lai_connector:viewindexpage'] = 'Darf die Hauptseite der Komponente besuchen.';
@@ -75,6 +77,8 @@ $string['event_track_document_bits_created'] = 'Event: Ein Dokument-Bit wurde de
 $string['event_track_document_bits_deleted'] = 'Event: Ein Dokument-Bit wurde aus dem Brain entfernt.';
 $string['event_track_image_bits_created'] = 'Event: Ein Bild-Bit wurde dem Brain hinzugefügt.';
 $string['event_track_image_bits_deleted'] = 'Event: Ein Bild-Bit wurde aus dem Brain entfernt.';
+$string['event_track_image_url_bits_created'] = 'Event: Ein URL referenziertes Bild-Bit wurde dem Brain hinzugefügt.';
+$string['event_track_image_url_bits_deleted'] = 'Event: Ein URL referenziertes Bild-Bit wurde aus dem Brain entfernt.';
 $string['event_track_question_bits_created'] = 'Event: Ein Frage-Bit wurde dem Brain hinzugefügt.';
 $string['event_track_question_bits_deleted'] = 'Event: Ein Frage-Bit wurde aus dem Brain entfernt.';
 $string['event_track_question_bool_bits_created'] = 'Event: Ein Boolsches Frage-Bit wurde dem Brain hinzugefügt.';
@@ -87,6 +91,8 @@ $string['event_track_url_bits_created'] = 'Event: Ein URL-Bit wurde dem Brain hi
 $string['event_track_url_bits_deleted'] = 'Event: Ein URL-Bit wurde aus dem Brain entfernt.';
 $string['event_track_video_bits_created'] = 'Event: Ein Video-Bit wurde dem Brain hinzugefügt.';
 $string['event_track_video_bits_deleted'] = 'Event: Ein Video-Bit wurde aus dem Brain entfernt.';
+$string['track_video_url_bits_created'] = 'Event: Ein URL referenziertes Video-Bit wurde dem Brain hinzugefügt.';
+$string['track_video_url_bits_deleted'] = 'Event: Ein URL referenziertes Video-Bit wurde aus dem Brain entfernt.';
 
 // info for the main page.
 $string['indexpage_title'] = 'LAI Hauptseite';
@@ -104,6 +110,24 @@ $string['frontend_cm_tarsus_status_submit'] = 'Dieses Element dem Brain jetzt hi
 $string['frontend_cm_tarsus_status_delete'] = 'Dieses Element aus dem Brain löschen';
 $string['frontend_cm_tarsus_status_norights'] = 'Sie haben nicht das Recht, diesen Status zu ändern.';
 
+// Javascript texte und Modal Window Texte
+$string['js_curatecontent'] = 'Inhalt kuratieren?';
+$string['js_content_submitted_self'] = 'Sie haben diesen Inhalt bereits selbst eingereicht. Am Datum: ';
+$string['js_content_submitted_not'] = 'Dieser Inhalt wurde noch nicht eingereicht. Wollen sie jetzt diese Aktivität kuratieren? ';
+$string['js_content_submitted'] = ' hat diesen Inhalt bereits eingereicht, mit Datum zum: ';
+$string['js_modal_title'] = 'Wie wollen sie mit diesem Inhalt arbeiten?';
+$string['js_modal_title_add'] = 'Diesen Inhalt zum Brain hinzufügen?';
+$string['js_modal_title_remove'] = 'Diesen Inhalt wieder entfernen?';
+$string['js_modal_content_include'] = 'Diesen Inhalt in das Brain hinzufügen.';
+$string['js_modal_content_include_now'] = 'Inhalt hinzufügen';
+$string['js_modal_content_include_tooltip'] = 'Wenn Sie hier klicken wird dieser Inhalt das TARSUS Brain hinzugefügt!';
+$string['js_modal_content_exclude'] = 'Diesen Inhalt aus dem Brain wieder entfernen.';
+$string['js_modal_content_exclude_now'] = 'Inhalt entfernen!';
+$string['js_modal_content_exclude_tooltip'] = 'Wenn Sie hier klicken wird dieser Inhalt wieder aus dem TARSUS Brain entfernen!';
+$string['js_modal_checkbox'] = 'Do you want to copy user data? (Eg. glossary/wiki/database entries)';
+$string['js_modal_confirm_backup'] = 'Bestätigen';
+$string['js_modal_confirm_delete'] = 'Löschen';
+
 // strings for the report comp_brain page.
 $string['report_allbrains_brainname'] = 'Name des Brains';
 $string['report_allbrains_braindescription'] = 'Beschreibung';
@@ -115,6 +139,12 @@ $string['report_allbrains_brainaction'] = 'Aktionen';
 $string['report_allbrains_no_results'] = 'Entschuldigung, es wurden keine Brains gefunden, oder sie haben nicht die nötigen Rechte diese zu sehen.';
 $string['report_allbrains_currenttoken'] = 'Ihr aktueller Token: ';
 $string['report_allbrains_email_von_pascal'] = 'Hinweis von TARSUS: Die Erstellung eines Brains kostet extrem viel Geld und kann tausende von Euros an Kosten erzeugen. Bitte nur ein Brain erzeugen und damit arbeiten. In der Zukunft ist es gedacht, dass ihr für jeden einzelnen Kunden ein Brain erzeugt, denn die Kunden werden für jedes Brain zahlen.<br><br><i>Cheers<br>Pascal Zoleko</i>';
+$string['report_allbrains_brainservice'] = 'Der genutzte Service';
+$string['report_allbrains_braintype'] = 'Api Type';
+$string['report_allbrains_braincredits'] = 'Credits';
+$string['report_allbrains_braincount'] = 'Anzahl';
+$string['report_allbrains_brainstarttime'] = 'Startzeit des Reports';
+$string['report_allbrains_brainendtime'] = 'Endzeit des Reports';
 
 // strings for the report comp_brainquotas page.
 $string['report_brainquotas_no_results'] = 'Entschuldigung, es wurden keine Datennutzungsstatistiken oder Brainsquotas gefunden, oder sie haben nicht die nötigen Rechte diese zu sehen.';
@@ -160,6 +190,10 @@ $string['tarsus_brain_update_error'] = 'Das TARSUS Brain {$a->brainid} konnte ni
 $string['tarsus_brain_deleted'] = 'Das TARSUS Brain {$a->brainid} wurde erfolgreich gelöscht.';
 $string['tarsus_brain_not_deleted'] = 'Das TARSUS Brain {$a->brainid} konnte nicht gelöscht werden.';
 $string['except_dberror_delete_brain'] = 'Fehler: Dieses BRAIN konnte nicht aus der DB gelöscht werden.';
+$string['except_dberror_delete_trackedbit'] = 'Fehler: Dieses getrackte Informations BIT konnte nicht aus der DB gelöscht werden.';
+$string['tarsus_track_element_created'] = 'Das TARSUS Tracked Element vom Type {$a->bittype} mit der ResourceID {$a->resourceid} wurde erfolgreich erstellt.';
+$string['tarsus_track_element_deleted'] = 'Das TARSUS Tracked Element vom Type {$a->bittype} mit der ResourceID {$a->resourceid} wurde erfolgreich gelöscht.';
+$string['tarsus_track_element_not_deleted'] = 'Das TARSUS Tracked Element vom Type {$a->bittype} mit der ResourceID {$a->resourceid} konnte nicht gelöscht werden.';
 
 // strings for the explain comp_legend page.
 $string['legend_comp_title'] = 'Legende zur Erklärung';
@@ -207,7 +241,7 @@ $string['setting_general_title_help'] = 'Auf dieser Seite können Sie alle notwe
 $string['setting_general_title_url'] = 'Sie können auch die Startseite des Plugins <a href="/local/lai_connector/index.php" target="_blank">hier</a> sehen: <a href="/local/lai_connector/index.php" target="_blank">/local/lai_connector/index.php</a>';
 $string['setting_tarsus_tab_title'] = 'TARSUS Konfig';
 $string['setting_tarsus_title'] = 'Allgemeine TARSUS Konfigurationsübersicht';
-$string['setting_tarsus_title_help'] = 'Auf dieser Seite werden alle Einstellungen zu dem Interface von TARSUS vorgenommen';
+$string['setting_tarsus_title_help'] = 'Auf dieser Seite werden alle Einstellungen zu dem Interface von TARSUS vorgenommen. Sie können auch auf der <a href="/local/lai_connector/index.php" target="_blank">Startseite des Plugins</a> weitere Einstellungen vornehmen. </a>';
 $string['setting_tarsus_customer_name'] = 'Der Firmenname des Kunden / Anwenders';
 $string['setting_tarsus_customer_name_help'] = 'Tragen Sie hier den Namen des Kunden / Anwenders ein, der für das LAI-System verwendet wird';
 $string['setting_tarsus_customer_address'] = 'Die Firmenanschrift des Kunden / Anwenders';
@@ -216,7 +250,12 @@ $string['setting_tarsus_customer_email'] = 'Die E-Mail-Adresse des Kunden / Anwe
 $string['setting_tarsus_customer_email_help'] = 'Tragen Sie hier die E-Mail-Adresse des Kunden / Anwenders ein, der für das LAI-System verwendet wird';
 $string['setting_tarsus_brain_tab_title'] = 'TARSUS Brains';
 $string['setting_tarsus_brain_title'] = 'Haupt- und zusätzliche Brains Konfigurationsübersicht';
-$string['setting_tarsus_brain_title_help'] = 'Auf dieser Seite werden alle Einstellungen zum Hauptbrain und zu dem untergeordneten Wissesnständen vorgenommen';
+$string['setting_tarsus_brain_title_help'] = 'Auf dieser Seite werden alle Einstellungen zum Hauptbrain und zu dem untergeordneten Wissensständen vorgenommen';
+$string['setting_tarsus_bits_tab_title'] = 'TARSUS BITS';
+$string['setting_tarsus_bits_title'] = 'Allgemeine TARSUS BITS Konfiguration';
+$string['setting_tarsus_bits_title_help'] = 'Auf dieser Seite werden alle Einstellungen zu den BITS vorgenommen, welche wir in TARSUS einlesen können. Sie können auch auf der <a href="/local/lai_connector/index.php" target="_blank">Startseite des Plugins</a> weitere Einstellungen vornehmen. </a>';
+$string['setting_tarsus_bits_usage'] = 'Welche Aktivitäten dürfen kuratiert werden';
+$string['setting_tarsus_bits_usage_help'] = 'Da wir noch nicht für alle Aktivitäten einen Parser haben, können hier die Aktivitätstypen freigeschaltet werden, welche im Frontend in das TARSUS Brain eingeladen werden dürfen. Die anderen Aktivitäten bekommen kein ADD-Icon.';
 $string['setting_tasks_tab_title'] = 'Tasks';
 $string['setting_tasks_title'] = 'Tasks und Cronjobs Konfigurationsübersicht';
 $string['setting_tasks_title_help'] = 'Auf dieser Seite konfigurieren Sie die Tasks und Cronjobs, die für das LAI-System benötigt werden';

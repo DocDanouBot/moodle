@@ -25,7 +25,7 @@
 require_once('../../config.php');
 $context = context_system::instance();
 
-global $PAGE, $OUTPUT;
+global $PAGE, $OUTPUT, $DB, $CFG, $USER;
 
 // Check access.
 require_login(null, false);
@@ -39,9 +39,17 @@ $pageheading .= ' | ' . get_string('curatedatapage_title', 'local_lai_connector'
 $PAGE->set_title(get_string('curatedatapage_title', 'local_lai_connector'));
 $PAGE->set_heading($pageheading, false, false);
 $PAGE->set_url(new moodle_url('/local/lai_connector/curatedata.php'));
+$PAGE->requires->css('/local/lai_connector/styles.css');
+$PAGE->requires->jquery();
+$PAGE->requires->jquery_plugin('ui');
+$PAGE->requires->jquery_plugin('ui-css');
 
 // Load the lib.js to allow ajax communication with server
-$PAGE->requires->js(new moodle_url('/local/lai_connector/lib.js'));
+# $PAGE->requires->js_call_amd('local_lai_connector/ajaxbuttons', 'init');
+
+$tarsusBitsConfig = explode(',',strtolower( $CFG->local_lai_connector_tarsus_bits));
+$initparams =['userid' => $USER->id, 'bitssettings' => $tarsusBitsConfig];
+$PAGE->requires->js_call_amd('local_lai_connector/script', 'init',$initparams);
 
 // Define and start the AI connector
 $api = \local_lai_connector\ai_connector::get_instance();
@@ -57,4 +65,32 @@ $templatedata['brains'] = $brains;
 // Output content.
 echo $OUTPUT->header();
 echo $OUTPUT->render_from_template('local_lai_connector/page_curatedata', $templatedata);
+
+# echo("tarsusBitsConfig");
+# var_dump($tarsusBitsConfig);
+
+/*
+$courseid = 2;
+$table = 'local_lai_connector_assets';
+$db_results = $DB->get_records($table, ['courseid' => $courseid],'','id, brainid, bittype, userid, resourceid, assetid,cmid,timecreated,timemodified');
+
+$temparray = (array) $db_results;
+foreach ($temparray as $key => $value) {
+    if (isset($value->cmid) && ($value->cmid > 0)) {
+        // Sort it, so we have the cmids as keys
+        $newarray[$value->cmid] = (array) $value;
+    }
+
+}
+$tarsus['cmids'] = (array) $newarray;
+$tarsus['enabled'] = true;
+$returnarray['content'] =  $tarsus;
+# return $returnarray;
+
+echo("<pre>");
+print_r($returnarray);
+echo("</pre>");
+*/
+
+
 echo $OUTPUT->footer();

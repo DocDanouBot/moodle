@@ -41,7 +41,7 @@ $PAGE->set_url($CFG->wwwroot.'/local/lai_connector/coursesettings_extended.php',
 $PAGE->set_pagelayout('admin');
 $PAGE->set_title(get_string("setting_courseext_pagetitle",  "local_lai_connector"));
 $PAGE->set_heading(get_string("setting_courseext_header",  "local_lai_connector"));
-$PAGE->requires->js(new moodle_url($CFG->wwwroot.'/local/lai_connector/lib.js'));
+
 
 $baseurl = $CFG->wwwroot."/local/lai_connector/coursesettings_extended.php";
 
@@ -60,7 +60,7 @@ if ($tarsusenabledform->is_cancelled())   {
     // Go back to the course overview page.
     redirect(new moodle_url('/course/view.php', array('id' => $course->id)));
 } else if ($fromform = $tarsusenabledform->get_data()) {
-    if (!isset($fromform->enabled) || (!$fromform->enabled)) {
+    if (!isset($fromform->enabled)) {
         // Set the value to anything if nothing was set before
         $fromform->enabled = 0;
     }
@@ -74,6 +74,9 @@ if ($tarsusenabledform->is_cancelled())   {
     $tarsusenabledform->display();
 
 } else {
+    #$data = new \stdClass();
+    #$data->enabled = 1;
+    $tarsusenabledform->set_data(); //Is this doesn't listening to us?
     // Nothing has happend yet, so we display the regular prefilled form, as it exists.
     $tarsusenabledform->display();
 }

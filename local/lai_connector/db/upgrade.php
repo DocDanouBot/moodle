@@ -77,7 +77,7 @@ function xmldb_local_lai_connector_upgrade($oldversion) {
         }
 
         // A new table for the local_lai_connector to save all the assets that have been added to TARSUS
-        $table = new xmldb_table('local_lai_connector_tracked_assets');
+        $table = new xmldb_table('local_lai_connector_assets');
         if ($dbman->table_exists($table)) {
             // lets make sure that we start from scratch, so we drop the table.
             $dbman->drop_table($table);
@@ -86,12 +86,11 @@ function xmldb_local_lai_connector_upgrade($oldversion) {
         $table->add_field('brainid',XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, "", 'id');
         $table->add_field('courseid', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'brainid');
         $table->add_field('userid', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'courseid');
-        $table->add_field('resourceid', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'userid');
-        $table->add_field('assertid', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'resourceid');
-        $table->add_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'assertid');
+        $table->add_field('resourceid', XMLDB_TYPE_CHAR, '64', null, XMLDB_NOTNULL, null, '', 'userid');
+        $table->add_field('assetid', XMLDB_TYPE_TEXT, null, null, null, null, null, 'resourceid');
+        $table->add_field('timecreated', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'assetid');
         $table->add_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'timecreated');
         $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
-        $table->add_key('course', XMLDB_KEY_UNIQUE, array('courseid'));
         // Define key brainid (foreign) to be added to local_lai_connector_courses.
         $table->add_key('brainid', XMLDB_KEY_FOREIGN, ['brainid'], 'user', ['local_lai_connector_brains']);
         // Define key courseid (foreign) to be added to local_lai_connector_courses.
@@ -103,6 +102,32 @@ function xmldb_local_lai_connector_upgrade($oldversion) {
         }
 
         upgrade_plugin_savepoint(true, 2024070010, 'local', 'lai_connector');
+    }
+
+    if ($oldversion < 2024070013) {
+        // A new field to memorize the type of traced bit
+        $table = new xmldb_table('local_lai_connector_assets');
+        $field = new xmldb_field('bittype', XMLDB_TYPE_CHAR, '15', null, null, null, "", 'brainid');
+
+        // Conditionally launch add field
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        upgrade_plugin_savepoint(true, 2024070013, 'local', 'lai_connector');
+    }
+
+    if ($oldversion < 2024080000) {
+        // A new field to memorize the type of traced bit
+        $table = new xmldb_table('local_lai_connector_assets');
+        $field = new xmldb_field('cmid', XMLDB_TYPE_INTEGER, '8', null, null, null, null, 'assetid');
+
+        // Conditionally launch add field
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        upgrade_plugin_savepoint(true, 2024080000, 'local', 'lai_connector');
     }
 
     return true;

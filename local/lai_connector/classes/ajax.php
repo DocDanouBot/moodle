@@ -29,6 +29,7 @@ require_once('../../../config.php');
 require_login();
 $action = required_param('action', PARAM_ALPHAEXT);
 $courseid = optional_param('courseid', 0, PARAM_INT);
+$brainname = optional_param('brainname', '',PARAM_ALPHAEXT);
 $api = \local_lai_connector\ai_connector::get_instance();
 $token =  $api::get_api_token();
 
@@ -51,8 +52,8 @@ switch ($action) {
         echo json_encode($returndata);
         break;
     case "addCourseToBrain":
-        $brainname = required_param('brainname', PARAM_ALPHAEXT);
-        $result = $api->add_course_to_brain($brainname,$courseid);
+        $currentuserid = required_param('userid', PARAM_INT);
+        $result = $api->add_course_to_brain($courseid,$brainname,$currentuserid);
         $returndata = array(
             'token' => $token,
             'result' => $result,
@@ -62,15 +63,45 @@ switch ($action) {
         echo json_encode($returndata);
         break;
     case "addElementToBrain":
+        $activityname = strtoupper(required_param('moduletype', PARAM_ALPHAEXT));
+        $currentuserid = required_param('userid', PARAM_INT);
+        $cmid = required_param('cmid', PARAM_INT);
+
+        $result = \local_lai_connector\tarsus_track_element::create($brainname, $activityname, $cmid, $courseid, $currentuserid);
         $returndata = array(
             'token' => $token,
+            'result' => $result,
+            'courseid' => $courseid,
             'status' => "ON",
             'function' => "addElementToBrain"
         );
+
+        $url = new moodle_url('/course/view.php', ['id' => $courseid]);
+        header('Location: '.$url);
         echo json_encode($returndata);
         break;
+
+    case "removeElementFromBrain":
+        $activityname = strtoupper(required_param('moduletype', PARAM_ALPHAEXT));
+        $currentuserid = required_param('userid', PARAM_INT);
+        $cmid = required_param('cmid', PARAM_INT);
+        $brainname = "lernlinkbrain";
+        $result = \local_lai_connector\tarsus_track_element::untrack($brainname, $activityname, $cmid, $courseid, $currentuserid);
+        $returndata = array(
+            'token' => $token,
+            'result' => $result,
+            'courseid' => $courseid,
+            'status' => "DELETED",
+            'function' => "removeElementFromBrain"
+        );
+
+        // echo ("DONE delete");
+
+        $url = new moodle_url('/course/view.php', ['id' => $courseid]);
+        header('Location: '.$url);
+        # echo json_encode($returndata);
+        break;
     case "createNewBrain":
-        $brainname = required_param('brainname', PARAM_ALPHAEXT);
         $result = $api->create_new_brain($brainname);
         $returndata = array(
             'result' => $result,
@@ -79,7 +110,6 @@ switch ($action) {
         echo json_encode($returndata);
         break;
     case "deleteBrain":
-        $brainname = required_param('brainname', PARAM_ALPHAEXT);
         $result = $api->delete_brain($brainname);
         $returndata = array(
             'result' => $result,
@@ -97,7 +127,6 @@ switch ($action) {
         echo json_encode($returndata);
         break;
     case "showBrainsQuotas":
-        $brainname = required_param('newbrainname', PARAM_ALPHAEXT);
         $result = $api->get_brain_usage($brainname);
         $returndata = array(
             'token' => $token,

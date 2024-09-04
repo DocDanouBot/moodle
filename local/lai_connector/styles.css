@@ -1,3 +1,8 @@
+.moodle-dialogue-base .moodle-dialogue-wrap {
+    min-width: 800px !important;
+    width: 10vw !important;
+}
+
 code, code a {
     font-size: 87.5%;
     color: #e83e8c;
@@ -33,6 +38,10 @@ code, code a {
     vertical-align: top;
 }
 
+.brainslist {
+    width: 100%;
+}
+
 .resultlist i.icon,
 .brainslist i.icon {
     margin-right: 0!important;
@@ -55,18 +64,62 @@ code, code a {
 ############################################################
 */
 
+.activity-actions {
+    display: flex;
+}
+
 .activity-item .activity-tarsus-info {
 
     justify-self: end;
 }
+.activity-item .tarsus-activity-icon,
 .activity-item .activity-tarsus-info .tarsus-information {
     height: 32px;
     width: 32px;
     border-radius: 0.5rem;
 }
-.activity-item .activity-tarsus-info .tarsus-icon-info {
+
+.activity-item .tarsus-activity-icon {
     display: none;
 }
+
+.editing .activity-item:hover > .tarsus-activity-icon,
+.editing .activity-item.selected > .tarsus-activity-icon {
+    display: block;
+}
+
+
+.btn.add-to-tarsus-brain.submitted {
+    background-color: transparent;
+}
+
+.btn.add-to-tarsus-brain.submitted.self {
+    background-color: transparent;
+}
+
+.btn.add-to-tarsus-brain.submitted.not {
+    background-color: transparent;
+}
+
+/*  ################    MODAL WINDOWS     ################ */
+.modal_curatecontent{
+    min-width: 100%;
+    width: 100%;
+}
+
+.modal_curatecontent tr td:first-child {
+    min-width: 66%;
+    width: 66%;
+    text-align: left;
+}
+.modal_curatecontent tr td:last-child {
+    width: auto;
+    text-align: right;
+}
+
+
+/*  ################    RESPONSIVE STUPH     ################ */
+
 @media (max-width: 575.98px) {
     .activity-item .activity-tarsus-info {
         width: 100%;
@@ -86,4 +139,20 @@ code, code a {
         opacity: 1;
         visibility: visible;
     }
+}
+
+
+/*  ################    COMPONENT SETTINGS     ################ */
+
+
+#page-admin-setting-local_lai_connector .form-item .form-setting .form-multicheckbox ul {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 100%;
+    width: 100%;
+}
+
+#page-admin-setting-local_lai_connector .form-item .form-setting .form-multicheckbox ul li {
+    margin-left: 20px;
 }

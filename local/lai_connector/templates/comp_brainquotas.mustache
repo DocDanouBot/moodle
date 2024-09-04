@@ -70,18 +70,34 @@
 <table id="reports_brainquotas" class="brainslist">
     <thead>
     <tr class="headerrow grey_bg">
-        <th>{{#str}}report_allbrains_brainid, local_lai_connector{{/str}}</th>
-        <th>{{#str}}report_allbrains_brainname, local_lai_connector{{/str}}</th>
+        <th>{{#str}}report_allbrains_brainservice, local_lai_connector{{/str}}</th>
+        <th>{{#str}}report_allbrains_braintype, local_lai_connector{{/str}}</th>
+        <th>{{#str}}report_allbrains_braincredits, local_lai_connector{{/str}}</th>
+        <th>{{#str}}report_allbrains_braincount, local_lai_connector{{/str}}</th>
+        <th>{{#str}}report_allbrains_brainstarttime, local_lai_connector{{/str}}</th>
+        <th>{{#str}}report_allbrains_brainendtime, local_lai_connector{{/str}}</th>
     </tr>
     </thead>
     <tbody>
     {{#brainquotas}}
         <tr class="brainrow">
-            <td colspan="2">
-                art
+            <td>
+                <strong>{{{brain_service}}}</strong>
             </td>
-            <td colspan="4">
-                {{{.}}}
+            <td>
+                {{{brain_type}}}
+            </td>
+            <td>
+                {{{brain_credits}}}
+            </td>
+            <td>
+                {{{brain_count}}}
+            </td>
+            <td>
+                {{{brain_starttime}}}
+            </td>
+            <td>
+                {{{brain_endtime}}}
             </td>
         </tr>
     {{/brainquotas}}

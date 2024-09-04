@@ -55,8 +55,11 @@ class edit_brain extends \moodleform {
         $mform->addElement('text', 'brainid', get_string('form_edit_brainid', 'local_lai_connector'));
         $mform->addHelpButton('brainid', 'form_edit_brainid', 'local_lai_connector');
         $mform->setType('brainid', PARAM_TEXT);
-        $mform->addRule('brainid', null, 'required', null, 'client');
-        $mform->addRule('brainid', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
+        // Disable brainid if there is already a value set. Because this is the connector to the real TARSUS Brain.
+        $mform->disabledIf('brainid', 'brainid', 'eq', "testbrain");
+        #$mform->addRule('brainid', null, 'required', null, 'client');
+        #$mform->addRule('brainid', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
+
 
         // The Lernlink name of the brain
         $mform->addElement('text', 'brainname', get_string('form_edit_brainname', 'local_lai_connector'));
