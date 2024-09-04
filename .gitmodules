@@ -1,0 +1,9 @@
+[submodule "admin/tool/useranonymization"]
+	path = admin/tool/useranonymization
+	url = https://github.com/lernlink/moodle-tool_useranonymization
+[submodule "blocks/lai_chatbot"]
+	path = blocks/lai_chatbot
+	url = https://github.com/lernlink/moodle-block_lai_chatbot
+[submodule "mod/bycs_feedback"]
+	path = mod/bycs_feedback
+	url = https://github.com/lernlink/moodle-mod_bycs_feedback
