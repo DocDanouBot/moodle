@@ -1,3 +1,6 @@
 [submodule "mod/moodle-mod_bycs_feedback"]
 	path = mod/moodle-mod_bycs_feedback
 	url = git@github.com:lernlink/moodle-mod_bycs_feedback.git
+[submodule "mod/bycsfeedback"]
+	path = mod/bycsfeedback
+	url = git@github.com:lernlink/moodle-mod_bycs_feedback.git
