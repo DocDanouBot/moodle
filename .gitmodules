@@ -1,0 +1,3 @@
+[submodule "blocks/lai_chatbot"]
+	path = blocks/lai_chatbot
+	url = git@github.com:lernlink/moodle-blocks_lai_chatbot.git
