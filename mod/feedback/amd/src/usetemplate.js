@@ -16,52 +16,69 @@
 /**
  * Javascript module for using an existing template
  *
- * @module      mod_feedback/usetemplate
+ * @module      mod_bycsfeedback/usetemplate
  * @copyright   2021 Peter Dias
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-import ModalForm from 'core_form/modalform';
-import Notification from 'core/notification';
-import {getString} from 'core/str';
-
-const selectors = {
-    modaltrigger: '[data-action="usetemplate"]',
-};
-
 /**
- * Initialize module
+ * Forked and Extended version of the feedback plugin for
+ * BayernCloudSchule (ByCS) by Lern.link GmbH
+ *
+ * @package    mod_bycsfeedback
+ * @author     Danou Nauck danou.nauck@lernlink.de
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-export const init = () => {
-    const trigger = document.querySelector(selectors.modaltrigger);
 
-    trigger.addEventListener('click', event => {
-        event.preventDefault();
 
-        const modalForm = new ModalForm({
-            modalConfig: {
-                title: getString('use_this_template', 'mod_feedback'),
-            },
-            formClass: 'mod_feedback\\form\\use_template_form',
-            args: {
-                id: trigger.getAttribute('data-dataid'),
-                templateid: trigger.getAttribute('data-templateid')
-            },
-            saveButtonText: getString('save', 'core')
-        });
 
-        // Show a toast notification when the form is submitted.
-        modalForm.addEventListener(modalForm.events.FORM_SUBMITTED, event => {
-            if (event.detail.result) {
-                window.location.assign(event.detail.url);
-            } else {
-                Notification.addNotification({
-                    type: 'error',
-                    message:  getString('saving_failed', 'mod_feedback')
+
+define('mod_bycsfeedback/usetemplate',['core_form/modalform','core/notification', 'core/str'],
+    function(ModalForm, Notification, {getString}) {
+
+        const selectors = {
+            modaltrigger: '[data-action="usetemplate"]',
+        };
+
+        /**
+         * Initialize module
+         */
+
+        return {
+            // Initialize the settings of the block /
+            init: function () {
+
+                const trigger = document.querySelector(selectors.modaltrigger);
+
+                trigger.addEventListener('click', event => {
+                    event.preventDefault();
+
+                    const modalForm = new ModalForm({
+                        modalConfig: {
+                            title: getString('use_this_template', 'mod_bycsfeedback'),
+                        },
+                        formClass: 'mod_bycsfeedback\\form\\use_template_form',
+                        args: {
+                            id: trigger.getAttribute('data-dataid'),
+                            templateid: trigger.getAttribute('data-templateid')
+                        },
+                        saveButtonText: getString('save', 'core')
+                    });
+
+                    // Show a toast notification when the form is submitted.
+                    modalForm.addEventListener(modalForm.events.FORM_SUBMITTED, event => {
+                        if (event.detail.result) {
+                            window.location.assign(event.detail.url);
+                        } else {
+                            Notification.addNotification({
+                                type: 'error',
+                                message: getString('saving_failed', 'mod_bycsfeedback')
+                            });
+                        }
+                    });
+
+                    modalForm.show();
                 });
             }
-        });
-
-        modalForm.show();
+        };
     });
-};
