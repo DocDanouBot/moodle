@@ -65,6 +65,7 @@ jsconfig.json
 /blocks/ai_chat
 /mod/individualfeedback
 /mod/bycs_feedback
+/mod/bycsfeedback
 /theme/boost_union
 /admin/tool/usersuspension
-
+/availability/condition/completiondelay
