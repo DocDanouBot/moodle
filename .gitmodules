@@ -1,3 +1,21 @@
 [submodule "blocks/lai_chatbot"]
 	path = blocks/lai_chatbot
-	url = git@github.com:lernlink/moodle-blocks_lai_chatbot.git
+	url = https://github.com/lernlink/moodle-block_lai_chatbot
+[submodule "blocks/lai_sandbox"]
+	path = blocks/lai_sandbox
+	url = https://github.com/lernlink/moodle-block_lai_sandbox
+[submodule "local/lai_connector"]
+	path = local/lai_connector
+	url = https://github.com/lernlink/moodle-local_lai_connector
+[submodule "theme/boost_union"]
+	path = theme/boost_union
+	url = https://github.com/moodle-an-hochschulen/moodle-theme_boost_union
+[submodule "mod/individualfeedback"]
+	path = mod/individualfeedback
+	url = https://github.com/mebis-lp/moodle-mod_individualfeedback
+[submodule "mod/bycsfeedback"]
+   	path = mod/bycsfeedback
+   	url = https://github.com/lernlink/moodle-mod_bycsfeedback
+[submodule "admin/tool/useranonymization"]
+	path = admin/tool/useranonymization
+	url = https://github.com/lernlink/moodle-tool_useranonymization
