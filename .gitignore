@@ -58,4 +58,18 @@ moodle-plugin-ci.phar
 .hugo_build.lock
 phpcs.xml
 jsconfig.json
+
+# My own components
+/local/ai_manager
+/local/lai_connector
+/blocks/lai_sandbox
+/blocks/lai_chatbot
+/blocks/ai_chat
+/mod/individualfeedback
+/mod/bycs_feedback
+/mod/bycsfeedback
+/theme/boost_union
+/admin/tool/usersuspension
+/availability/condition/completiondelay
+
 UPGRADING-CURRENT.md
